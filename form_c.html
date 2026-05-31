@@ -60,67 +60,92 @@ body {
   background: rgba(255,255,255,0.08);
 }
 
-/* PAGE WRAPPER */
+/* Tab Pages */
 .tab-page {
   display: none;
   width: 100%;
-  padding-bottom: 80px;
+  padding-bottom: 20px;
 }
 .tab-page.active {
   display: block;
 }
 
-/* Header */
+/* Progress Bar (only in data entry tab) */
+.progress-container {
+  background: var(--blue-dark);
+  padding: 10px 16px;
+  position: sticky;
+  top: 52px;
+  z-index: 100;
+}
+.progress-bar {
+  background: rgba(255,255,255,0.2);
+  border-radius: 20px;
+  height: 6px;
+  overflow: hidden;
+}
+.progress-fill {
+  background: var(--gold);
+  height: 100%;
+  width: 0%;
+  transition: width 0.3s ease;
+  border-radius: 20px;
+}
+.progress-text {
+  color: white;
+  font-size: 11px;
+  margin-top: 6px;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Page Header */
 .page-header {
   background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 60%, var(--blue-light) 100%);
   color: white;
   text-align: center;
-  padding: 20px 16px;
+  padding: 16px 16px;
 }
-.header-logos { display: flex; justify-content: center; gap: 16px; margin-bottom: 14px; flex-wrap: wrap; }
-.header-logo { height: 56px; width: auto; background: white; padding: 5px 10px; border-radius: 10px; }
-.header-org { font-size: 11px; font-weight: 600; letter-spacing: 0.8px; margin-bottom: 6px; opacity: 0.9; }
-.header-title { font-size: 20px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); }
-.header-sub { font-size: 12px; font-weight: 500; opacity: 0.85; margin-top: 5px; }
+.header-logos { display: flex; justify-content: center; gap: 16px; margin-bottom: 10px; flex-wrap: wrap; }
+.header-logo { height: 50px; width: auto; background: white; padding: 4px 10px; border-radius: 10px; }
+.header-org { font-size: 9px; font-weight: 600; letter-spacing: 0.8px; margin-bottom: 4px; opacity: 0.9; }
+.header-title { font-size: 16px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--gold); }
+.header-sub { font-size: 10px; font-weight: 500; opacity: 0.85; }
+
+/* Form Title */
 .form-title {
   background: linear-gradient(90deg, var(--blue-dark), var(--blue));
   color: white;
-  padding: 13px 16px;
+  padding: 10px 16px;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 13px;
   border-left: 4px solid var(--gold);
 }
 
-/* Sections */
+/* Section Pages */
+.section-page {
+  display: none;
+  background: white;
+  margin: 12px;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.section-page.active {
+  display: block;
+}
 .section-header {
   background: var(--soft-bg);
   color: var(--blue-dark);
   padding: 14px 16px;
   font-weight: 700;
-  font-size: 13px;
+  font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   border-left: 4px solid var(--blue);
-  margin-top: 4px;
 }
 .section-card {
-  background: white;
-  border-bottom: 1px solid var(--border);
   padding: 16px;
-}
-
-/* Demographics */
-.demographics {
-  background: white;
-  padding: 16px;
-  border-bottom: 1px solid var(--border);
-}
-.demographics h3 {
-  color: var(--blue-dark);
-  margin-bottom: 16px;
-  font-size: 13px;
-  font-weight: 700;
-  text-transform: uppercase;
 }
 
 /* Form Elements */
@@ -189,7 +214,7 @@ body {
   accent-color: white;
 }
 
-/* Checkbox Options - FULL VERTICAL */
+/* Checkbox Options */
 .options-group-check {
   display: flex;
   flex-direction: column;
@@ -230,6 +255,7 @@ body {
   background: var(--soft-bg);
   padding: 10px 16px;
   border-top: 1px solid var(--border);
+  margin-top: 8px;
 }
 .score-label {
   font-size: 12px;
@@ -246,6 +272,39 @@ body {
 .score-badge.good { background: var(--green); color: white; }
 .score-badge.fair { background: var(--orange); color: white; }
 .score-badge.poor { background: var(--red); color: white; }
+
+/* Navigation Buttons */
+.nav-buttons {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background: white;
+  border-top: 1px solid var(--border);
+  margin-top: 8px;
+}
+.btn-prev, .btn-next, .btn-submit-final {
+  flex: 1;
+  padding: 14px;
+  border-radius: 40px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  text-align: center;
+  border: none;
+}
+.btn-prev {
+  background: #f0f2f5;
+  color: var(--text-dark);
+  border: 1px solid var(--border);
+}
+.btn-next {
+  background: var(--blue);
+  color: white;
+}
+.btn-submit-final {
+  background: var(--green);
+  color: white;
+}
 
 /* Member Card */
 .member-card {
@@ -286,18 +345,6 @@ body {
   cursor: pointer;
   width: 100%;
   margin-top: 8px;
-}
-.btn-submit {
-  width: 100%;
-  padding: 16px;
-  background: var(--blue);
-  color: white;
-  border: none;
-  border-radius: 40px;
-  font-weight: 700;
-  font-size: 16px;
-  cursor: pointer;
-  margin: 20px 0;
 }
 
 /* Summary Tab */
@@ -354,10 +401,6 @@ body {
   text-align: right;
   flex: 1;
 }
-.val-yes { background: #d4edda; color: #155724; padding: 2px 10px; border-radius: 20px; display: inline-block; }
-.val-no { background: #f8d7da; color: #721c24; padding: 2px 10px; border-radius: 20px; display: inline-block; }
-.val-good { background: #d4edda; color: #155724; padding: 2px 10px; border-radius: 20px; }
-.val-poor { background: #f8d7da; color: #721c24; padding: 2px 10px; border-radius: 20px; }
 
 /* Modal */
 .modal {
@@ -375,8 +418,6 @@ body {
   border-radius: 20px;
   max-width: 500px;
   width: 100%;
-  max-height: 85vh;
-  overflow-y: auto;
 }
 .modal-header {
   background: linear-gradient(135deg, var(--blue-dark), var(--blue));
@@ -392,7 +433,6 @@ body {
 .btn-cancel { flex: 1; padding: 12px; background: #f0f2f5; border: 1px solid var(--border); border-radius: 40px; font-weight: 600; cursor: pointer; }
 .btn-confirm { flex: 1; padding: 12px; background: var(--green); color: white; border: none; border-radius: 40px; font-weight: 600; cursor: pointer; }
 
-.px20 { padding: 0 16px 20px 16px; }
 .no-data { text-align: center; padding: 40px; color: var(--text-light); }
 </style>
 </head>
@@ -417,88 +457,14 @@ body {
   </div>
   <div class="form-title">FORM C: RAPID DIAGNOSTIC TEST (mRDT) USE ASSESSMENT</div>
 
-  <!-- Demographics with Cascading -->
-  <div class="demographics">
-    <h3>FACILITY DEMOGRAPHICS</h3>
-    <div class="question-row"><div class="question-text">District <span class="required-star">*</span></div><select class="form-select" id="districtSelect" onchange="updateChiefdom()"><option value="">Select District...</option></select></div>
-    <div class="question-row"><div class="question-text">Chiefdom / Zone / City <span class="required-star">*</span></div><select class="form-select" id="chiefdomSelect" onchange="updatePHU()" disabled><option value="">Select District first</option></select></div>
-    <div class="question-row"><div class="question-text">Health Facility (PHU) <span class="required-star">*</span></div><select class="form-select" id="phuSelect" disabled><option value="">Select Chiefdom first</option></select></div>
-    <div class="question-row"><div class="question-text">Supervisor Name <span class="required-star">*</span></div><input class="form-input" id="supervisor" type="text" placeholder="Supervisor name"></div>
-    <div class="question-row"><div class="question-text">Date of Visit <span class="required-star">*</span></div><input class="form-input" id="visitdate" type="date"></div>
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-text" id="progressText">Section 1 of 14</div>
   </div>
 
-  <!-- Section 1: Training -->
-  <div class="section-header">1. STAFF TRAINING ON mRDT</div>
-  <div class="section-card">
-    <div class="question-row"><div class="question-text">Are there any clinical staff who have been formally trained/mentored in mRDTs in the last two years? <span class="required-star">*</span></div>
-      <div class="options-group-vertical" id="group_trained"></div>
-    </div>
-    <div class="question-row"><div class="question-text">Number of clinical staff formally trained in mRDTs in the last 2 years</div><input class="form-input" id="trained_count" type="number" min="0" placeholder="0"></div>
-  </div>
-
-  <!-- Section 2: Observations -->
-  <div class="section-header">2. STAFF OBSERVATION</div>
-  <div class="section-card"><div id="observations-container"></div><button class="add-btn" onclick="addObservation()">+ Add Another Observation</button></div>
-
-  <!-- Section 3: Availability -->
-  <div class="section-header">3. AVAILABILITY OF MALARIA RAPID DIAGNOSTIC TESTS</div>
-  <div class="section-card"><div id="sec_availability"></div></div>
-  <div class="score-row"><span class="score-label">Availability Score</span><span class="score-badge" id="score_avail">0/3</span></div>
-
-  <!-- Section 4: Preparation -->
-  <div class="section-header">4. mRDTs PREPARATION & PATIENT PREPARATION</div>
-  <div class="section-card"><div id="sec_prep"></div></div>
-  <div class="score-row"><span class="score-label">Preparation Score</span><span class="score-badge" id="score_prep">0/6</span></div>
-
-  <!-- Section 5: Procedure -->
-  <div class="section-header">5. BLOOD COLLECTION & mRDT PROCEDURE</div>
-  <div class="section-card"><div id="sec_procedure"></div></div>
-  <div class="score-row"><span class="score-label">Procedure Score</span><span class="score-badge" id="score_proc">0/6</span></div>
-
-  <!-- Section 6: Waste -->
-  <div class="section-header">6. mRDT WASTE DISPOSAL</div>
-  <div class="section-card"><div id="sec_waste"></div></div>
-  <div class="score-row"><span class="score-label">Waste Disposal Score</span><span class="score-badge" id="score_waste">0/3</span></div>
-
-  <!-- Section 7: Therapeutic Decisions -->
-  <div class="section-header">7. USE OF mRDT RESULT IN THERAPEUTIC DECISIONS</div>
-  <div class="section-card"><div id="sec_therapeutic"></div></div>
-  <div class="score-row"><span class="score-label">Therapeutic Score</span><span class="score-badge" id="score_therapeutic">0/6</span></div>
-
-  <!-- Section 8: Record Review -->
-  <div class="section-header">8. ASSESSMENT OF COMPLIANCE WITH NEGATIVE RESULTS</div>
-  <div class="section-card"><div id="sec_records"></div></div>
-  <div class="score-row"><span class="score-label">Record Review Score</span><span class="score-badge" id="score_records">0/8</span></div>
-
-  <!-- Section 9: Unable Reason -->
-  <div class="section-header">9. REASON IF UNABLE TO CONDUCT/COMPLETE mRDT OBSERVATION</div>
-  <div class="section-card"><div id="sec_unable"></div></div>
-
-  <!-- Section 10: Corrective Actions -->
-  <div class="section-header">10. IMMEDIATE CORRECTIVE ACTIONS</div>
-  <div class="section-card"><div id="sec_issues"></div></div>
-
-  <!-- Section 11: Staff Reached -->
-  <div class="section-header">11. TOTAL NUMBER OF STAFF REACHED</div>
-  <div class="section-card"><div id="sec_staffreach"></div></div>
-
-  <!-- Section 12: Feedback -->
-  <div class="section-header">12. SUPERVISOR FEEDBACK</div>
-  <div class="section-card"><div id="sec_feedback"></div></div>
-
-  <!-- Section 13-18: Gaps -->
-  <div class="section-header">13-18. GAP ANALYSIS & ACTION PLAN</div>
-  <div class="section-card">
-    <div class="question-row"><div class="question-text">Biggest gap(s) identified during last HF visit</div><textarea class="form-textarea" id="lastgaps" rows="2" placeholder="1)... 2)... 3)..."></textarea></div>
-    <div class="question-row"><div class="question-text">Action plan from previous visit</div><textarea class="form-textarea" id="prevplan" rows="2" placeholder="Describe action plan..."></textarea></div>
-    <div class="question-row"><div class="question-text">Were these gaps addressed?</div><div class="options-group-vertical" id="group_gapaddr"></div></div>
-    <div class="question-row"><div class="question-text">Biggest gap(s) identified today</div><textarea class="form-textarea" id="todaygaps" rows="2" placeholder="1)... 2)..."></textarea></div>
-    <div class="question-row"><div class="question-text">Was immediate feedback provided?</div><div class="options-group-vertical" id="group_immfeedback"></div></div>
-    <div class="question-row" id="feedbackhow_row" style="display:none"><div class="question-text">How was feedback provided?</div><div class="options-group-check" id="group_feedbackhow"></div></div>
-    <div class="question-row"><div class="question-text">Supervisor Comments</div><textarea class="form-textarea" id="supcomments" rows="3" placeholder="Supervisor comments..."></textarea></div>
-  </div>
-
-  <div class="px20"><button class="btn-submit" onclick="submitForm()">✅ SAVE &amp; VIEW SUMMARY</button></div>
+  <!-- Sections Container -->
+  <div id="sections-container"></div>
 </div>
 
 <!-- SUMMARY TAB -->
@@ -514,93 +480,33 @@ body {
 <div id="confirmModal" class="modal"><div class="modal-content"><div class="modal-header"><span>Confirm Submission</span><button onclick="closeModal()">×</button></div><div class="modal-body">Save this form? You can still edit after saving.</div><div class="modal-footer"><button class="btn-cancel" onclick="closeModal()">Cancel</button><button class="btn-confirm" onclick="doSubmit()">Save &amp; View Summary</button></div></div></div>
 
 <script>
-// ==================== CASCADING CSV DATA ====================
-let districtsSet = new Set(), chiefdomMap = new Map(), phuMap = new Map();
-async function loadCSV() {
-  try {
-    const response = await fetch('cascading.csv');
-    if (!response.ok) throw new Error('CSV not found');
-    const text = await response.text();
-    const lines = text.trim().split(/\r?\n/);
-    for (let i = 1; i < lines.length; i++) {
-      const parts = lines[i].split(',');
-      if (parts.length >= 3) {
-        const d = parts[0].trim(), c = parts[1].trim(), p = parts[2].trim();
-        if (d && c && p) {
-          districtsSet.add(d);
-          if (!chiefdomMap.has(d)) chiefdomMap.set(d, new Set());
-          chiefdomMap.get(d).add(c);
-          const key = `${d}|${c}`;
-          if (!phuMap.has(key)) phuMap.set(key, []);
-          phuMap.get(key).push(p);
-        }
-      }
-    }
-    const districtSelect = document.getElementById("districtSelect");
-    districtSelect.innerHTML = '<option value="">Select District...</option>';
-    Array.from(districtsSet).sort().forEach(d => { districtSelect.innerHTML += `<option value="${d}">${d}</option>`; });
-  } catch(e) { console.error(e); }
-}
-function updateChiefdom() {
-  const district = document.getElementById("districtSelect").value;
-  const chiefdomSelect = document.getElementById("chiefdomSelect");
-  chiefdomSelect.innerHTML = '<option value="">Select Chiefdom...</option>';
-  if (district && chiefdomMap.has(district)) {
-    Array.from(chiefdomMap.get(district)).sort().forEach(c => { chiefdomSelect.innerHTML += `<option value="${c}">${c}</option>`; });
-    chiefdomSelect.disabled = false;
-  } else chiefdomSelect.disabled = true;
-  document.getElementById("phuSelect").innerHTML = '<option value="">Select Chiefdom first</option>';
-  document.getElementById("phuSelect").disabled = true;
-}
-function updatePHU() {
-  const district = document.getElementById("districtSelect").value, chiefdom = document.getElementById("chiefdomSelect").value;
-  const phuSelect = document.getElementById("phuSelect");
-  phuSelect.innerHTML = '<option value="">Select PHU...</option>';
-  if (district && chiefdom) {
-    const key = `${district}|${chiefdom}`;
-    if (phuMap.has(key)) { phuMap.get(key).sort().forEach(p => { phuSelect.innerHTML += `<option value="${p}">${p}</option>`; }); phuSelect.disabled = false; }
-    else phuSelect.disabled = true;
-  } else phuSelect.disabled = true;
-}
-
 // ==================== DATA ====================
 let ans = {}, submitted = false;
 let observations = [{ cadre: "", gender: "" }];
+let currentSection = 0;
+
+// Section definitions
+const sections = [
+  { id: "demographics", title: "Facility Demographics" },
+  { id: "training", title: "Staff Training on mRDT" },
+  { id: "observations", title: "Staff Observation" },
+  { id: "availability", title: "mRDT Availability" },
+  { id: "preparation", title: "mRDT Preparation" },
+  { id: "procedure", title: "Blood Collection & Procedure" },
+  { id: "waste", title: "mRDT Waste Disposal" },
+  { id: "therapeutic", title: "Therapeutic Decisions" },
+  { id: "records", title: "Record Review" },
+  { id: "unable", title: "Reason Unable to Conduct" },
+  { id: "issues", title: "Corrective Actions" },
+  { id: "staffreach", title: "Staff Reached" },
+  { id: "feedback", title: "Supervisor Feedback" },
+  { id: "gaps", title: "Gap Analysis & Action Plan" }
+];
 
 function updateAns(key, val) { ans[key] = val; updateScores(); }
 function updateObservation(idx, field, val) { if (!observations[idx]) observations[idx] = {}; observations[idx][field] = val; }
-
 function addObservation() { observations.push({ cadre: "", gender: "" }); renderObservations(); }
 function removeObservation(i) { observations.splice(i,1); if(observations.length===0) observations=[{cadre:"",gender:""}]; renderObservations(); }
-
-function renderObservations() {
-  const container = document.getElementById("observations-container");
-  let html = '';
-  observations.forEach((obs, i) => {
-    html += `<div class="member-card">
-      <div class="member-header"><span>Observation #${i+1}</span>${observations.length>1?`<button class="remove-btn" onclick="removeObservation(${i})">✕</button>`:''}</div>
-      <div class="question-row"><div class="question-text">Cadre of staff being observed <span class="required-star">*</span></div>
-        <select class="form-select" id="obs_cadre_${i}" onchange="updateObservation(${i},'cadre',this.value)"><option value="">Select...</option>
-          <option ${obs.cadre==='Community Health Officer'?'selected':''}>Community Health Officer</option>
-          <option ${obs.cadre==='Community Health Assistant'?'selected':''}>Community Health Assistant</option>
-          <option ${obs.cadre==='Midwife'?'selected':''}>Midwife</option>
-          <option ${obs.cadre==='SECHN'?'selected':''}>SECHN</option>
-          <option ${obs.cadre==='MCH Aide'?'selected':''}>MCH Aide</option>
-          <option ${obs.cadre==='CHT'?'selected':''}>CHT</option>
-          <option ${obs.cadre==='Other'?'selected':''}>Other</option>
-        </select><input class="form-input" style="margin-top:8px;" placeholder="If Other, specify" onchange="updateObservation(${i},'cadre_other',this.value)">
-      </div>
-      <div class="question-row"><div class="question-text">Gender of staff being observed <span class="required-star">*</span></div>
-        <div class="options-group-vertical" id="obs_gender_${i}">
-          <label class="radio-option"><input type="radio" name="obs_gender_${i}" value="Male" onchange="updateObservation(${i},'gender','Male'); updateRadioVisuals('obs_gender_${i}')"> Male</label>
-          <label class="radio-option"><input type="radio" name="obs_gender_${i}" value="Female" onchange="updateObservation(${i},'gender','Female'); updateRadioVisuals('obs_gender_${i}')"> Female</label>
-        </div>
-      </div>
-    </div>`;
-  });
-  container.innerHTML = html;
-  observations.forEach((_,i) => updateRadioVisuals(`obs_gender_${i}`));
-}
 
 function updateRadioVisuals(groupId) {
   const g = document.getElementById(groupId);
@@ -635,81 +541,255 @@ function updateScores() {
   if(ans.negtreat_count) recScore += Math.min(parseInt(ans.negtreat_count)||0, 2);
   recScore = Math.min(recScore, 8);
   
-  document.getElementById('score_avail').innerHTML = `${availScore}/3`; document.getElementById('score_avail').className = `score-badge ${availScore>=3?'good':availScore>=2?'fair':'poor'}`;
-  document.getElementById('score_prep').innerHTML = `${prepScore}/6`; document.getElementById('score_prep').className = `score-badge ${prepScore>=6?'good':prepScore>=3?'fair':'poor'}`;
-  document.getElementById('score_proc').innerHTML = `${procScore}/6`; document.getElementById('score_proc').className = `score-badge ${procScore>=6?'good':procScore>=3?'fair':'poor'}`;
-  document.getElementById('score_waste').innerHTML = `${wasteScore}/3`; document.getElementById('score_waste').className = `score-badge ${wasteScore>=3?'good':wasteScore>=2?'fair':'poor'}`;
-  document.getElementById('score_therapeutic').innerHTML = `${therScore}/6`; document.getElementById('score_therapeutic').className = `score-badge ${therScore>=6?'good':therScore>=3?'fair':'poor'}`;
-  document.getElementById('score_records').innerHTML = `${recScore}/8`; document.getElementById('score_records').className = `score-badge ${recScore>=7?'good':recScore>=4?'fair':'poor'}`;
+  const scoreEls = ['score_avail', 'score_prep', 'score_proc', 'score_waste', 'score_therapeutic', 'score_records'];
+  const scores = [availScore, prepScore, procScore, wasteScore, therScore, recScore];
+  const maxes = [3,6,6,3,6,8];
+  scoreEls.forEach((id,i) => {
+    const el = document.getElementById(id);
+    if(el) { el.innerHTML = `${scores[i]}/${maxes[i]}`; el.className = `score-badge ${scores[i]>=maxes[i]*0.9?'good':scores[i]>=maxes[i]*0.5?'fair':'poor'}`; }
+  });
 }
 
-// Build all question sections
-function buildSections() {
-  document.getElementById("group_trained").innerHTML = `<label class="radio-option"><input type="radio" name="trained" value="Yes" onchange="updateAns('trained','Yes'); updateRadioVisuals('group_trained')"> Yes</label><label class="radio-option"><input type="radio" name="trained" value="No" onchange="updateAns('trained','No'); updateRadioVisuals('group_trained')"> No</label>`;
+function renderObservations() {
+  const container = document.getElementById("obs-container");
+  if(!container) return;
+  let html = '';
+  observations.forEach((obs, i) => {
+    html += `<div class="member-card">
+      <div class="member-header"><span>Observation #${i+1}</span>${observations.length>1?`<button class="remove-btn" onclick="removeObservation(${i})">✕</button>`:''}</div>
+      <div class="question-row"><div class="question-text">Cadre of staff being observed <span class="required-star">*</span></div>
+        <select class="form-select" id="obs_cadre_${i}" onchange="updateObservation(${i},'cadre',this.value)"><option value="">Select...</option>
+          <option ${obs.cadre==='Community Health Officer'?'selected':''}>Community Health Officer</option>
+          <option ${obs.cadre==='Community Health Assistant'?'selected':''}>Community Health Assistant</option>
+          <option ${obs.cadre==='Midwife'?'selected':''}>Midwife</option>
+          <option ${obs.cadre==='SECHN'?'selected':''}>SECHN</option>
+          <option ${obs.cadre==='MCH Aide'?'selected':''}>MCH Aide</option>
+          <option ${obs.cadre==='CHT'?'selected':''}>CHT</option>
+          <option ${obs.cadre==='Other'?'selected':''}>Other</option>
+        </select><input class="form-input" style="margin-top:8px;" placeholder="If Other, specify" onchange="updateObservation(${i},'cadre_other',this.value)">
+      </div>
+      <div class="question-row"><div class="question-text">Gender of staff being observed <span class="required-star">*</span></div>
+        <div class="options-group-vertical" id="obs_gender_${i}">
+          <label class="radio-option"><input type="radio" name="obs_gender_${i}" value="Male" onchange="updateObservation(${i},'gender','Male'); updateRadioVisuals('obs_gender_${i}')"> Male</label>
+          <label class="radio-option"><input type="radio" name="obs_gender_${i}" value="Female" onchange="updateObservation(${i},'gender','Female'); updateRadioVisuals('obs_gender_${i}')"> Female</label>
+        </div>
+      </div>
+    </div>`;
+  });
+  container.innerHTML = html;
+  observations.forEach((_,i) => updateRadioVisuals(`obs_gender_${i}`));
+}
+
+function buildAllSections() {
+  const container = document.getElementById("sections-container");
+  let html = '';
   
-  const availQs = ["Are all materials for RDT procedure assembled?", "Are mRDTs available today for testing suspected cases?", "Is this observation being done with an actual suspected malaria case?"];
-  let availHtml = '';
-  availQs.forEach((q,idx) => { availHtml += `<div class="question-row"><div class="question-text">${q} <span class="required-star">*</span></div><div class="options-group-vertical" id="group_avail${idx}"><label class="radio-option"><input type="radio" name="avail${idx}" value="Yes" onchange="updateAns('avail${idx}','Yes'); updateRadioVisuals('group_avail${idx}')"> Yes</label><label class="radio-option"><input type="radio" name="avail${idx}" value="No" onchange="updateAns('avail${idx}','No'); updateRadioVisuals('group_avail${idx}')"> No</label></div></div>`; });
-  availHtml += `<div class="question-row"><div class="question-text">How was the observation done?</div><div class="options-group-vertical" id="group_avail3"><label class="radio-option"><input type="radio" name="avail3" value="Demonstration" onchange="updateAns('avail3','Demonstration'); updateRadioVisuals('group_avail3')"> Demonstration</label><label class="radio-option"><input type="radio" name="avail3" value="Other" onchange="updateAns('avail3','Other'); updateRadioVisuals('group_avail3')"> Other</label></div><input class="form-input" style="margin-top:8px;" placeholder="Specify other..." oninput="updateAns('availOther',this.value)"></div>`;
-  document.getElementById("sec_availability").innerHTML = availHtml;
+  // Section 0: Demographics
+  html += `<div class="section-page" id="section_demographics"><div class="section-header">1. FACILITY DEMOGRAPHICS</div><div class="section-card">
+    <div class="question-row"><div class="question-text">District <span class="required-star">*</span></div><select class="form-select" id="districtSelect" onchange="updateChiefdom()"><option value="">Select District...</option></select></div>
+    <div class="question-row"><div class="question-text">Chiefdom / Zone / City <span class="required-star">*</span></div><select class="form-select" id="chiefdomSelect" onchange="updatePHU()" disabled><option value="">Select District first</option></select></div>
+    <div class="question-row"><div class="question-text">Health Facility (PHU) <span class="required-star">*</span></div><select class="form-select" id="phuSelect" disabled><option value="">Select Chiefdom first</option></select></div>
+    <div class="question-row"><div class="question-text">Supervisor Name <span class="required-star">*</span></div><input class="form-input" id="supervisor" type="text" placeholder="Supervisor name"></div>
+    <div class="question-row"><div class="question-text">Date of Visit <span class="required-star">*</span></div><input class="form-input" id="visitdate" type="date"></div>
+  </div></div>`;
   
-  const prepQs = ["Expiry date checked", "Cassette labeled with patient's name/ID number", "Patient information recorded in the register", "Procedure explained to patient", "New gloves worn", "Puncture site cleaned with alcohol and allowed to air dry"];
-  let prepHtml = '';
-  prepQs.forEach((q,idx) => { prepHtml += `<div class="question-row"><div class="question-text">${q} <span class="required-star">*</span></div><div class="options-group-vertical" id="group_prep${idx}"><label class="radio-option"><input type="radio" name="prep${idx}" value="Yes" onchange="updateAns('prep${idx}','Yes'); updateRadioVisuals('group_prep${idx}')"> Yes</label><label class="radio-option"><input type="radio" name="prep${idx}" value="No" onchange="updateAns('prep${idx}','No'); updateRadioVisuals('group_prep${idx}')"> No</label></div></div>`; });
-  document.getElementById("sec_prep").innerHTML = prepHtml;
+  // Section 1: Training
+  html += `<div class="section-page" id="section_training"><div class="section-header">2. STAFF TRAINING ON mRDT</div><div class="section-card">
+    <div class="question-row"><div class="question-text">Are there any clinical staff who have been formally trained/mentored in mRDTs in the last two years? <span class="required-star">*</span></div>
+      <div class="options-group-vertical" id="group_trained"><label class="radio-option"><input type="radio" name="trained" value="Yes" onchange="updateAns('trained','Yes'); updateRadioVisuals('group_trained')"> Yes</label><label class="radio-option"><input type="radio" name="trained" value="No" onchange="updateAns('trained','No'); updateRadioVisuals('group_trained')"> No</label></div>
+    </div>
+    <div class="question-row"><div class="question-text">Number of clinical staff formally trained in mRDTs in the last 2 years</div><input class="form-input" id="trained_count" type="number" min="0" placeholder="0" oninput="updateAns('trained_count',this.value)"></div>
+  </div></div>`;
   
-  const procQs = ["Adequate volume of blood collected", "Blood dispensed in correct well of mRDT device", "Buffer applied to correct well", "Appropriate number of drops of buffer dispensed", "If negative, did worker wait for correct incubation time?", "Is the Control line visible?"];
-  let procHtml = '';
-  procQs.forEach((q,idx) => { procHtml += `<div class="question-row"><div class="question-text">${q} <span class="required-star">*</span></div><div class="options-group-vertical" id="group_proc${idx}"><label class="radio-option"><input type="radio" name="proc${idx}" value="Yes" onchange="updateAns('proc${idx}','Yes'); updateRadioVisuals('group_proc${idx}')"> Yes</label><label class="radio-option"><input type="radio" name="proc${idx}" value="No" onchange="updateAns('proc${idx}','No'); updateRadioVisuals('group_proc${idx}')"> No</label></div></div>`; });
+  // Section 2: Observations
+  html += `<div class="section-page" id="section_observations"><div class="section-header">3. STAFF OBSERVATION</div><div class="section-card"><div id="obs-container"></div><button class="add-btn" onclick="addObservation()">+ Add Another Observation</button></div></div>`;
+  
+  // Section 3: Availability
+  let availHtml = `<div class="section-page" id="section_availability"><div class="section-header">4. mRDT AVAILABILITY</div><div class="section-card">`;
+  ["Are all materials for RDT procedure assembled?", "Are mRDTs available today for testing suspected cases?", "Is this observation being done with an actual suspected malaria case?"].forEach((q,idx) => {
+    availHtml += `<div class="question-row"><div class="question-text">${q} <span class="required-star">*</span></div><div class="options-group-vertical" id="group_avail${idx}"><label class="radio-option"><input type="radio" name="avail${idx}" value="Yes" onchange="updateAns('avail${idx}','Yes'); updateRadioVisuals('group_avail${idx}')"> Yes</label><label class="radio-option"><input type="radio" name="avail${idx}" value="No" onchange="updateAns('avail${idx}','No'); updateRadioVisuals('group_avail${idx}')"> No</label></div></div>`;
+  });
+  availHtml += `<div class="question-row"><div class="question-text">How was the observation done?</div><div class="options-group-vertical" id="group_avail3"><label class="radio-option"><input type="radio" name="avail3" value="Demonstration" onchange="updateAns('avail3','Demonstration'); updateRadioVisuals('group_avail3')"> Demonstration</label><label class="radio-option"><input type="radio" name="avail3" value="Other" onchange="updateAns('avail3','Other'); updateRadioVisuals('group_avail3')"> Other</label></div><input class="form-input" style="margin-top:8px;" placeholder="Specify other..." oninput="updateAns('availOther',this.value)"></div>
+  <div class="score-row"><span class="score-label">Availability Score</span><span class="score-badge" id="score_avail">0/3</span></div></div></div>`;
+  html += availHtml;
+  
+  // Section 4: Preparation
+  let prepHtml = `<div class="section-page" id="section_preparation"><div class="section-header">5. mRDT PREPARATION & PATIENT PREPARATION</div><div class="section-card">`;
+  ["Expiry date checked", "Cassette labeled with patient's name/ID number", "Patient information recorded in the register", "Procedure explained to patient", "New gloves worn", "Puncture site cleaned with alcohol and allowed to air dry"].forEach((q,idx) => {
+    prepHtml += `<div class="question-row"><div class="question-text">${q} <span class="required-star">*</span></div><div class="options-group-vertical" id="group_prep${idx}"><label class="radio-option"><input type="radio" name="prep${idx}" value="Yes" onchange="updateAns('prep${idx}','Yes'); updateRadioVisuals('group_prep${idx}')"> Yes</label><label class="radio-option"><input type="radio" name="prep${idx}" value="No" onchange="updateAns('prep${idx}','No'); updateRadioVisuals('group_prep${idx}')"> No</label></div></div>`;
+  });
+  prepHtml += `<div class="score-row"><span class="score-label">Preparation Score</span><span class="score-badge" id="score_prep">0/6</span></div></div></div>`;
+  html += prepHtml;
+  
+  // Section 5: Procedure
+  let procHtml = `<div class="section-page" id="section_procedure"><div class="section-header">6. BLOOD COLLECTION & mRDT PROCEDURE</div><div class="section-card">`;
+  ["Adequate volume of blood collected", "Blood dispensed in correct well of mRDT device", "Buffer applied to correct well", "Appropriate number of drops of buffer dispensed", "If negative, did worker wait for correct incubation time?", "Is the Control line visible?"].forEach((q,idx) => {
+    procHtml += `<div class="question-row"><div class="question-text">${q} <span class="required-star">*</span></div><div class="options-group-vertical" id="group_proc${idx}"><label class="radio-option"><input type="radio" name="proc${idx}" value="Yes" onchange="updateAns('proc${idx}','Yes'); updateRadioVisuals('group_proc${idx}')"> Yes</label><label class="radio-option"><input type="radio" name="proc${idx}" value="No" onchange="updateAns('proc${idx}','No'); updateRadioVisuals('group_proc${idx}')"> No</label></div></div>`;
+  });
   procHtml += `<div class="question-row"><div class="question-text">If invalid, was another mRDT test done?</div><div class="options-group-vertical" id="group_proc6"><label class="radio-option"><input type="radio" name="proc6" value="Yes" onchange="updateAns('proc6','Yes'); updateRadioVisuals('group_proc6')"> Yes</label><label class="radio-option"><input type="radio" name="proc6" value="No" onchange="updateAns('proc6','No'); updateRadioVisuals('group_proc6')"> No</label><label class="radio-option"><input type="radio" name="proc6" value="N/A" onchange="updateAns('proc6','N/A'); updateRadioVisuals('group_proc6')"> N/A</label></div></div>`;
-  procHtml += `<div class="question-row"><div class="question-text">Reads test result correctly</div><div class="options-group-vertical" id="group_proc7"><label class="radio-option"><input type="radio" name="proc7" value="Yes" onchange="updateAns('proc7','Yes'); updateRadioVisuals('group_proc7')"> Yes</label><label class="radio-option"><input type="radio" name="proc7" value="No" onchange="updateAns('proc7','No'); updateRadioVisuals('group_proc7')"> No</label></div></div>`;
-  document.getElementById("sec_procedure").innerHTML = procHtml;
+  procHtml += `<div class="question-row"><div class="question-text">Reads test result correctly</div><div class="options-group-vertical" id="group_proc7"><label class="radio-option"><input type="radio" name="proc7" value="Yes" onchange="updateAns('proc7','Yes'); updateRadioVisuals('group_proc7')"> Yes</label><label class="radio-option"><input type="radio" name="proc7" value="No" onchange="updateAns('proc7','No'); updateRadioVisuals('group_proc7')"> No</label></div></div>
+  <div class="score-row"><span class="score-label">Procedure Score</span><span class="score-badge" id="score_proc">0/6</span></div></div></div>`;
+  html += procHtml;
   
-  const wasteQs = ["Used tests, transfer devices disposed of appropriately", "Used lancet disposed of in sharps container", "Test result recorded correctly in register"];
-  let wasteHtml = '';
-  wasteQs.forEach((q,idx) => { wasteHtml += `<div class="question-row"><div class="question-text">${q} <span class="required-star">*</span></div><div class="options-group-vertical" id="group_waste${idx}"><label class="radio-option"><input type="radio" name="waste${idx}" value="Yes" onchange="updateAns('waste${idx}','Yes'); updateRadioVisuals('group_waste${idx}')"> Yes</label><label class="radio-option"><input type="radio" name="waste${idx}" value="No" onchange="updateAns('waste${idx}','No'); updateRadioVisuals('group_waste${idx}')"> No</label></div></div>`; });
-  document.getElementById("sec_waste").innerHTML = wasteHtml;
+  // Section 6: Waste
+  let wasteHtml = `<div class="section-page" id="section_waste"><div class="section-header">7. mRDT WASTE DISPOSAL</div><div class="section-card">`;
+  ["Used tests, transfer devices disposed of appropriately", "Used lancet disposed of in sharps container", "Test result recorded correctly in register"].forEach((q,idx) => {
+    wasteHtml += `<div class="question-row"><div class="question-text">${q} <span class="required-star">*</span></div><div class="options-group-vertical" id="group_waste${idx}"><label class="radio-option"><input type="radio" name="waste${idx}" value="Yes" onchange="updateAns('waste${idx}','Yes'); updateRadioVisuals('group_waste${idx}')"> Yes</label><label class="radio-option"><input type="radio" name="waste${idx}" value="No" onchange="updateAns('waste${idx}','No'); updateRadioVisuals('group_waste${idx}')"> No</label></div></div>`;
+  });
+  wasteHtml += `<div class="score-row"><span class="score-label">Waste Disposal Score</span><span class="score-badge" id="score_waste">0/3</span></div></div></div>`;
+  html += wasteHtml;
   
-  const therQs = ["Supervisor agrees on mRDT result", "Operator adhered to negative test result", "Operator adhered to positive test result", "If positive, patient prescribed right drug and dose", "If positive, patient/caretaker counseled", "Supervisor agrees on mRDT result (confirmation)"];
-  let therHtml = '';
-  therQs.forEach((q,idx) => { therHtml += `<div class="question-row"><div class="question-text">${q} <span class="required-star">*</span></div><div class="options-group-vertical" id="group_ther${idx}"><label class="radio-option"><input type="radio" name="ther${idx}" value="Yes" onchange="updateAns('ther${idx}','Yes'); updateRadioVisuals('group_ther${idx}')"> Yes</label><label class="radio-option"><input type="radio" name="ther${idx}" value="No" onchange="updateAns('ther${idx}','No'); updateRadioVisuals('group_ther${idx}')"> No</label>${idx===1||idx===2||idx===3||idx===4?`<label class="radio-option"><input type="radio" name="ther${idx}" value="N/A" onchange="updateAns('ther${idx}','N/A'); updateRadioVisuals('group_ther${idx}')"> N/A</label>`:''}</div></div>`; });
-  document.getElementById("sec_therapeutic").innerHTML = therHtml;
+  // Section 7: Therapeutic
+  let therHtml = `<div class="section-page" id="section_therapeutic"><div class="section-header">8. USE OF mRDT RESULT IN THERAPEUTIC DECISIONS</div><div class="section-card">`;
+  ["Supervisor agrees on mRDT result", "Operator adhered to negative test result", "Operator adhered to positive test result", "If positive, patient prescribed right drug and dose", "If positive, patient/caretaker counseled", "Supervisor agrees on mRDT result (confirmation)"].forEach((q,idx) => {
+    therHtml += `<div class="question-row"><div class="question-text">${q} <span class="required-star">*</span></div><div class="options-group-vertical" id="group_ther${idx}"><label class="radio-option"><input type="radio" name="ther${idx}" value="Yes" onchange="updateAns('ther${idx}','Yes'); updateRadioVisuals('group_ther${idx}')"> Yes</label><label class="radio-option"><input type="radio" name="ther${idx}" value="No" onchange="updateAns('ther${idx}','No'); updateRadioVisuals('group_ther${idx}')"> No</label>${idx===1||idx===2||idx===3||idx===4?`<label class="radio-option"><input type="radio" name="ther${idx}" value="N/A" onchange="updateAns('ther${idx}','N/A'); updateRadioVisuals('group_ther${idx}')"> N/A</label>`:''}</div></div>`;
+  });
+  therHtml += `<div class="score-row"><span class="score-label">Therapeutic Score</span><span class="score-badge" id="score_therapeutic">0/6</span></div></div></div>`;
+  html += therHtml;
   
-  document.getElementById("sec_records").innerHTML = `<div class="question-row"><div class="question-text">Select and review 3 under-five and 2 above-five records with negative mRDT results <span class="required-star">*</span></div><div class="options-group-vertical" id="group_records"><label class="radio-option"><input type="radio" name="records" value="complete" onchange="updateAns('records','complete'); updateRadioVisuals('group_records')"> Records complete (5/5)</label><label class="radio-option"><input type="radio" name="records" value="incomplete" onchange="updateAns('records','incomplete'); updateRadioVisuals('group_records')"> Incomplete records</label></div></div>
+  // Section 8: Records
+  html += `<div class="section-page" id="section_records"><div class="section-header">9. ASSESSMENT OF COMPLIANCE WITH NEGATIVE RESULTS</div><div class="section-card">
+    <div class="question-row"><div class="question-text">Select and review 3 under-five and 2 above-five records with negative mRDT results <span class="required-star">*</span></div><div class="options-group-vertical" id="group_records"><label class="radio-option"><input type="radio" name="records" value="complete" onchange="updateAns('records','complete'); updateRadioVisuals('group_records')"> Records complete (5/5)</label><label class="radio-option"><input type="radio" name="records" value="incomplete" onchange="updateAns('records','incomplete'); updateRadioVisuals('group_records')"> Incomplete records</label></div></div>
     <div class="question-row"><div class="question-text">Are there any negative tests that received treatment? <span class="required-star">*</span></div><div class="options-group-vertical" id="group_negtreat"><label class="radio-option"><input type="radio" name="negtreat" value="Yes" onchange="updateAns('negtreat','Yes'); updateRadioVisuals('group_negtreat')"> Yes</label><label class="radio-option"><input type="radio" name="negtreat" value="No" onchange="updateAns('negtreat','No'); updateRadioVisuals('group_negtreat')"> No</label></div></div>
-    <div class="question-row"><div class="question-text">How many negatives were treated?</div><input class="form-input" id="negtreat_count" type="number" min="0" placeholder="Number" oninput="updateAns('negtreat_count',this.value)"></div>`;
+    <div class="question-row"><div class="question-text">How many negatives were treated?</div><input class="form-input" id="negtreat_count" type="number" min="0" placeholder="Number" oninput="updateAns('negtreat_count',this.value)"></div>
+    <div class="score-row"><span class="score-label">Record Review Score</span><span class="score-badge" id="score_records">0/8</span></div>
+  </div></div>`;
   
+  // Section 9: Unable
   const unableReasons = ["mRDT tests not ordered", "Health care worker cannot perform mRDT", "No mRDTs available", "Stopped due to potential Patient harm", "Not enough time during procedure"];
-  document.getElementById("sec_unable").innerHTML = `<div class="question-row"><div class="question-text">Select reason(s) for unable to conduct/complete m-RDT observations</div><div class="options-group-check" id="unable_group">${unableReasons.map(r=>`<label class="check-option"><input type="checkbox" value="${r}" onchange="updateCheck('unable',this.value,this)"> ${r}</label>`).join('')}<input class="form-input" style="margin-top:8px;" placeholder="Other specify..." oninput="updateAns('unableOther',this.value)"></div></div>`;
+  html += `<div class="section-page" id="section_unable"><div class="section-header">10. REASON IF UNABLE TO CONDUCT mRDT OBSERVATION</div><div class="section-card">
+    <div class="question-row"><div class="question-text">Select reason(s) for unable to conduct/complete m-RDT observations</div><div class="options-group-check" id="unable_group">${unableReasons.map(r=>`<label class="check-option"><input type="checkbox" value="${r}" onchange="updateCheck('unable',this.value,this)"> ${r}</label>`).join('')}<input class="form-input" style="margin-top:8px;" placeholder="Other specify..." oninput="updateAns('unableOther',this.value)"></div></div>
+  </div></div>`;
   
-  document.getElementById("sec_issues").innerHTML = `<div class="question-row"><div class="question-text">Briefly describe key activities and issues identified</div><textarea class="form-textarea" rows="3" oninput="updateAns('issues',this.value)"></textarea></div>
-    <div class="question-row"><div class="question-text">Intervention types</div><div class="options-group-check" id="interventions_group">${["Guideline review","SOP review","Mentoring/Coaching","Document","Demonstration"].map(i=>`<label class="check-option"><input type="checkbox" value="${i}" onchange="updateCheck('interventions',this.value,this)"> ${i}</label>`).join('')}</div></div>`;
+  // Section 10: Issues
+  html += `<div class="section-page" id="section_issues"><div class="section-header">11. IMMEDIATE CORRECTIVE ACTIONS</div><div class="section-card">
+    <div class="question-row"><div class="question-text">Briefly describe key activities and issues identified</div><textarea class="form-textarea" rows="3" oninput="updateAns('issues',this.value)"></textarea></div>
+    <div class="question-row"><div class="question-text">Intervention types</div><div class="options-group-check" id="interventions_group">${["Guideline review","SOP review","Mentoring/Coaching","Document","Demonstration"].map(i=>`<label class="check-option"><input type="checkbox" value="${i}" onchange="updateCheck('interventions',this.value,this)"> ${i}</label>`).join('')}</div></div>
+  </div></div>`;
   
-  document.getElementById("sec_staffreach").innerHTML = `<div class="question-row"><div class="question-text">Total number of staff reached</div><input class="form-input" id="staff_reached" type="number" placeholder="Number of staff" oninput="updateAns('staff_reached',this.value)"></div>`;
+  // Section 11: Staff Reached
+  html += `<div class="section-page" id="section_staffreach"><div class="section-header">12. TOTAL NUMBER OF STAFF REACHED</div><div class="section-card">
+    <div class="question-row"><div class="question-text">Total number of staff reached</div><input class="form-input" id="staff_reached" type="number" placeholder="Number of staff" oninput="updateAns('staff_reached',this.value)"></div>
+  </div></div>`;
   
-  document.getElementById("sec_feedback").innerHTML = `<div class="question-row"><div class="question-text">Did you provide feedback to staff on mRDT technical performance? <span class="required-star">*</span></div><div class="options-group-vertical" id="group_fb1"><label class="radio-option"><input type="radio" name="fb1" value="Yes" onchange="updateAns('fb1','Yes'); updateRadioVisuals('group_fb1')"> Yes</label><label class="radio-option"><input type="radio" name="fb1" value="No" onchange="updateAns('fb1','No'); updateRadioVisuals('group_fb1')"> No</label></div></div>
+  // Section 12: Feedback
+  html += `<div class="section-page" id="section_feedback"><div class="section-header">13. SUPERVISOR FEEDBACK</div><div class="section-card">
+    <div class="question-row"><div class="question-text">Did you provide feedback to staff on mRDT technical performance? <span class="required-star">*</span></div><div class="options-group-vertical" id="group_fb1"><label class="radio-option"><input type="radio" name="fb1" value="Yes" onchange="updateAns('fb1','Yes'); updateRadioVisuals('group_fb1')"> Yes</label><label class="radio-option"><input type="radio" name="fb1" value="No" onchange="updateAns('fb1','No'); updateRadioVisuals('group_fb1')"> No</label></div></div>
     <div class="question-row"><div class="question-text">If No, why not?</div><div class="options-group-check" id="fb1reasons_group">${["No febrile patient available","mRDT kits/Buffer out of stock","Staff already proficient","Consultation stopped","Not enough time"].map(r=>`<label class="check-option"><input type="checkbox" value="${r}" onchange="updateCheck('fb1reasons',this.value,this)"> ${r}</label>`).join('')}<input class="form-input" style="margin-top:8px;" placeholder="Other explain..." oninput="updateAns('fb1other',this.value)"></div></div>
     <div class="question-row"><div class="question-text">Overall rating of this HF on mRDT protocols <span class="required-star">*</span></div><div class="options-group-vertical" id="group_rating"><label class="radio-option"><input type="radio" name="rating" value="Unsatisfactory" onchange="updateAns('rating','Unsatisfactory'); updateRadioVisuals('group_rating')"> Unsatisfactory</label><label class="radio-option"><input type="radio" name="rating" value="Fair" onchange="updateAns('rating','Fair'); updateRadioVisuals('group_rating')"> Fair</label><label class="radio-option"><input type="radio" name="rating" value="Satisfactory" onchange="updateAns('rating','Satisfactory'); updateRadioVisuals('group_rating')"> Satisfactory</label><label class="radio-option"><input type="radio" name="rating" value="Excellent" onchange="updateAns('rating','Excellent'); updateRadioVisuals('group_rating')"> Excellent</label></div></div>
-    <div class="question-row"><div class="question-text">Additional comments</div><textarea class="form-textarea" rows="2" oninput="updateAns('addComments',this.value)"></textarea></div>`;
+    <div class="question-row"><div class="question-text">Additional comments</div><textarea class="form-textarea" rows="2" oninput="updateAns('addComments',this.value)"></textarea></div>
+  </div></div>`;
   
-  document.getElementById("group_gapaddr").innerHTML = ['Not addressed','Partially addressed','Completely addressed','Initial Visit'].map(o=>`<label class="radio-option"><input type="radio" name="gapaddr" value="${o}" onchange="updateAns('gapaddr','${o}'); updateRadioVisuals('group_gapaddr')"> ${o}</label>`).join('');
-  document.getElementById("group_immfeedback").innerHTML = ['Yes','No'].map(o=>`<label class="radio-option"><input type="radio" name="immfeedback" value="${o}" onchange="updateAns('immfeedback','${o}'); document.getElementById('feedbackhow_row').style.display=this.value==='Yes'?'block':'none'; updateRadioVisuals('group_immfeedback')"> ${o}</label>`).join('');
-  document.getElementById("group_feedbackhow").innerHTML = ['FMC Engagement','Escalate to DHMT','Mentoring/Coaching','Document','Demonstration'].map(o=>`<label class="check-option"><input type="checkbox" value="${o}" onchange="updateCheck('feedbackHow',this.value,this)"> ${o}</label>`).join('');
+  // Section 13: Gaps
+  html += `<div class="section-page" id="section_gaps"><div class="section-header">14. GAP ANALYSIS & ACTION PLAN</div><div class="section-card">
+    <div class="question-row"><div class="question-text">Biggest gap(s) identified during last HF visit</div><textarea class="form-textarea" id="lastgaps" rows="2" placeholder="1)... 2)... 3)..." oninput="updateAns('lastgaps',this.value)"></textarea></div>
+    <div class="question-row"><div class="question-text">Action plan from previous visit</div><textarea class="form-textarea" id="prevplan" rows="2" placeholder="Describe action plan..." oninput="updateAns('prevplan',this.value)"></textarea></div>
+    <div class="question-row"><div class="question-text">Were these gaps addressed?</div><div class="options-group-vertical" id="group_gapaddr"><label class="radio-option"><input type="radio" name="gapaddr" value="Not addressed" onchange="updateAns('gapaddr','Not addressed'); updateRadioVisuals('group_gapaddr')"> Not addressed</label><label class="radio-option"><input type="radio" name="gapaddr" value="Partially addressed" onchange="updateAns('gapaddr','Partially addressed'); updateRadioVisuals('group_gapaddr')"> Partially addressed</label><label class="radio-option"><input type="radio" name="gapaddr" value="Completely addressed" onchange="updateAns('gapaddr','Completely addressed'); updateRadioVisuals('group_gapaddr')"> Completely addressed</label><label class="radio-option"><input type="radio" name="gapaddr" value="Initial Visit" onchange="updateAns('gapaddr','Initial Visit'); updateRadioVisuals('group_gapaddr')"> Initial Visit</label></div></div>
+    <div class="question-row"><div class="question-text">Biggest gap(s) identified today</div><textarea class="form-textarea" id="todaygaps" rows="2" placeholder="1)... 2)..." oninput="updateAns('todaygaps',this.value)"></textarea></div>
+    <div class="question-row"><div class="question-text">Was immediate feedback provided?</div><div class="options-group-vertical" id="group_immfeedback"><label class="radio-option"><input type="radio" name="immfeedback" value="Yes" onchange="updateAns('immfeedback','Yes'); updateRadioVisuals('group_immfeedback')"> Yes</label><label class="radio-option"><input type="radio" name="immfeedback" value="No" onchange="updateAns('immfeedback','No'); updateRadioVisuals('group_immfeedback')"> No</label></div></div>
+    <div class="question-row"><div class="question-text">Supervisor Comments</div><textarea class="form-textarea" id="supcomments" rows="3" placeholder="Supervisor comments..." oninput="updateAns('supcomments',this.value)"></textarea></div>
+  </div></div>`;
   
-  setTimeout(() => {
-    for(let i=0;i<3;i++) updateRadioVisuals(`group_avail${i}`);
-    for(let i=0;i<6;i++) updateRadioVisuals(`group_prep${i}`);
-    for(let i=0;i<7;i++) updateRadioVisuals(`group_proc${i}`);
-    for(let i=0;i<3;i++) updateRadioVisuals(`group_waste${i}`);
-    for(let i=0;i<6;i++) updateRadioVisuals(`group_ther${i}`);
-    updateRadioVisuals('group_trained'); updateRadioVisuals('group_records'); updateRadioVisuals('group_negtreat');
-    updateRadioVisuals('group_fb1'); updateRadioVisuals('group_rating'); updateRadioVisuals('group_gapaddr');
-    updateRadioVisuals('group_immfeedback');
-  }, 100);
+  container.innerHTML = html;
+  
+  // Add navigation buttons to each section
+  document.querySelectorAll('.section-page').forEach((page, idx) => {
+    const navDiv = document.createElement('div');
+    navDiv.className = 'nav-buttons';
+    if(idx === 0) {
+      navDiv.innerHTML = `<button class="btn-next" onclick="nextSection()">Next →</button>`;
+    } else if(idx === sections.length - 1) {
+      navDiv.innerHTML = `<button class="btn-prev" onclick="prevSection()">← Back</button><button class="btn-submit-final" onclick="submitForm()">✓ SUBMIT FORM</button>`;
+    } else {
+      navDiv.innerHTML = `<button class="btn-prev" onclick="prevSection()">← Back</button><button class="btn-next" onclick="nextSection()">Next →</button>`;
+    }
+    page.appendChild(navDiv);
+  });
+}
+
+// Navigation functions
+function showSection(index) {
+  document.querySelectorAll('.section-page').forEach((page, i) => {
+    page.classList.toggle('active', i === index);
+  });
+  currentSection = index;
+  const progressPercent = ((index + 1) / sections.length) * 100;
+  document.getElementById('progressFill').style.width = progressPercent + '%';
+  document.getElementById('progressText').innerText = `Section ${index + 1} of ${sections.length}: ${sections[index].title}`;
+  window.scrollTo(0, 0);
+}
+
+function nextSection() { if (currentSection < sections.length - 1) showSection(currentSection + 1); }
+function prevSection() { if (currentSection > 0) showSection(currentSection - 1); }
+
+// Switch between Data Entry and Summary tabs
+function switchTab(tab) {
+  document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  if(tab === 'entry') document.querySelector('.tab-btn:first-child').classList.add('active');
+  else document.querySelector('.tab-btn:last-child').classList.add('active');
+  if(tab === 'summary') renderSummary();
+  window.scrollTo(0, 0);
+}
+
+// Cascading CSV data
+let districtsSet = new Set(), chiefdomMap = new Map(), phuMap = new Map();
+async function loadCSV() {
+  try {
+    const response = await fetch('cascading.csv');
+    if (!response.ok) throw new Error('CSV not found');
+    const text = await response.text();
+    const lines = text.trim().split(/\r?\n/);
+    for (let i = 1; i < lines.length; i++) {
+      const parts = lines[i].split(',');
+      if (parts.length >= 3) {
+        const d = parts[0].trim(), c = parts[1].trim(), p = parts[2].trim();
+        if (d && c && p) {
+          districtsSet.add(d);
+          if (!chiefdomMap.has(d)) chiefdomMap.set(d, new Set());
+          chiefdomMap.get(d).add(c);
+          const key = `${d}|${c}`;
+          if (!phuMap.has(key)) phuMap.set(key, []);
+          phuMap.get(key).push(p);
+        }
+      }
+    }
+    const districtSelect = document.getElementById("districtSelect");
+    if(districtSelect) {
+      districtSelect.innerHTML = '<option value="">Select District...</option>';
+      Array.from(districtsSet).sort().forEach(d => { districtSelect.innerHTML += `<option value="${d}">${d}</option>`; });
+    }
+  } catch(e) { console.error(e); }
+}
+
+function updateChiefdom() {
+  const district = document.getElementById("districtSelect")?.value;
+  const chiefdomSelect = document.getElementById("chiefdomSelect");
+  if(!chiefdomSelect) return;
+  chiefdomSelect.innerHTML = '<option value="">Select Chiefdom...</option>';
+  if (district && chiefdomMap.has(district)) {
+    Array.from(chiefdomMap.get(district)).sort().forEach(c => { chiefdomSelect.innerHTML += `<option value="${c}">${c}</option>`; });
+    chiefdomSelect.disabled = false;
+  } else chiefdomSelect.disabled = true;
+  const phuSelect = document.getElementById("phuSelect");
+  if(phuSelect) { phuSelect.innerHTML = '<option value="">Select Chiefdom first</option>'; phuSelect.disabled = true; }
+}
+
+function updatePHU() {
+  const district = document.getElementById("districtSelect")?.value, chiefdom = document.getElementById("chiefdomSelect")?.value;
+  const phuSelect = document.getElementById("phuSelect");
+  if(!phuSelect) return;
+  phuSelect.innerHTML = '<option value="">Select PHU...</option>';
+  if (district && chiefdom) {
+    const key = `${district}|${chiefdom}`;
+    if (phuMap.has(key)) { phuMap.get(key).sort().forEach(p => { phuSelect.innerHTML += `<option value="${p}">${p}</option>`; }); phuSelect.disabled = false; }
+    else phuSelect.disabled = true;
+  } else phuSelect.disabled = true;
 }
 
 function getDemographics() {
-  return { district: document.getElementById("districtSelect").value, chiefdom: document.getElementById("chiefdomSelect").value, phu: document.getElementById("phuSelect").value, supervisor: document.getElementById("supervisor").value, visitdate: document.getElementById("visitdate").value };
+  return { district: document.getElementById("districtSelect")?.value || "", chiefdom: document.getElementById("chiefdomSelect")?.value || "", phu: document.getElementById("phuSelect")?.value || "", supervisor: document.getElementById("supervisor")?.value || "", visitdate: document.getElementById("visitdate")?.value || "" };
 }
 
 function validateForm() {
@@ -754,20 +834,21 @@ function renderSummary(){
   document.getElementById('summary-content').innerHTML = html;
 }
 
-function switchTab(tab){
-  document.querySelectorAll('.tab-page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('tab-'+tab).classList.add('active');
-  if(tab==='entry') document.querySelector('.tab-btn:first-child').classList.add('active');
-  else document.querySelector('.tab-btn:last-child').classList.add('active');
-  if(tab==='summary') renderSummary();
-  window.scrollTo(0,0);
-}
-
-document.getElementById("visitdate").value = new Date().toISOString().split('T')[0];
-loadCSV();
+document.getElementById("visitdate")?.setAttribute('value', new Date().toISOString().split('T')[0]);
+buildAllSections();
 renderObservations();
-buildSections();
+loadCSV();
+showSection(0);
+setTimeout(() => {
+  for(let i=0;i<3;i++) updateRadioVisuals(`group_avail${i}`);
+  for(let i=0;i<6;i++) updateRadioVisuals(`group_prep${i}`);
+  for(let i=0;i<7;i++) updateRadioVisuals(`group_proc${i}`);
+  for(let i=0;i<3;i++) updateRadioVisuals(`group_waste${i}`);
+  for(let i=0;i<6;i++) updateRadioVisuals(`group_ther${i}`);
+  updateRadioVisuals('group_trained'); updateRadioVisuals('group_records'); updateRadioVisuals('group_negtreat');
+  updateRadioVisuals('group_fb1'); updateRadioVisuals('group_rating'); updateRadioVisuals('group_gapaddr');
+  updateRadioVisuals('group_immfeedback');
+}, 200);
 </script>
 </body>
 </html>
