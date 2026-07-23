@@ -24,7 +24,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text-da
 .tab-btn { flex:1; padding:16px 8px; color:rgba(255,255,255,0.65); font-weight:700; font-size:14px; border:none; background:none; cursor:pointer; border-bottom:3px solid transparent; transition:all 0.2s; letter-spacing:0.3px; }
 .tab-btn.active { color:white; border-bottom:3px solid var(--gold); background:rgba(255,255,255,0.08); }
 
-/* PAGE WRAPPER — no max-width cap, full phone width */
+/* PAGE WRAPPER */
 .tab-page { display:none; width:100%; padding:0 0 80px 0; }
 .tab-page.active { display:block; }
 
@@ -52,11 +52,12 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text-da
 /* INPUTS — large touch targets */
 .form-input, .form-select, .form-textarea {
   width:100%; padding:14px 14px; border:1.5px solid var(--border); border-radius:12px;
-  font-size:16px; /* 16px prevents iOS zoom */ font-family:'Inter',sans-serif;
+  font-size:16px; font-family:'Inter',sans-serif;
   background:white; transition:border-color 0.2s; appearance:none; -webkit-appearance:none;
 }
 .form-select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236c7a8a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:38px; }
 .form-input:focus, .form-select:focus, .form-textarea:focus { border-color:var(--blue); outline:none; box-shadow:0 0 0 3px rgba(59,120,168,0.12); }
+.form-select:disabled { background-color:#f6f8fa; color:#9aa7b4; }
 .form-textarea { resize:vertical; min-height:90px; font-size:15px; }
 
 /* QUESTION ROWS */
@@ -64,8 +65,9 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text-da
 .question-row:last-child { margin-bottom:0; }
 .question-text { font-weight:600; font-size:15px; margin-bottom:10px; color:var(--text-dark); line-height:1.4; }
 .question-num { color:var(--blue); margin-right:5px; font-weight:700; }
+.required-star { color:var(--red); margin-left:4px; font-size:12px; }
 
-/* RADIO OPTIONS — full width, tall tap targets */
+/* RADIO OPTIONS */
 .options-group-vertical { display:flex; flex-direction:column; gap:10px; margin-top:6px; }
 .radio-option-vertical {
   display:flex; align-items:center; gap:14px; background:white; padding:14px 16px;
@@ -76,7 +78,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text-da
 .radio-option-vertical.selected { background:var(--blue); border-color:var(--blue); color:white; }
 .radio-option-vertical.selected input { accent-color:white; }
 
-/* CHECKBOX OPTIONS — full width stacked on mobile */
+/* CHECKBOX OPTIONS */
 .options-group-check { display:flex; flex-direction:column; gap:10px; margin-top:6px; }
 .check-option {
   display:flex; align-items:center; gap:12px; background:white; padding:13px 16px;
@@ -86,7 +88,7 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text-da
 .check-option input { width:20px; height:20px; accent-color:var(--blue); cursor:pointer; margin:0; flex-shrink:0; }
 .check-option.selected { background:var(--blue); border-color:var(--blue); color:white; }
 
-/* SEX RADIO — keep side by side (only 2 options) */
+/* SEX RADIO — side by side */
 .options-group-h { display:flex; gap:10px; margin-top:6px; flex-wrap:wrap; }
 .options-group-h .check-option { flex:1; min-width:120px; justify-content:center; }
 
@@ -109,17 +111,15 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text-da
 .btn-submit { width:100%; padding:17px; background:var(--blue); color:white; border:none; border-radius:14px; font-weight:700; font-size:16px; cursor:pointer; letter-spacing:0.3px; margin:20px 0; transition:background 0.2s; min-height:56px; }
 .btn-submit:active { background:var(--blue-dark); }
 
-/* ACTION PLAN — card style on mobile instead of wide table */
-.action-card { background:#fafbfc; border:1px solid var(--border); border-radius:12px; padding:14px; margin-bottom:12px; }
-.action-card-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; font-weight:700; color:var(--blue-dark); font-size:13px; }
-.action-field { margin-bottom:10px; }
-.action-field:last-child { margin-bottom:0; }
-.action-field label { font-size:12px; font-weight:700; color:var(--text-light); text-transform:uppercase; letter-spacing:0.4px; display:block; margin-bottom:5px; }
-.action-field input { width:100%; padding:11px 13px; border:1.5px solid var(--border); border-radius:10px; font-size:15px; font-family:'Inter',sans-serif; background:white; }
-.action-field input:focus { border-color:var(--blue); outline:none; }
+/* ACTION PLAN */
+.action-table { width:100%; border-collapse:collapse; font-size:13px; }
+.action-table th { background:var(--blue-dark); color:white; padding:10px 8px; text-align:left; font-weight:700; font-size:12px; }
+.action-table td { padding:6px 8px; border-bottom:1px solid var(--border); }
+.action-table input { width:100%; padding:9px 10px; border:1.5px solid var(--border); border-radius:10px; font-size:14px; font-family:'Inter',sans-serif; background:white; }
+.action-table input:focus { border-color:var(--blue); outline:none; }
 .add-row-btn { background:var(--soft-bg); color:var(--blue-dark); border:1.5px dashed var(--blue); border-radius:12px; padding:14px 16px; font-weight:700; font-size:14px; cursor:pointer; width:100%; margin-top:8px; min-height:50px; }
 
-/* ISSUES LIST — single column on phone */
+/* ISSUES LIST */
 .issues-grid { display:flex; flex-direction:column; border-top:1px solid var(--border); }
 .issue-item { padding:12px 14px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; font-size:14px; gap:10px; }
 .issue-label { color:var(--text-dark); flex:1; line-height:1.4; }
@@ -174,25 +174,8 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text-da
 .overall-rating { text-align:center; padding:24px 16px; }
 .rating-label { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--text-light); margin-bottom:10px; }
 .rating-value { font-size:32px; font-weight:800; }
-.rating-value.Unsatisfactory { color:var(--red); }
-.rating-value.Fair { color:var(--orange); }
-.rating-value.Satisfactory { color:var(--blue); }
-.rating-value.Excellent { color:var(--green); }
 .no-data { text-align:center; padding:24px; color:var(--text-light); font-size:14px; font-style:italic; }
 
-/* MODAL */
-.modal { display:none; position:fixed; top:0;left:0;right:0;bottom:0; background:rgba(0,0,0,0.6); z-index:1000; align-items:flex-end; justify-content:center; padding:0; }
-.modal-content { background:white; border-radius:20px 20px 0 0; width:100%; box-shadow:0 -4px 30px rgba(0,0,0,0.2); padding-bottom:env(safe-area-inset-bottom); }
-.modal-header { background:linear-gradient(135deg,var(--blue-dark),var(--blue)); color:white; padding:16px 20px; font-weight:700; font-size:15px; border-radius:20px 20px 0 0; display:flex; justify-content:space-between; align-items:center; }
-.modal-header button { background:none; border:none; color:white; font-size:26px; cursor:pointer; line-height:1; }
-.modal-body { padding:20px 16px; font-size:15px; color:var(--text-dark); }
-.modal-footer { padding:12px 16px 20px 16px; display:flex; gap:12px; }
-.btn-cancel { flex:1; padding:14px; background:#f0f2f5; color:var(--text-dark); border:1px solid var(--border); border-radius:12px; font-weight:600; font-size:15px; cursor:pointer; }
-.btn-confirm { flex:1; padding:14px; background:var(--green); color:white; border:none; border-radius:12px; font-weight:700; font-size:15px; cursor:pointer; }
-
-.px16 { padding:0 16px; }
-/* remove old px20 */
-.px20 { padding:0 16px; }
 /* MODAL */
 .modal { display:none; position:fixed; top:0;left:0;right:0;bottom:0; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center; padding:20px; }
 .modal-content { background:white; border-radius:20px; max-width:500px; width:100%; box-shadow:0 20px 40px rgba(0,0,0,0.3); }
@@ -203,7 +186,8 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text-da
 .btn-cancel { flex:1; padding:12px; background:#f0f2f5; color:var(--text-dark); border:1px solid var(--border); border-radius:40px; font-weight:600; cursor:pointer; }
 .btn-confirm { flex:1; padding:12px; background:var(--green); color:white; border:none; border-radius:40px; font-weight:600; cursor:pointer; }
 
-.px20 { padding:0 20px; }
+.px16 { padding:0 16px; }
+.px20 { padding:0 16px; }
 </style>
 </head>
 <body>
@@ -227,27 +211,24 @@ body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text-da
   </div>
   <div class="form-title">FORM B: CHECKLIST FOR ASSESSING HF READINESS</div>
 
-  <!-- DEMOGRAPHICS -->
+  <!-- DEMOGRAPHICS: Region > District > Chiefdom > PHU > Facility Type -->
   <div class="demographics">
     <h3>Facility Demographics</h3>
     <div class="question-row">
-      <div class="question-text">Region</div>
-      <select class="form-select" id="region" onchange="updateDistricts()">
-        <option value="">Select Region...</option>
-        <option>Eastern</option><option>Northern</option><option>North West</option><option>Southern</option><option>Western Area</option>
-      </select>
+      <div class="question-text">District <span class="required-star">*</span></div>
+      <select class="form-select" id="district" onchange="updateChiefdoms()"><option>Bo</option></select>
     </div>
     <div class="question-row">
-      <div class="question-text">District</div>
-      <select class="form-select" id="district"><option value="">Select District...</option></select>
+      <div class="question-text">Chiefdom / Zone / City <span class="required-star">*</span></div>
+      <select class="form-select" id="chiefdom" onchange="updatePHUs()" disabled><option value="">Select District first</option></select>
     </div>
     <div class="question-row">
-      <div class="question-text">Chiefdom / Zone / City</div>
-      <input class="form-input" id="chiefdom" type="text" placeholder="Enter chiefdom/zone/city">
+      <div class="question-text">Health Facility (PHU) <span class="required-star">*</span></div>
+      <select class="form-select" id="phu" onchange="updateFacilityType()" disabled><option value="">Select Chiefdom first</option></select>
     </div>
     <div class="question-row">
-      <div class="question-text">Health Facility (PHU)</div>
-      <input class="form-input" id="phu" type="text" placeholder="Health facility name">
+      <div class="question-text">Health Facility Type <span class="required-star">*</span></div>
+      <select class="form-select" id="facilitytype" disabled><option value="">Select PHU first</option></select>
     </div>
     <div class="question-row">
       <div class="question-text">Supervisor Name</div>
@@ -427,20 +408,114 @@ let submitted = false;
 const dynamicTables = { malariaTrain:[], hmisTrain:[] };
 let actionRows = [];
 
-const districtsByRegion = {
-  "Eastern":["Kailahun","Kenema","Kono"],
-  "Northern":["Bombali","Falaba","Koinadugu","Tonkolili"],
-  "North West":["Kambia","Karene","Port Loko"],
-  "Southern":["Bo","Bonthe","Moyamba","Pujehun"],
-  "Western Area":["Western Area Rural","Western Area Urban"]
-};
+const DISTRICT = "Bo";   // MOCM pilot runs in Bo District only
+// All chiefdoms of Bo District. The pilot facilities sit in five of them;
+// the others are listed so any Bo chiefdom can be recorded.
+const BO_CHIEFDOMS = [
+  "Badjia Chiefdom", "Bagbe Chiefdom", "Bagbo Chiefdom", "Baoma Chiefdom",
+  "Bongor Chiefdom", "Bumpe Ngao Chiefdom", "Gbo Chiefdom", "Kakua Chiefdom",
+  "Komboya Chiefdom", "Lugbu Chiefdom", "Niawa Lenga Chiefdom", "Selenga Chiefdom",
+  "Tikonko Chiefdom", "Valunia Chiefdom", "Wonde Chiefdom"
+];
 
-function updateDistricts(){
-  const r=document.getElementById("region").value;
-  const d=document.getElementById("district");
-  d.innerHTML='<option value="">Select District...</option>';
-  if(r && districtsByRegion[r]) districtsByRegion[r].forEach(x=>d.innerHTML+=`<option>${x}</option>`);
+// ===================== FACILITY LIST =====================
+// MOCM pilot: 10 selected facilities, Bo District.
+// district | chiefdom | phu | facility_type
+const PILOT_FACILITIES = [
+  { district:"Bo", chiefdom:"Badjia Chiefdom",     phu:"Njagbahun (Badjia) MCHP",   type:"MCHP" },
+  { district:"Bo", chiefdom:"Baoma Chiefdom",      phu:"Faabu CHP",                 type:"CHP"  },
+  { district:"Bo", chiefdom:"Baoma Chiefdom",      phu:"Gerehun CHC",               type:"CHC"  },
+  { district:"Bo", chiefdom:"Baoma Chiefdom",      phu:"Mbundorbu MCHP",            type:"MCHP" },
+  { district:"Bo", chiefdom:"Bongor Chiefdom",     phu:"Mamboma (Bongor) CHP",      type:"CHP"  },
+  { district:"Bo", chiefdom:"Bumpe Ngao Chiefdom", phu:"Bumpe CHC",                 type:"CHC"  },
+  { district:"Bo", chiefdom:"Bumpe Ngao Chiefdom", phu:"Mokoba MCHP",               type:"MCHP" },
+  { district:"Bo", chiefdom:"Bumpe Ngao Chiefdom", phu:"Yengema (Bumpe Ngao) MCHP", type:"MCHP" },
+  { district:"Bo", chiefdom:"Tikonko Chiefdom",    phu:"Gondama (Tikonko) CHC",     type:"CHC"  },
+  { district:"Bo", chiefdom:"Tikonko Chiefdom",    phu:"Griema MCHP",               type:"MCHP" }
+];
+
+const FACILITY_TYPES = ["CHC","CHP","MCHP","Government Hospital","Mission Hospital"];
+
+function chiefdomsIn(district){
+  if (district === DISTRICT) return BO_CHIEFDOMS.slice();
+  const set = new Set();
+  PILOT_FACILITIES.forEach(f => { if (f.district === district) set.add(f.chiefdom); });
+  return Array.from(set).sort();
 }
+function phusIn(district, chiefdom){
+  return PILOT_FACILITIES
+    .filter(f => f.district === district && f.chiefdom === chiefdom)
+    .sort((a,b) => a.phu.localeCompare(b.phu));
+}
+function typeOf(district, chiefdom, phu){
+  const hit = PILOT_FACILITIES.find(f => f.district === district && f.chiefdom === chiefdom && f.phu === phu);
+  return hit ? hit.type : "";
+}
+
+// ===================== CASCADE =====================
+function updateChiefdoms(){
+  const district = document.getElementById("district").value;
+  const c = document.getElementById("chiefdom");
+  resetFrom("phu");
+  const list = district ? chiefdomsIn(district) : [];
+  if (list.length){
+    c.innerHTML = '<option value="">Select Chiefdom...</option>' + list.map(x => `<option>${escOpt(x)}</option>`).join('');
+    c.disabled = false;
+  } else {
+    c.innerHTML = '<option value="">No chiefdoms listed for this district</option>';
+    c.disabled = true;
+  }
+}
+
+function updatePHUs(){
+  const district = document.getElementById("district").value;
+  const chiefdom = document.getElementById("chiefdom").value;
+  const p = document.getElementById("phu");
+  resetFrom("facilitytype");
+  const list = (district && chiefdom) ? phusIn(district, chiefdom) : [];
+  if (list.length){
+    p.innerHTML = '<option value="">Select PHU...</option>' + list.map(f => `<option>${escOpt(f.phu)}</option>`).join('');
+    p.disabled = false;
+  } else {
+    p.innerHTML = '<option value="">No facilities listed for this chiefdom</option>';
+    p.disabled = true;
+  }
+}
+
+function updateFacilityType(){
+  const district = document.getElementById("district").value;
+  const chiefdom = document.getElementById("chiefdom").value;
+  const phu = document.getElementById("phu").value;
+  const t = document.getElementById("facilitytype");
+  if (!phu){
+    t.innerHTML = '<option value="">Select PHU first</option>';
+    t.disabled = true;
+    return;
+  }
+  const type = typeOf(district, chiefdom, phu);
+  if (type){
+    t.innerHTML = `<option>${escOpt(type)}</option>`;
+  } else {
+    t.innerHTML = '<option value="">Select facility type...</option>' + FACILITY_TYPES.map(x => `<option>${x}</option>`).join('');
+  }
+  t.disabled = false;
+}
+
+// clear the selects below a given level
+function resetFrom(level){
+  const c = document.getElementById("chiefdom");
+  const p = document.getElementById("phu");
+  const t = document.getElementById("facilitytype");
+  if (level === "chiefdom"){
+    c.innerHTML = '<option value="">Select District first</option>'; c.disabled = true;
+  }
+  if (level === "chiefdom" || level === "phu"){
+    p.innerHTML = '<option value="">Select Chiefdom first</option>'; p.disabled = true;
+  }
+  t.innerHTML = '<option value="">Select PHU first</option>'; t.disabled = true;
+}
+
+function escOpt(s){ return String(s).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m])); }
 
 // ===================== SECTION DEFINITIONS =====================
 const secReporting = [
@@ -477,7 +552,6 @@ const secAntimalarial = [
   {k:"a10",n:"2.10",t:"Artesunate inj",opts:["Sufficient","Not Sufficient","Stockout"],scored:true},
   {k:"a11",n:"2.11",t:"Artesunate suppositories",opts:["Sufficient","Not Sufficient","Stockout"],scored:true},
   {k:"a12",n:"2.12",t:"Malaria Vaccine (RTS,S)",opts:["Sufficient","Not Sufficient","Stockout"],scored:true},
-  // placeholder for 2.1
   {k:"a1",n:"2.1",t:"Malaria RDT (general availability)",opts:["Sufficient","Not Sufficient","Stockout"],scored:true},
 ];
 const secEssential = [
@@ -578,7 +652,6 @@ function updateRadio(key, val, el){
   const g = document.getElementById(`group_${key}`);
   if(g){ g.querySelectorAll('.radio-option-vertical').forEach(o=>o.classList.remove('selected')); el.closest('.radio-option-vertical').classList.add('selected'); }
   updateScores();
-  // show/hide referral level
   if(key==='rf2'){ document.getElementById('referral_level_row').style.display = val==='Yes'?'block':'none'; }
   if(key==='rf7'){ document.getElementById('transport_row').style.display = val==='Yes'?'block':'none'; }
   if(key==='immfeedback'){ document.getElementById('feedbackhow_row').style.display = val==='Yes'?'block':'none'; }
@@ -606,9 +679,8 @@ function updateScores(){
     {id:'score_antimalarial', items:secAntimalarial, exp:12},
     {id:'score_essential', items:secEssential, exp:11},
     {id:'score_tools', items:secTools, exp:10},
-    {id:'score_waste', items:secWaste.concat([{k:'_waste_disp',scored:true}]), exp:2},
+    {id:'score_waste', items:secWaste, exp:2},
   ];
-  // waste: score 1 if disposal answered + guideline yes
   const wasteScore = (ans.w2==='Yes'?1:0) + (ans.wasteDisposal&&ans.wasteDisposal.length?1:0);
 
   sections.forEach(s=>{
@@ -781,7 +853,6 @@ function renderTrainees(){
   });
 }
 function addRow(tn){ dynamicTables[tn].push({}); renderTrainees(); }
-// Pre-seed one empty row per training table
 dynamicTables.malariaTrain.push({});
 dynamicTables.hmisTrain.push({});
 function removeRow(tn,i){ dynamicTables[tn].splice(i,1); renderTrainees(); }
@@ -816,10 +887,10 @@ function removeActionRow(i){ actionRows.splice(i,1); renderActionRows(); }
 // ===================== SUBMIT =====================
 function submitForm(){
   const d=getDemographics();
-  if(!d.region){ alert("Please select Region"); return; }
   if(!d.district){ alert("Please select District"); return; }
-  if(!d.chiefdom){ alert("Please enter Chiefdom"); return; }
-  if(!d.phu){ alert("Please enter Health Facility Name"); return; }
+  if(!d.chiefdom){ alert("Please select Chiefdom"); return; }
+  if(!d.phu){ alert("Please select Health Facility (PHU)"); return; }
+  if(!d.facility_type){ alert("Please select Health Facility Type"); return; }
   document.getElementById('confirmModal').style.display='flex';
 }
 function closeModal(){ document.getElementById('confirmModal').style.display='none'; }
@@ -836,10 +907,10 @@ function doSubmit(){
 }
 function getDemographics(){
   return {
-    region: document.getElementById("region").value,
     district: document.getElementById("district").value,
     chiefdom: document.getElementById("chiefdom").value,
     phu: document.getElementById("phu").value,
+    facility_type: document.getElementById("facilitytype").value,
     supervisor: document.getElementById("supervisor").value,
     visitdate: document.getElementById("visitdate").value,
   };
@@ -851,7 +922,6 @@ function renderSummary(){
   const demo = ans._demographics || getDemographics();
   document.getElementById('sum_date').textContent = 'Saved: ' + (ans._submitted || new Date().toLocaleString());
 
-  // Calc all scores
   const scR = calcScore(secReporting);
   const scRef = calcScore(secReference);
   const scA = calcScore(secAntimalarial);
@@ -865,7 +935,6 @@ function renderSummary(){
 
   let html = '';
 
-  // SCORE CARDS
   html += `<div class="score-cards">
     <div class="score-card"><div class="score-card-title">Overall Score</div>
       <div class="score-card-value ${overallCls}">${overallPct}%</div>
@@ -873,7 +942,7 @@ function renderSummary(){
       <div class="progress-bar-wrap"><div class="progress-bar ${overallCls}" style="width:${overallPct}%"></div></div>
     </div>
     <div class="score-card"><div class="score-card-title">Overall Rating</div>
-      <div class="score-card-value ${ans.fb2?ans.fb2.toLowerCase().replace(' ',''):''}" style="font-size:20px;margin-top:6px;">${ans.fb2||'—'}</div>
+      <div class="score-card-value" style="font-size:20px;margin-top:6px;">${ans.fb2||'—'}</div>
       <div class="score-card-sub">${demo.phu||'—'} · ${demo.district||'—'}</div>
     </div>
     ${scoreCard('Reporting Tools', scR.scored, 11)}
@@ -884,58 +953,50 @@ function renderSummary(){
     ${scoreCard('Waste Mgmt', wasteScore, 2)}
   </div>`;
 
-  // DEMOGRAPHICS
   html += `<div class="summary-section">
     <div class="summary-section-title">Facility Demographics</div>
     <div class="demo-grid">
-      ${demoItem('Region', demo.region)}
       ${demoItem('District', demo.district)}
       ${demoItem('Chiefdom/Zone', demo.chiefdom)}
       ${demoItem('Health Facility', demo.phu)}
+      ${demoItem('Facility Type', demo.facility_type)}
       ${demoItem('Supervisor', demo.supervisor)}
       ${demoItem('Date of Visit', demo.visitdate)}
     </div>
   </div>`;
 
-  // TRAINEE TABLES
   const mt = ans._malariaTrain||[];
   const ht = ans._hmisTrain||[];
   html += traineeSection('1.1.1 Malaria Training', mt);
   html += traineeSection('1.1.2 HMIS Training', ht);
 
-  // SCORED SECTIONS
   html += summaryRadioSection('1.2 Reporting Tools Readiness', secReporting, `${scR.scored}/11`);
   html += summaryRadioSection('1.4 Malaria Reference Material', secReference, `${scRef.scored}/7`);
   html += summaryRadioSection('2. Antimalarial Drugs', secAntimalarial, `${scA.scored}/12`);
   html += summaryRadioSection('3. Essential Drugs', secEssential, `${scE.scored}/11`);
 
-  // PHARMACY
   html += `<div class="summary-section"><div class="summary-section-title">4. Pharmacy Operations</div>`;
   secPharmacy.forEach(q=>{ html+=summaryItem(q.t, ans[q.k]); });
   html+=summaryItem('Storage Condition', (ans.storageCondition||[]).join(', ')||'—');
   html+='</div>';
 
-  // TOOLS
   html += `<div class="summary-section"><div class="summary-section-title">5. Basic Tools <span class="badge">${scT.scored}/10</span></div>`;
   secTools.forEach(q=>{ html+=summaryItem(q.t, ans[q.k]); });
   html+=summaryItem('Available at facility', (ans.toolsCheck||[]).join(', ')||'—');
   html+='</div>';
 
-  // REFERRAL
   html += `<div class="summary-section"><div class="summary-section-title">6. Inpatient Services & Referral</div>`;
   secReferral.forEach(q=>{ html+=summaryItem(q.t, ans[q.k]); });
   html+=summaryItem('Referral facility level', (ans.referralLevel||[]).join(', ')||'—');
   html+=summaryItem('Transport modes', (ans.transportMode||[]).join(', ')||'—');
   html+='</div>';
 
-  // WASTE
   html += `<div class="summary-section"><div class="summary-section-title">7. Waste Management <span class="badge">${wasteScore}/2</span></div>`;
   html+=summaryItem('Waste disposal method', (ans.wasteDisposal||[]).join(', ')||'—');
   if(ans.wasteOther) html+=summaryItem('Other (specify)', ans.wasteOther);
   secWaste.forEach(q=>{ html+=summaryItem(q.t, ans[q.k]); });
   html+='</div>';
 
-  // ISSUES
   html += `<div class="summary-section"><div class="summary-section-title">8. Immediate Corrective Actions</div>
     <div class="issues-grid" style="border-top:1px solid var(--border);">`;
   issuesList.forEach(q=>{
@@ -947,7 +1008,6 @@ function renderSummary(){
   html+=summaryItem('Intervention Types', (ans.interventionType||[]).join(', ')||'—');
   html+='</div>';
 
-  // STAFF REACH
   html += `<div class="summary-section"><div class="summary-section-title">9. Staff Reached</div>`;
   issuesList.forEach(q=>{
     const v=ans[`staff_${q.k}`];
@@ -955,12 +1015,10 @@ function renderSummary(){
   });
   html+='</div>';
 
-  // FEEDBACK
   html += `<div class="summary-section"><div class="summary-section-title">10. Supervisor Feedback</div>`;
   secFeedback.forEach(q=>{ html+=summaryItem(q.t, ans[q.k]); });
   html+='</div>';
 
-  // COMMENTS & GAPS
   html += `<div class="summary-section"><div class="summary-section-title">Comments & Gap Analysis</div>`;
   html+=summaryItem('Additional Comments', ans.comments||'—');
   html+=summaryItem('Gaps from last visit', ans.lastgaps||'—');
@@ -972,7 +1030,6 @@ function renderSummary(){
   html+=summaryItem('Supervisor Comments', ans.supcomments||'—');
   html+='</div>';
 
-  // ACTION PLAN
   const ar=ans._actionRows||[];
   if(ar.length){
     html+=`<div class="summary-section"><div class="summary-section-title">18. Action Plan</div>
@@ -1039,7 +1096,9 @@ function switchTab(tab){
 
 // ===================== INIT =====================
 function init(){
-  document.getElementById("region").addEventListener("change", updateDistricts);
+  document.getElementById("visitdate").value = new Date().toISOString().split('T')[0];
+  document.getElementById("district").value = DISTRICT;
+  updateChiefdoms();
   renderSection('sec_reporting', secReporting);
   renderSection('sec_reference', secReference);
   renderSection('sec_antimalarial', secAntimalarial);
