@@ -1,1 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>FORM A - MOCM/OTSS+ Checklist | NMCP Sierra Leone</title>
+<style>
+  @font-face {
+    font-family: 'AgencyFB';
+    src: local('Agency FB'), local('AgencyFB');
+  }
+</style>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --blue: #3b78a8;
+  --blue-dark: #2b5f8a;
+  --blue-light: #4a8dbf;
+  --soft-bg: #e7f3ff;
+  --white: #ffffff;
+  --gold: #ffc107;
+  --green: #28a745;
+  --red: #dc3545;
+  --bg: #f0f2f5;
+  --border: #e0e6ed;
+  --text-dark: #1a2c3e;
+  --text-light: #6c7a8a;
+  --radius: 16px;
+}
+
+body {
+  font-family: 'Agency FB', 'AgencyFB', 'Arial Narrow', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text-dark);
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 20px 16px 0 16px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.page-header {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 60%, var(--blue-light) 100%);
+  color: white;
+  text-align: center;
+  padding: 24px 16px;
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.header-logos { display: flex; justify-content: center; gap: 20px; margin-bottom: 16px; flex-wrap: wrap; }
+.header-logo { height: 65px; width: auto; background: white; padding: 6px 12px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+.header-org { font-size: 11px; font-weight: 600; letter-spacing: 1px; margin-bottom: 6px; opacity: 0.9; }
+.header-title { font-size: 22px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); }
+.header-sub { font-size: 11px; font-weight: 500; opacity: 0.85; margin-top: 6px; }
+
+.form-title {
+  background: linear-gradient(90deg, var(--blue-dark), var(--blue));
+  color: white;
+  padding: 14px 20px;
+  font-weight: 700;
+  font-size: 15px;
+  border-left: 4px solid var(--gold);
+}
+
+.section-card {
+  background: var(--white);
+}
+.card-header {
+  background: var(--white);
+  color: var(--blue-dark);
+  padding: 16px 20px 8px 20px;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--soft-bg);
+}
+.card-body { padding: 16px 20px 20px 20px; }
+
+.demographics {
+  background: var(--white);
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.demographics h3 { 
+  color: var(--blue-dark); 
+  margin-bottom: 16px; 
+  font-size: 13px; 
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.form-input, .form-select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  font-size: 14px;
+  font-family: 'Agency FB', 'AgencyFB', 'Arial Narrow', Arial, sans-serif;
+  background: var(--white);
+}
+.form-input:focus, .form-select:focus {
+  border-color: var(--blue);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 120, 168, 0.1);
+}
+
+.question-row { margin-bottom: 24px; }
+.question-text { font-weight: 600; font-size: 14px; margin-bottom: 12px; color: var(--text-dark); }
+.required-star { color: var(--red); margin-left: 4px; font-size: 12px; }
+
+.options-group-vertical { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+.radio-option-vertical {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--white);
+  padding: 10px 16px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.radio-option-vertical input { width: 18px; height: 18px; accent-color: var(--blue); cursor: pointer; margin: 0; }
+.radio-option-vertical.selected { background: var(--blue); border-color: var(--blue); color: white; }
+.radio-option-vertical.selected input { accent-color: white; }
+
+.member-card {
+  background: #fafbfc;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+}
+.member-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+  font-weight: 700;
+  color: var(--blue-dark);
+  font-size: 13px;
+}
+.remove-btn { color: var(--red); cursor: pointer; background: none; border: none; font-size: 18px; font-weight: 700; padding: 0 8px; }
+.add-btn {
+  background: var(--blue);
+  color: white;
+  border: none;
+  border-radius: 40px;
+  padding: 12px 20px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 8px;
+}
+.add-btn:hover { background: var(--blue-dark); }
+
+.signature-container {
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background: white;
+  margin-top: 8px;
+  overflow: hidden;
+}
+.signature-canvas { display: block; width: 100%; height: 120px; background: white; cursor: crosshair; }
+.signature-buttons { display: flex; gap: 10px; padding: 8px 10px; background: var(--soft-bg); border-top: 1px solid var(--border); }
+.signature-btn { background: var(--blue); color: white; border: none; border-radius: 20px; padding: 6px 12px; font-size: 11px; font-weight: 600; cursor: pointer; }
+.signature-btn.clear { background: var(--red); }
+
+.submit-container { padding: 20px; background: var(--white); margin-bottom: 20px; }
+.btn-submit {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+  color: white;
+  border: none;
+  border-radius: 40px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+}
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-content {
+  background: var(--white);
+  border-radius: 20px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+.modal-header {
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+  color: white;
+  padding: 16px 20px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+}
+.modal-header button { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+.modal-body { padding: 20px; }
+.modal-footer { padding: 16px 20px; border-top: 1px solid var(--border); display: flex; gap: 12px; background: white; position: sticky; bottom: 0; }
+.summary-item { margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.summary-label { font-weight: 700; color: var(--blue); font-size: 10px; text-transform: uppercase; margin-bottom: 4px; }
+.summary-value { font-size: 13px; color: var(--text-dark); }
+.summary-section-title { font-weight: 700; font-size: 14px; color: var(--blue); margin: 16px 0 10px 0; padding-bottom: 6px; border-bottom: 2px solid var(--blue); }
+.btn-cancel { flex: 1; padding: 12px; background: #f0f2f5; color: var(--text-dark); border: 1px solid var(--border); border-radius: 40px; font-weight: 600; cursor: pointer; }
+.btn-confirm { flex: 1; padding: 12px; background: var(--blue); color: white; border: none; border-radius: 40px; font-weight: 600; cursor: pointer; }
+.loading-indicator { text-align: center; padding: 20px; color: var(--blue); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="header-logos">
+    <img src="ICF-SL.jpg" class="header-logo" alt="ICF-SL" onerror="this.style.display='none'">
+    <img src="NMCP.png" class="header-logo" alt="NMCP" onerror="this.style.display='none'">
+  </div>
+  <div class="header-org">National Malaria Control Programme — Ministry of Health, Sierra Leone</div>
+  <div class="header-title">MOCM/OTSS+ Checklist</div>
+  <div class="header-sub">FORM A: General Health Facility Information</div>
+</div>
+
+<div class="form-title">FORM A: General Health Facility Information</div>
+
+<!-- Demographics Section with Cascading from CSV (district, chiefdom, phu, facility_type) -->
+<div class="demographics">
+  <h3>FACILITY DEMOGRAPHICS</h3>
+  <div class="question-row">
+    <div class="question-text">1. District <span class="required-star">*</span></div>
+    <select class="form-select" id="districtSelect" onchange="updateChiefdom()">
+      <option value="">Loading districts...</option>
+    </select>
+  </div>
+  <div class="question-row">
+    <div class="question-text">2. Chiefdom / Zone / City <span class="required-star">*</span></div>
+    <select class="form-select" id="chiefdomSelect" onchange="updatePHU()" disabled>
+      <option value="">Select District first</option>
+    </select>
+  </div>
+  <div class="question-row">
+    <div class="question-text">3. Name of Health Facility (PHU) <span class="required-star">*</span></div>
+    <select class="form-select" id="phuSelect" onchange="updateFacilityType()" disabled>
+      <option value="">Select Chiefdom first</option>
+    </select>
+  </div>
+  <div class="question-row">
+    <div class="question-text">4. Health Facility Type <span class="required-star">*</span></div>
+    <select class="form-select" id="facilityTypeSelect" disabled>
+      <option value="">Select PHU first</option>
+    </select>
+  </div>
+</div>
+
+<!-- Remaining Facility Information -->
+<div class="section-card">
+  <div class="card-header">FACILITY INFORMATION (CONTINUED)</div>
+  <div class="card-body">
+    <div class="question-row"><div class="question-text">5. Number of health care workers responsible for malaria services <span class="required-star">*</span></div>
+      <input class="form-input" id="hcw_count" type="number" min="0" placeholder="0" value="0">
+    </div>
+    <div class="question-row"><div class="question-text">6. Name of Health Facility In-Charge <span class="required-star">*</span></div>
+      <input class="form-input" id="incharge_name" type="text" placeholder="Full name">
+    </div>
+    <div class="question-row"><div class="question-text">7. Gender of health facility In-charge <span class="required-star">*</span></div>
+      <div class="options-group-vertical" id="incharge_gender_group">
+        <label class="radio-option-vertical"><input type="radio" name="incharge_gender" value="Female"> Female</label>
+        <label class="radio-option-vertical"><input type="radio" name="incharge_gender" value="Male"> Male</label>
+      </div>
+    </div>
+    <div class="question-row"><div class="question-text">8. Cadre of In-Charge <span class="required-star">*</span></div>
+      <div class="options-group-vertical" id="cadre_group">
+        <label class="radio-option-vertical"><input type="radio" name="cadre" value="CHO"> CHO</label>
+        <label class="radio-option-vertical"><input type="radio" name="cadre" value="CHT"> CHT</label>
+        <label class="radio-option-vertical"><input type="radio" name="cadre" value="CHA"> CHA</label>
+        <label class="radio-option-vertical"><input type="radio" name="cadre" value="Midwife"> Midwife</label>
+        <label class="radio-option-vertical"><input type="radio" name="cadre" value="SRN"> SRN</label>
+        <label class="radio-option-vertical"><input type="radio" name="cadre" value="SECHN"> SECHN</label>
+        <label class="radio-option-vertical"><input type="radio" name="cadre" value="MCHA"> MCHA</label>
+      </div>
+    </div>
+    <div class="question-row"><div class="question-text">9. Date of visit <span class="required-star">*</span></div>
+      <input class="form-input" id="visit_date" type="date">
+    </div>
+  </div>
+</div>
+
+<!-- Supervisors -->
+<div class="section-card">
+  <div class="card-header">SUPERVISORS INFORMATION</div>
+  <div class="card-body">
+    <div class="question-text" style="margin-bottom: 12px;">At least one supervisor is required <span class="required-star">*</span></div>
+    <div id="supervisors-container"></div>
+    <button class="add-btn" onclick="addSupervisor()">+ Add Supervisor</button>
+  </div>
+</div>
+
+<!-- Staff -->
+<div class="section-card">
+  <div class="card-header">HEALTH FACILITY STAFF DESCRIPTION</div>
+  <div class="card-body">
+    <div id="staff-container"></div>
+    <button class="add-btn" onclick="addStaffMember()">+ Add Staff Member</button>
+  </div>
+</div>
+
+<div class="submit-container">
+  <button class="btn-submit" onclick="validateAndSubmit()">REVIEW & SUBMIT FORM A</button>
+</div>
+
+<div id="summaryModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header"><span>FORM A - SUBMISSION SUMMARY</span><button onclick="closeModal()">&times;</button></div>
+    <div class="modal-body" id="summaryBody"></div>
+    <div class="modal-footer"><button class="btn-cancel" onclick="closeModal()">CANCEL</button><button class="btn-confirm" onclick="confirmSubmit()">CONFIRM SUBMIT</button></div>
+  </div>
+</div>
+
+<script>
+// ==================== CSV DATA STRUCTURE ====================
+// Expected CSV columns: district, chiefdom, phu, facility_type
+let csvData = [];
+let districtsSet = new Set();
+let chiefdomMap = new Map();        // district -> Set of chiefdoms
+let phuMap = new Map();             // "district|chiefdom" -> Array of {phu, facility_type}
+let facilityTypeMap = new Map();    // "district|chiefdom|phu" -> facility_type
+
+// Load CSV file
+async function loadCSV() {
+  try {
+    const response = await fetch('cascading.csv');
+    if (!response.ok) {
+      throw new Error('CSV file not found');
+    }
+    const csvText = await response.text();
+    parseCSV(csvText);
+  } catch (error) {
+    console.error('Error loading cascading.csv:', error);
+    document.getElementById("districtSelect").innerHTML = '<option value="">Error: cascading.csv not found</option>';
+  }
+}
+
+function parseCSV(csvText) {
+  const lines = csvText.trim().split(/\r?\n/);
+  if (lines.length === 0) return;
+  
+  // Parse header to find column indices
+  const header = lines[0].toLowerCase();
+  let districtIdx = -1, chiefdomIdx = -1, phuIdx = -1, facilityTypeIdx = -1;
+  const headers = parseCSVLine(lines[0]);
+  
+  for (let i = 0; i < headers.length; i++) {
+    const h = headers[i].toLowerCase().trim();
+    if (h === 'district') districtIdx = i;
+    else if (h === 'chiefdom') chiefdomIdx = i;
+    else if (h === 'phu') phuIdx = i;
+    else if (h === 'facility_type') facilityTypeIdx = i;
+  }
+  
+  // If exact match not found, try alternative names
+  if (districtIdx === -1) districtIdx = headers.findIndex(h => h.toLowerCase().includes('district'));
+  if (chiefdomIdx === -1) chiefdomIdx = headers.findIndex(h => h.toLowerCase().includes('chiefdom'));
+  if (phuIdx === -1) phuIdx = headers.findIndex(h => h.toLowerCase().includes('phu') || h.toLowerCase().includes('facility'));
+  if (facilityTypeIdx === -1) facilityTypeIdx = headers.findIndex(h => h.toLowerCase().includes('facility_type') || h.toLowerCase().includes('facility type'));
+  
+  const startRow = 1;
+  
+  for (let i = startRow; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (line === "") continue;
+    
+    const row = parseCSVLine(line);
+    if (row.length > Math.max(districtIdx, chiefdomIdx, phuIdx, facilityTypeIdx)) {
+      const district = row[districtIdx]?.trim();
+      const chiefdom = row[chiefdomIdx]?.trim();
+      const phu = row[phuIdx]?.trim();
+      const facilityType = facilityTypeIdx !== -1 ? row[facilityTypeIdx]?.trim() : "";
+      
+      if (district && chiefdom && phu) {
+        csvData.push({ district, chiefdom, phu, facilityType });
+        districtsSet.add(district);
+        
+        if (!chiefdomMap.has(district)) {
+          chiefdomMap.set(district, new Set());
+        }
+        chiefdomMap.get(district).add(chiefdom);
+        
+        const phuKey = `${district}|${chiefdom}`;
+        if (!phuMap.has(phuKey)) {
+          phuMap.set(phuKey, []);
+        }
+        phuMap.get(phuKey).push({ phu, facilityType });
+        
+        const facilityKey = `${district}|${chiefdom}|${phu}`;
+        if (!facilityTypeMap.has(facilityKey) && facilityType) {
+          facilityTypeMap.set(facilityKey, facilityType);
+        }
+      }
+    }
+  }
+  
+  // Populate district dropdown
+  const districtSelect = document.getElementById("districtSelect");
+  const sortedDistricts = Array.from(districtsSet).sort();
+  districtSelect.innerHTML = '<option value="">Select District...</option>';
+  sortedDistricts.forEach(district => {
+    districtSelect.innerHTML += `<option value="${escapeHtml(district)}">${escapeHtml(district)}</option>`;
+  });
+  districtSelect.disabled = false;
+}
+
+function parseCSVLine(line) {
+  const result = [];
+  let inQuotes = false;
+  let current = '';
+  
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    if (char === '"') {
+      inQuotes = !inQuotes;
+    } else if (char === ',' && !inQuotes) {
+      result.push(current);
+      current = '';
+    } else {
+      current += char;
+    }
+  }
+  result.push(current);
+  return result;
+}
+
+function updateChiefdom() {
+  const district = document.getElementById("districtSelect").value;
+  const chiefdomSelect = document.getElementById("chiefdomSelect");
+  const phuSelect = document.getElementById("phuSelect");
+  const facilityTypeSelect = document.getElementById("facilityTypeSelect");
+  
+  chiefdomSelect.innerHTML = '<option value="">Select Chiefdom...</option>';
+  phuSelect.innerHTML = '<option value="">Select PHU first</option>';
+  facilityTypeSelect.innerHTML = '<option value="">Select PHU first</option>';
+  phuSelect.disabled = true;
+  facilityTypeSelect.disabled = true;
+  
+  if (district && chiefdomMap.has(district)) {
+    const chiefdoms = Array.from(chiefdomMap.get(district)).sort();
+    chiefdoms.forEach(chiefdom => {
+      chiefdomSelect.innerHTML += `<option value="${escapeHtml(chiefdom)}">${escapeHtml(chiefdom)}</option>`;
+    });
+    chiefdomSelect.disabled = false;
+  } else {
+    chiefdomSelect.disabled = true;
+  }
+}
+
+function updatePHU() {
+  const district = document.getElementById("districtSelect").value;
+  const chiefdom = document.getElementById("chiefdomSelect").value;
+  const phuSelect = document.getElementById("phuSelect");
+  const facilityTypeSelect = document.getElementById("facilityTypeSelect");
+  
+  phuSelect.innerHTML = '<option value="">Select PHU...</option>';
+  facilityTypeSelect.innerHTML = '<option value="">Select PHU first</option>';
+  facilityTypeSelect.disabled = true;
+  
+  if (district && chiefdom) {
+    const phuKey = `${district}|${chiefdom}`;
+    if (phuMap.has(phuKey)) {
+      const phus = phuMap.get(phuKey).sort((a,b) => a.phu.localeCompare(b.phu));
+      phus.forEach(item => {
+        phuSelect.innerHTML += `<option value="${escapeHtml(item.phu)}" data-facility-type="${escapeHtml(item.facilityType || '')}">${escapeHtml(item.phu)}</option>`;
+      });
+      phuSelect.disabled = false;
+    } else {
+      phuSelect.disabled = true;
+    }
+  } else {
+    phuSelect.disabled = true;
+  }
+}
+
+function updateFacilityType() {
+  const district = document.getElementById("districtSelect").value;
+  const chiefdom = document.getElementById("chiefdomSelect").value;
+  const phu = document.getElementById("phuSelect").value;
+  const facilityTypeSelect = document.getElementById("facilityTypeSelect");
+  
+  if (district && chiefdom && phu) {
+    const facilityKey = `${district}|${chiefdom}|${phu}`;
+    const facilityType = facilityTypeMap.get(facilityKey) || "";
+    
+    if (facilityType) {
+      facilityTypeSelect.innerHTML = `<option value="${escapeHtml(facilityType)}">${escapeHtml(facilityType)}</option>`;
+      facilityTypeSelect.disabled = false;
+    } else {
+      // Allow manual entry if not in CSV
+      facilityTypeSelect.innerHTML = '<option value="">Select or enter facility type...</option>' +
+        '<option>CHC</option><option>CHPs (Community Health Post)</option><option>MCH Aid Post</option>' +
+        '<option>Peripheral Health Unit (PHU)</option><option>Government Hospital</option><option>Mission Hospital</option>';
+      facilityTypeSelect.disabled = false;
+    }
+  } else {
+    facilityTypeSelect.innerHTML = '<option value="">Select PHU first</option>';
+    facilityTypeSelect.disabled = true;
+  }
+}
+
+// ==================== SUPERVISORS WITH SIGNATURE PADS ====================
+let supervisors = [];
+let staffMembers = [];
+
+function createSignaturePad(canvasId, clearBtnId, storageKey) {
+  let drawing = false;
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  
+  function getCoordinates(e) {
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const scaleY = canvas.height / rect.height;
+    let clientX, clientY;
+    if (e.touches) {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+    return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY };
+  }
+  
+  function startDrawing(e) {
+    drawing = true;
+    const coord = getCoordinates(e);
+    ctx.beginPath();
+    ctx.moveTo(coord.x, coord.y);
+    ctx.lineTo(coord.x, coord.y);
+    ctx.stroke();
+    e.preventDefault();
+  }
+  
+  function draw(e) {
+    if (!drawing) return;
+    const coord = getCoordinates(e);
+    ctx.lineTo(coord.x, coord.y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(coord.x, coord.y);
+    e.preventDefault();
+  }
+  
+  function stopDrawing() {
+    drawing = false;
+    ctx.beginPath();
+    if (storageKey) sessionStorage.setItem(storageKey, canvas.toDataURL());
+  }
+  
+  ctx.lineWidth = 2;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = '#1a2c3e';
+  
+  canvas.addEventListener('mousedown', startDrawing);
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', stopDrawing);
+  canvas.addEventListener('mouseleave', stopDrawing);
+  canvas.addEventListener('touchstart', startDrawing);
+  canvas.addEventListener('touchmove', draw);
+  canvas.addEventListener('touchend', stopDrawing);
+  
+  document.getElementById(clearBtnId)?.addEventListener('click', () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (storageKey) sessionStorage.removeItem(storageKey);
+  });
+  
+  canvas.width = canvas.offsetWidth * 2;
+  canvas.height = canvas.offsetHeight * 2;
+  ctx.scale(2, 2);
+  
+  const saved = sessionStorage.getItem(storageKey);
+  if (saved) { const img = new Image(); img.onload = () => ctx.drawImage(img, 0, 0); img.src = saved; }
+}
+
+function renderSupervisors() {
+  const container = document.getElementById("supervisors-container");
+  if (!container) return;
+  let html = '';
+  supervisors.forEach((s, i) => {
+    html += `<div class="member-card">
+      <div class="member-header"><span>Supervisor #${i + 1}</span><button class="remove-btn" onclick="removeSupervisor(${i})">✕</button></div>
+      <div class="question-row"><div class="question-text">Full Name <span class="required-star">*</span></div><input class="form-input" type="text" id="sup_name_${i}" value="${escapeHtml(s.name || '')}" placeholder="Full name"></div>
+      <div class="question-row"><div class="question-text">Sex <span class="required-star">*</span></div><div class="options-group-vertical" id="sup_sex_group_${i}"><label class="radio-option-vertical"><input type="radio" name="sup_sex_${i}" value="Male" ${s.sex === 'Male' ? 'checked' : ''}> Male</label><label class="radio-option-vertical"><input type="radio" name="sup_sex_${i}" value="Female" ${s.sex === 'Female' ? 'checked' : ''}> Female</label></div></div>
+      <div class="question-row"><div class="question-text">Designation <span class="required-star">*</span></div><input class="form-input" type="text" id="sup_designation_${i}" value="${escapeHtml(s.designation || '')}" placeholder="Designation"></div>
+      <div class="question-row"><div class="question-text">Organization</div><input class="form-input" type="text" id="sup_org_${i}" value="${escapeHtml(s.organization || '')}" placeholder="Organization"></div>
+      <div class="question-row"><div class="question-text">Phone Number (9 digits) <span class="required-star">*</span></div><input class="form-input" type="tel" id="sup_phone_${i}" value="${escapeHtml(s.phone || '')}" placeholder="099177283" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,9)"></div>
+      <div class="question-row"><div class="question-text">Signature <span class="required-star">*</span></div><div class="signature-container"><canvas id="sup_sig_canvas_${i}" class="signature-canvas"></canvas><div class="signature-buttons"><button type="button" class="signature-btn clear" id="sup_sig_clear_${i}">Clear Signature</button></div></div></div>
+    </div>`;
+  });
+  container.innerHTML = html;
+  
+  supervisors.forEach((s, i) => {
+    setTimeout(() => createSignaturePad(`sup_sig_canvas_${i}`, `sup_sig_clear_${i}`, `sup_sig_${i}`), 50);
+    document.getElementById(`sup_name_${i}`).addEventListener('input', (e) => { supervisors[i].name = e.target.value; });
+    document.querySelectorAll(`input[name="sup_sex_${i}"]`).forEach(r => r.addEventListener('change', (e) => { if(e.target.checked) supervisors[i].sex = e.target.value; updateRadioVisuals(document.getElementById(`sup_sex_group_${i}`)); }));
+    document.getElementById(`sup_designation_${i}`).addEventListener('input', (e) => { supervisors[i].designation = e.target.value; });
+    document.getElementById(`sup_org_${i}`).addEventListener('input', (e) => { supervisors[i].organization = e.target.value; });
+    document.getElementById(`sup_phone_${i}`).addEventListener('input', (e) => { supervisors[i].phone = e.target.value; });
+  });
+}
+
+function addSupervisor() { supervisors.push({ name: "", sex: "", designation: "", organization: "", phone: "" }); renderSupervisors(); }
+function removeSupervisor(i) { supervisors.splice(i, 1); if (supervisors.length === 0) supervisors.push({ name: "", sex: "", designation: "", organization: "", phone: "" }); renderSupervisors(); }
+
+function renderStaff() {
+  const container = document.getElementById("staff-container");
+  if (!container) return;
+  let html = '';
+  staffMembers.forEach((s, i) => {
+    html += `<div class="member-card">
+      <div class="member-header"><span>Staff Member #${i + 1}</span>${staffMembers.length > 1 ? `<button class="remove-btn" onclick="removeStaffMember(${i})">✕</button>` : '<span style="color:#aaa; font-size:11px;">(Required)</span>'}</div>
+      <div class="question-row"><div class="question-text">Full Name ${staffMembers.length === 1 ? '<span class="required-star">*</span>' : ''}</div><input class="form-input" type="text" id="staff_name_${i}" value="${escapeHtml(s.name || '')}" placeholder="Full name"></div>
+      <div class="question-row"><div class="question-text">Sex ${staffMembers.length === 1 ? '<span class="required-star">*</span>' : ''}</div><div class="options-group-vertical" id="staff_sex_group_${i}"><label class="radio-option-vertical"><input type="radio" name="staff_sex_${i}" value="Male" ${s.sex === 'Male' ? 'checked' : ''}> Male</label><label class="radio-option-vertical"><input type="radio" name="staff_sex_${i}" value="Female" ${s.sex === 'Female' ? 'checked' : ''}> Female</label></div></div>
+      <div class="question-row"><div class="question-text">Cadre ${staffMembers.length === 1 ? '<span class="required-star">*</span>' : ''}</div><input class="form-input" type="text" id="staff_cadre_${i}" value="${escapeHtml(s.cadre || '')}" placeholder="Cadre"></div>
+      <div class="question-row"><div class="question-text">Unit</div><input class="form-input" type="text" id="staff_unit_${i}" value="${escapeHtml(s.unit || '')}" placeholder="Unit/Department"></div>
+      <div class="question-row"><div class="question-text">Phone Number (9 digits)</div><input class="form-input" type="tel" id="staff_phone_${i}" value="${escapeHtml(s.phone || '')}" placeholder="099177283" maxlength="9" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,9)"></div>
+    </div>`;
+  });
+  container.innerHTML = html;
+  
+  staffMembers.forEach((s, i) => {
+    document.getElementById(`staff_name_${i}`)?.addEventListener('input', (e) => { staffMembers[i].name = e.target.value; });
+    document.querySelectorAll(`input[name="staff_sex_${i}"]`).forEach(r => r.addEventListener('change', (e) => { if(e.target.checked) staffMembers[i].sex = e.target.value; updateRadioVisuals(document.getElementById(`staff_sex_group_${i}`)); }));
+    document.getElementById(`staff_cadre_${i}`)?.addEventListener('input', (e) => { staffMembers[i].cadre = e.target.value; });
+    document.getElementById(`staff_unit_${i}`)?.addEventListener('input', (e) => { staffMembers[i].unit = e.target.value; });
+    document.getElementById(`staff_phone_${i}`)?.addEventListener('input', (e) => { staffMembers[i].phone = e.target.value; });
+  });
+}
+
+function addStaffMember() { staffMembers.push({ name: "", sex: "", cadre: "", unit: "", phone: "" }); renderStaff(); }
+function removeStaffMember(i) { if (staffMembers.length > 1) { staffMembers.splice(i, 1); renderStaff(); } }
+
+function updateRadioVisuals(container) {
+  if (!container) return;
+  container.querySelectorAll('.radio-option-vertical').forEach(radio => {
+    const input = radio.querySelector('input');
+    if (input && input.checked) radio.classList.add('selected');
+    else radio.classList.remove('selected');
+  });
+}
+
+function escapeHtml(str) { if (!str) return ''; return String(str).replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
+function validatePhone(phone) { return phone && String(phone).replace(/\D/g, '').length === 9; }
+
+function validateForm() {
+  if (!document.getElementById("districtSelect").value) { alert("Please select District"); return false; }
+  if (!document.getElementById("chiefdomSelect").value) { alert("Please select Chiefdom"); return false; }
+  if (!document.getElementById("phuSelect").value) { alert("Please select Health Facility (PHU)"); return false; }
+  if (!document.getElementById("facilityTypeSelect").value) { alert("Please select/enter Health Facility Type"); return false; }
+  if (!document.getElementById("incharge_name").value) { alert("Please enter In-Charge Name"); return false; }
+  if (!document.querySelector('input[name="incharge_gender"]:checked')) { alert("Please select In-Charge Gender"); return false; }
+  if (!document.querySelector('input[name="cadre"]:checked')) { alert("Please select In-Charge Cadre"); return false; }
+  
+  const validSupervisors = supervisors.filter((s, idx) => {
+    if (!s.name || !s.sex || !s.designation) return false;
+    if (!validatePhone(s.phone)) { alert(`Supervisor #${idx+1}: Phone must be 9 digits`); return false; }
+    return true;
+  });
+  if (validSupervisors.length === 0) { alert("Add at least one supervisor with Name, Sex, Designation, and 9-digit Phone."); return false; }
+  
+  const firstStaff = staffMembers[0];
+  if (!firstStaff.name || !firstStaff.sex || !firstStaff.cadre) { alert("First staff member: Name, Sex, and Cadre are required."); return false; }
+  return true;
+}
+
+function getFormData() {
+  return {
+    submittedAt: new Date().toLocaleString(),
+    district: document.getElementById("districtSelect").value,
+    chiefdom: document.getElementById("chiefdomSelect").value,
+    phu: document.getElementById("phuSelect").value,
+    facility_type: document.getElementById("facilityTypeSelect").value,
+    hcw_count: document.getElementById("hcw_count").value,
+    incharge_name: document.getElementById("incharge_name").value,
+    incharge_gender: document.querySelector('input[name="incharge_gender"]:checked')?.value || "",
+    cadre: document.querySelector('input[name="cadre"]:checked')?.value || "",
+    visit_date: document.getElementById("visit_date").value,
+    supervisors: supervisors.map((s, i) => ({ ...s, signature: sessionStorage.getItem(`sup_sig_${i}`) || "" })),
+    staff: staffMembers
+  };
+}
+
+function showSummary() {
+  const data = getFormData();
+  let html = `<div class="summary-item"><div class="summary-label">Submitted At</div><div class="summary-value">${data.submittedAt}</div></div>`;
+  html += `<div class="summary-section-title">LOCATION & FACILITY TYPE</div>`;
+  html += `<div class="summary-item"><div class="summary-label">District</div><div class="summary-value">${data.district}</div></div>`;
+  html += `<div class="summary-item"><div class="summary-label">Chiefdom</div><div class="summary-value">${data.chiefdom}</div></div>`;
+  html += `<div class="summary-item"><div class="summary-label">Health Facility (PHU)</div><div class="summary-value">${data.phu}</div></div>`;
+  html += `<div class="summary-item"><div class="summary-label">Facility Type</div><div class="summary-value">${data.facility_type}</div></div>`;
+  html += `<div class="summary-section-title">FACILITY INFORMATION</div>`;
+  html += `<div class="summary-item"><div class="summary-label">HCWs for Malaria</div><div class="summary-value">${data.hcw_count}</div></div>`;
+  html += `<div class="summary-item"><div class="summary-label">In-Charge</div><div class="summary-value">${data.incharge_name}</div></div>`;
+  html += `<div class="summary-item"><div class="summary-label">Gender</div><div class="summary-value">${data.incharge_gender}</div></div>`;
+  html += `<div class="summary-item"><div class="summary-label">Cadre</div><div class="summary-value">${data.cadre}</div></div>`;
+  html += `<div class="summary-item"><div class="summary-label">Visit Date</div><div class="summary-value">${data.visit_date}</div></div>`;
+  html += `<div class="summary-section-title">SUPERVISORS</div>` + data.supervisors.map((s,i) => `<div class="summary-item"><div class="summary-label">Supervisor #${i+1}</div><div class="summary-value">${s.name} | ${s.sex} | ${s.designation} | Phone: ${s.phone} | Sig: ${s.signature ? '✓' : '✗'}</div></div>`).join('');
+  html += `<div class="summary-section-title">STAFF</div>` + data.staff.map((s,i) => `<div class="summary-item"><div class="summary-label">Staff #${i+1}</div><div class="summary-value">${s.name || '-'} | ${s.sex || '-'} | ${s.cadre || '-'}</div></div>`).join('');
+  document.getElementById("summaryBody").innerHTML = html;
+  document.getElementById("summaryModal").style.display = "flex";
+}
+
+function validateAndSubmit() { if (validateForm()) showSummary(); }
+function closeModal() { document.getElementById("summaryModal").style.display = "none"; }
+function confirmSubmit() { closeModal(); alert("FORM A submitted successfully!"); console.log(getFormData()); }
+
+// Initialize
+document.getElementById("visit_date").value = new Date().toISOString().split('T')[0];
+loadCSV();
+supervisors.push({ name: "", sex: "", designation: "", organization: "", phone: "" });
+staffMembers.push({ name: "", sex: "", cadre: "", unit: "", phone: "" });
+renderSupervisors();
+renderStaff();
+
+setTimeout(() => {
+  updateRadioVisuals(document.getElementById('incharge_gender_group'));
+  updateRadioVisuals(document.getElementById('cadre_group'));
+}, 100);
+</script>
+</body>
+</html>
 
