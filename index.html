@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+<title>MOCM | NMCP Sierra Leone</title>
+<meta name="theme-color" content="#2b5f8a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#3b78a8; --blue-dark:#2b5f8a; --blue-light:#4a8dbf; --blue-900:#1e4a6d;
+    --gold:#ffc107; --gold-600:#e0a800;
+    --soft-bg:#e7f3ff;
+    --green:#28a745; --red:#dc3545; --orange:#fd7e14;
+    --ink:#1a2c3e; --muted:#6c7a8a; --line:#e0e6ed; --bg:#f0f2f5; --white:#fff;
+    --sh-sm:0 2px 8px rgba(43,95,138,.08);
+    --sh-md:0 12px 30px rgba(43,95,138,.14);
+    --sh-lg:0 22px 50px rgba(30,74,109,.22);
+    --disp:'Oswald',system-ui,sans-serif;
+    --body:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{
+    font-family:var(--body);color:var(--ink);background:var(--bg);
+    min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
+    padding:14px 12px;
+  }
+  a{text-decoration:none;color:inherit;}
+
+  /* MAIN FRAME — blue vertical lines on both sides connecting header and footer */
+  .app-frame{
+    width:100%;max-width:420px;margin:0 auto;background:var(--bg);
+    border-left:3px solid var(--blue-dark);border-right:3px solid var(--blue-dark);
+    border-radius:20px;overflow:hidden;box-shadow:var(--sh-lg);
+  }
+
+  /* TOP BAR */
+  .top{
+    background:var(--white);border-bottom:3px solid var(--blue);
+    display:flex;align-items:center;gap:10px;padding:11px 14px;box-shadow:var(--sh-sm);
+  }
+  .top .logo{height:38px;width:auto;display:block;}
+  .top .brand{border-left:2px solid var(--line);padding-left:10px;min-width:0;}
+  .top .brand .n{font:600 13px/1 var(--disp);letter-spacing:.04em;color:var(--blue-dark);text-transform:uppercase;}
+  .top .brand .s{font:500 8.5px/1.25 var(--body);color:var(--muted);margin-top:3px;}
+
+  /* HERO */
+  .hero{
+    background:linear-gradient(155deg,var(--blue) 0%,var(--blue-dark) 55%,var(--blue-900) 100%);
+    color:#fff;border-radius:0 0 24px 24px;position:relative;overflow:hidden;padding:22px 18px 26px;
+  }
+  .hero::after{content:"";position:absolute;right:-50px;top:-60px;width:170px;height:170px;border-radius:50%;background:rgba(255,193,7,.14);}
+  .hero .tag{
+    display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.24);padding:5px 11px;border-radius:99px;
+    font:600 9px var(--body);letter-spacing:.06em;text-transform:uppercase;position:relative;
+  }
+  .hero .tag .g{width:6px;height:6px;border-radius:50%;background:var(--gold);}
+  .hero h1{font:600 22px/1.18 var(--disp);letter-spacing:.01em;margin:12px 0 10px;position:relative;text-transform:uppercase;}
+  .hero h1 span{color:var(--gold);}
+  .hero p{font:400 12px/1.6 var(--body);color:rgba(255,255,255,.92);position:relative;}
+  .hero .stats{display:flex;gap:20px;margin-top:18px;position:relative;}
+  .hero .stats .v{font:700 19px/1 var(--disp);color:var(--gold);}
+  .hero .stats .k{font:500 9.5px var(--body);color:rgba(255,255,255,.82);margin-top:4px;}
+
+  .wrap{padding:0 15px 4px;}
+
+  /* STATUS ROW */
+  .status-row{
+    display:flex;align-items:center;justify-content:space-between;
+    background:var(--white);border:1px solid var(--line);border-radius:14px;
+    padding:9px 14px;margin-top:16px;box-shadow:var(--sh-sm);
+  }
+  .status-left{display:flex;align-items:center;gap:8px;}
+  .status-dot{width:8px;height:8px;border-radius:8px;}
+  .status-dot.online{background:var(--green);box-shadow:0 0 0 2px rgba(40,167,69,.15);}
+  .status-dot.offline{background:#9ca3af;}
+  .status-text{font:500 12px var(--body);color:var(--ink);}
+  .status-badge{font:700 9.5px var(--body);letter-spacing:.06em;padding:4px 12px;border-radius:20px;background:#e8f5e9;color:var(--green);}
+
+  /* SECTION HEAD */
+  .sec-head{display:flex;align-items:baseline;gap:10px;margin:20px 2px 14px;}
+  .sec-head h2{font:600 17px/1 var(--disp);letter-spacing:.03em;color:var(--blue-dark);text-transform:uppercase;}
+  .sec-head .bar{flex:1;height:2px;background:var(--line);}
+  .sec-head .count{font:600 10.5px var(--body);color:var(--muted);}
+
+  /* FORM CARDS */
+  .grid{display:flex;flex-direction:column;gap:12px;padding-bottom:22px;}
+  .card{
+    background:var(--white);border:1px solid var(--line);border-radius:15px;box-shadow:var(--sh-sm);
+    cursor:pointer;overflow:hidden;position:relative;transition:transform .12s,box-shadow .2s,border-color .2s;
+  }
+  .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--accent,var(--blue));}
+  .card:active{transform:scale(.99);background:#fafcff;}
+  .card .inner{padding:15px 15px 15px 19px;}
+  .card .num{font:700 10px var(--disp);letter-spacing:.12em;color:var(--gold-600);}
+  .card h3{font:600 16px/1.22 var(--disp);color:var(--ink);margin:5px 0 7px;}
+  .card p{font:400 11.5px/1.5 var(--body);color:var(--muted);}
+  .card .foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:11px;border-top:1px solid var(--line);}
+  .card .foot .sub{font:600 10px var(--body);color:var(--muted);display:inline-flex;align-items:center;gap:5px;}
+  .card .foot .sub svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;}
+  .card.open .foot .sub{color:var(--green);}
+  .card .foot .go{display:inline-flex;align-items:center;gap:5px;font:600 11px var(--body);color:var(--blue-dark);}
+  .card .foot .go svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+
+  /* FOOTER */
+  .app-footer{
+    background:var(--blue-900);text-align:center;padding:16px;
+    color:rgba(255,255,255,.72);font:400 10.5px var(--body);letter-spacing:.3px;
+  }
+  .app-footer strong{color:var(--gold);font-weight:600;}
+
+  /* LOGIN MODAL */
+  .login-overlay{
+    display:none;position:fixed;inset:0;background:rgba(30,74,109,.78);backdrop-filter:blur(3px);
+    z-index:1000;align-items:center;justify-content:center;padding:20px;
+  }
+  .login-sheet{background:var(--white);border-radius:22px;width:100%;max-width:310px;padding:24px 20px 26px;text-align:center;box-shadow:0 24px 40px rgba(0,0,0,.28);}
+  .login-icon{width:48px;height:48px;background:linear-gradient(135deg,var(--blue-dark),var(--blue));border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;}
+  .login-icon svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:2;}
+  .login-title{font:600 18px/1.2 var(--disp);letter-spacing:.02em;color:var(--blue-dark);text-transform:uppercase;margin-bottom:5px;}
+  .login-lbl{font:400 11px var(--body);color:var(--muted);margin-bottom:16px;}
+  .login-input{
+    width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:12px;
+    font:400 13px var(--body);margin-bottom:10px;background:var(--white);color:var(--ink);
+  }
+  .login-input:focus{border-color:var(--blue);outline:2px solid rgba(59,120,168,.2);outline-offset:1px;}
+  .login-error{color:var(--red);font:500 10px var(--body);margin-bottom:12px;display:none;}
+  .login-btns{display:flex;gap:10px;margin-top:6px;}
+  .login-cancel,.login-submit{flex:1;padding:12px;border-radius:11px;font:600 12.5px var(--body);cursor:pointer;}
+  .login-cancel{background:var(--bg);color:var(--muted);border:1px solid var(--line);}
+  .login-submit{background:var(--blue-dark);color:#fff;border:none;}
+  .login-submit:active{transform:translateY(1px);}
+
+  /* FULLSCREEN FORM PANEL */
+  .form-panel{display:none;position:fixed;inset:0;background:var(--bg);z-index:200;flex-direction:column;}
+  .form-panel.active{display:flex;}
+  .panel-header{
+    background:linear-gradient(135deg,var(--blue-dark),var(--blue));padding:12px 14px;
+    display:flex;align-items:center;gap:12px;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.12);
+  }
+  .back-btn{
+    background:rgba(255,255,255,.2);border:none;width:36px;height:36px;border-radius:11px;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:19px;color:#fff;
+  }
+  .panel-title{font:600 14px/1.2 var(--disp);letter-spacing:.04em;text-transform:uppercase;flex:1;}
+  .iframe-wrap{flex:1;position:relative;background:var(--bg);}
+  .form-iframe{width:100%;height:100%;border:none;display:none;}
+  .iframe-loading{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--bg);}
+  .loading-lbl{font:500 12px var(--body);color:var(--muted);}
+  .spinner{width:36px;height:36px;border:3px solid var(--line);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .not-found{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:24px;text-align:center;background:var(--bg);}
+  .not-found svg{width:48px;height:48px;stroke:#b0c0d0;fill:none;stroke-width:1.5;}
+  .not-found h3{font:600 17px var(--disp);letter-spacing:.02em;color:var(--blue-dark);text-transform:uppercase;}
+  .not-found p{font:400 12px var(--body);color:var(--muted);}
+
+  @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-2px)}}
+  @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important;}}
+</style>
+</head>
+<body>
+
+<div class="app-frame">
+  <!-- TOP BAR -->
+  <header class="top">
+    <img src="NMCP.png" class="logo" alt="NMCP" onerror="this.style.display='none'">
+    <div class="brand">
+      <div class="n">NMCP</div>
+      <div class="s">National Malaria Control Programme &middot; Sierra Leone</div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="tag"><span class="g"></span>MOCM / OTSS+ &middot; Sierra Leone 2026</span>
+    <h1>Supportive Supervision &amp; <span>Readiness Assessment</span></h1>
+    <p>Open a form to record the facility visit. Forms A to G follow the order of the supervision visit, from facility profile through to the supervisor action plan.</p>
+    <div class="stats">
+      <div class="st"><div class="v" id="statForms">7</div><div class="k">Forms</div></div>
+      <div class="st"><div class="v">A&ndash;G</div><div class="k">Sections</div></div>
+      <div class="st"><div class="v">2026</div><div class="k">Cycle</div></div>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <!-- STATUS ROW -->
+    <div class="status-row">
+      <div class="status-left">
+        <div class="status-dot online" id="statusDot"></div>
+        <div class="status-text" id="statusTxt">System ready</div>
+      </div>
+      <div class="status-badge" id="statusBadge">ONLINE</div>
+    </div>
+
+    <!-- FORMS -->
+    <div class="sec-head">
+      <h2>Forms</h2><span class="bar"></span><span class="count" id="formCount">7</span>
+    </div>
+    <div class="grid" id="formGrid"></div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="app-footer">
+    Developed by <strong>ICF-SL</strong> &middot; NMCP Sierra Leone &middot; <span id="year">2026</span>
+  </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-sheet">
+    <div class="login-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>
+    <div class="login-title">Authentication Required</div>
+    <div class="login-lbl" id="loginLabel">Enter credentials to continue</div>
+    <input type="text" class="login-input" id="loginUsername" placeholder="Username" autocomplete="off">
+    <input type="password" class="login-input" id="loginPassword" placeholder="Password" onkeydown="if(event.key==='Enter') submitLogin()">
+    <div class="login-error" id="loginErrorMsg">Invalid username or password.</div>
+    <div class="login-btns">
+      <button class="login-cancel" onclick="closeLoginModal()">Cancel</button>
+      <button class="login-submit" onclick="submitLogin()">Unlock</button>
+    </div>
+  </div>
+</div>
+
+<!-- FULLSCREEN FORM PANEL -->
+<div id="formPanel" class="form-panel">
+  <div class="panel-header">
+    <button class="back-btn" onclick="closeFormPanel()">&larr;</button>
+    <div class="panel-title" id="panelTitle">Form</div>
+    <div style="width:36px;"></div>
+  </div>
+  <div class="iframe-wrap">
+    <div class="iframe-loading" id="iframeLoading"><div class="spinner"></div><div class="loading-lbl">Loading form&hellip;</div></div>
+    <iframe class="form-iframe" id="formIframe" frameborder="0"></iframe>
+    <div class="not-found" id="notFoundMsg">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8zM14 2v6h6"/></svg>
+      <h3>Form Not Found</h3>
+      <p>Please ensure the file exists in the same folder.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---------- CONFIGURATION ----------
+  var FORMS = [
+    {id:'a', title:'Facility Profile',                  desc:'PHU identification, location &amp; staff details',  file:'form_a.html', accent:'#3b78a8'},
+    {id:'b', title:'HF Readiness',                      desc:'Capacity, supplies, tools &amp; referral',          file:'form_b.html', accent:'#2b5f8a'},
+    {id:'c', title:'Case Management',                   desc:'RDT, ACT, treatment compliance',                    file:'form_c.html', accent:'#4a8dbf'},
+    {id:'d', title:'Data Quality',                      desc:'HMIS register &amp; data verification',              file:'form_d.html', accent:'#28a745'},
+    {id:'e', title:'Community Services',                desc:'IPTp, ITN distribution &amp; outreach',              file:'form_e.html', accent:'#fd7e14'},
+    {id:'f', title:'Referral System',                   desc:'Severe malaria referral pathway',                    file:'form_f.html', accent:'#9c27b0'},
+    {id:'g', title:'Supervisor Feedback &amp; Action Plan', desc:'Rating, gaps, corrective actions',               file:'form_g.html', accent:'#ffc107'}
+  ];
+
+  // CREDENTIALS - same username/password for all forms
+  var FORM_CREDENTIALS = {
+    'a': { username: 'supervisor', password: 'mocm2026' },
+    'b': { username: 'supervisor', password: 'mocm2026' },
+    'c': { username: 'supervisor', password: 'mocm2026' },
+    'd': { username: 'supervisor', password: 'mocm2026' },
+    'e': { username: 'supervisor', password: 'mocm2026' },
+    'f': { username: 'supervisor', password: 'mocm2026' },
+    'g': { username: 'supervisor', password: 'mocm2026' }
+  };
+
+  var ICON = {
+    lock:'<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></svg>',
+    open:'<svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 017-2.6"/></svg>',
+    arrow:'<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>'
+  };
+
+  // ---------- SESSION STATE ----------
+  var unlockedForms = {};
+  try {
+    var saved = sessionStorage.getItem('mocm_unlocked_final');
+    if (saved) unlockedForms = JSON.parse(saved);
+  } catch(e) {}
+
+  var pendingForm = null;
+  var pendingFormName = '';
+
+  function formById(id){
+    for (var i = 0; i < FORMS.length; i++) if (FORMS[i].id === id) return FORMS[i];
+    return null;
+  }
+
+  function formLabel(f){
+    return 'Form ' + f.id.toUpperCase() + ' \u2014 ' + f.title.replace(/&amp;/g, '&');
+  }
+
+  // ---------- RENDER FORM CARDS ----------
+  function renderForms(){
+    var grid = document.getElementById('formGrid');
+    grid.innerHTML = FORMS.map(function(f){
+      var unlocked = !!unlockedForms[f.id];
+      return '<div class="card' + (unlocked ? ' open' : '') + '" data-form="' + f.id + '" style="--accent:' + f.accent + '" ' +
+             'onclick="requestLogin(\'' + f.id + '\')">' +
+        '<div class="inner">' +
+          '<div class="num">FORM ' + f.id.toUpperCase() + '</div>' +
+          '<h3>' + f.title + '</h3>' +
+          '<p>' + f.desc + '</p>' +
+          '<div class="foot">' +
+            '<span class="sub">' + (unlocked ? ICON.open + 'Unlocked' : ICON.lock + 'Login required') + '</span>' +
+            '<span class="go">Open ' + ICON.arrow + '</span>' +
+          '</div>' +
+        '</div></div>';
+    }).join('');
+    document.getElementById('formCount').textContent = FORMS.length;
+    document.getElementById('statForms').textContent = FORMS.length;
+  }
+
+  function persistUnlock(formId) {
+    unlockedForms[formId] = true;
+    try { sessionStorage.setItem('mocm_unlocked_final', JSON.stringify(unlockedForms)); } catch(e) {}
+    renderForms();
+  }
+
+  // ---------- LOGIN ----------
+  function requestLogin(formId) {
+    var f = formById(formId);
+    if (!f) return;
+    var creds = FORM_CREDENTIALS[formId];
+    var title = formLabel(f);
+
+    if (!creds || (!creds.username && !creds.password) || unlockedForms[formId]) {
+      showFormIframe(formId, title);
+    } else {
+      pendingForm = formId;
+      pendingFormName = title;
+      document.getElementById('loginLabel').textContent = 'Enter credentials for ' + title;
+      document.getElementById('loginErrorMsg').style.display = 'none';
+      document.getElementById('loginUsername').value = '';
+      document.getElementById('loginPassword').value = '';
+      document.getElementById('loginOverlay').style.display = 'flex';
+      setTimeout(function() { document.getElementById('loginUsername').focus(); }, 50);
+    }
+  }
+
+  function submitLogin() {
+    var enteredUser = document.getElementById('loginUsername').value.trim();
+    var enteredPass = document.getElementById('loginPassword').value;
+    var creds = FORM_CREDENTIALS[pendingForm];
+
+    if (creds && enteredUser === creds.username && enteredPass === creds.password) {
+      var id = pendingForm, name = pendingFormName;
+      persistUnlock(id);
+      closeLoginModal();
+      showFormIframe(id, name);
+    } else {
+      var errorDiv = document.getElementById('loginErrorMsg');
+      var userField = document.getElementById('loginUsername');
+      var passField = document.getElementById('loginPassword');
+      errorDiv.style.display = 'block';
+      userField.style.animation = 'shake 0.3s ease';
+      passField.style.animation = 'shake 0.3s ease';
+      userField.style.borderColor = '#dc3545';
+      passField.style.borderColor = '#dc3545';
+      userField.value = '';
+      passField.value = '';
+      setTimeout(function() {
+        userField.style.animation = '';
+        passField.style.animation = '';
+        userField.style.borderColor = '#e0e6ed';
+        passField.style.borderColor = '#e0e6ed';
+        userField.focus();
+      }, 350);
+    }
+  }
+
+  function closeLoginModal() {
+    document.getElementById('loginOverlay').style.display = 'none';
+    pendingForm = null;
+  }
+
+  // ---------- FORM PANEL ----------
+  function showFormIframe(formId, formTitle) {
+    var panel = document.getElementById('formPanel');
+    var iframe = document.getElementById('formIframe');
+    var loading = document.getElementById('iframeLoading');
+    var notFound = document.getElementById('notFoundMsg');
+    var titleEl = document.getElementById('panelTitle');
+    var f = formById(formId);
+
+    titleEl.textContent = formTitle;
+    panel.classList.add('active');
+
+    iframe.style.display = 'none';
+    notFound.style.display = 'none';
+    loading.style.display = 'flex';
+
+    var filePath = f ? f.file : null;
+    if (!filePath) {
+      loading.style.display = 'none';
+      notFound.style.display = 'flex';
+      return;
+    }
+
+    iframe.onload = function() {
+      setTimeout(function() {
+        try {
+          var doc = iframe.contentDocument || iframe.contentWindow.document;
+          if (doc && doc.location.href && doc.location.href !== 'about:blank') {
+            loading.style.display = 'none';
+            iframe.style.display = 'block';
+            notFound.style.display = 'none';
+          } else {
+            loading.style.display = 'none';
+            notFound.style.display = 'flex';
+            iframe.style.display = 'none';
+          }
+        } catch(e) {
+          loading.style.display = 'none';
+          iframe.style.display = 'block';
+          notFound.style.display = 'none';
+        }
+      }, 300);
+    };
+
+    iframe.onerror = function() {
+      loading.style.display = 'none';
+      notFound.style.display = 'flex';
+      iframe.style.display = 'none';
+    };
+
+    iframe.src = filePath;
+  }
+
+  function closeFormPanel() {
+    var panel = document.getElementById('formPanel');
+    var iframe = document.getElementById('formIframe');
+    panel.classList.remove('active');
+    iframe.src = 'about:blank';
+    document.getElementById('iframeLoading').style.display = 'flex';
+    iframe.style.display = 'none';
+  }
+
+  // ---------- ONLINE STATUS ----------
+  function updateOnlineStatus() {
+    var dot = document.getElementById('statusDot');
+    var txt = document.getElementById('statusTxt');
+    var badge = document.getElementById('statusBadge');
+    if (navigator.onLine) {
+      dot.className = 'status-dot online';
+      txt.textContent = 'System ready';
+      badge.textContent = 'ONLINE';
+      badge.style.background = '#e8f5e9';
+      badge.style.color = '#28a745';
+    } else {
+      dot.className = 'status-dot offline';
+      txt.textContent = 'Offline mode';
+      badge.textContent = 'OFFLINE';
+      badge.style.background = '#fee2e2';
+      badge.style.color = '#dc3545';
+    }
+  }
+
+  window.addEventListener('online', updateOnlineStatus);
+  window.addEventListener('offline', updateOnlineStatus);
+
+  window.addEventListener('popstate', function(e) {
+    var panel = document.getElementById('formPanel');
+    if (panel && panel.classList.contains('active')) {
+      closeFormPanel();
+      history.pushState(null, '', location.href);
+    }
+  });
+  history.pushState(null, '', location.href);
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      if (document.getElementById('loginOverlay').style.display === 'flex') closeLoginModal();
+      else if (document.getElementById('formPanel').classList.contains('active')) closeFormPanel();
+    }
+  });
+
+  document.getElementById('loginOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeLoginModal();
+  });
+
+  // ---------- INIT ----------
+  document.getElementById('year').textContent = new Date().getFullYear();
+  renderForms();
+  updateOnlineStatus();
+</script>
+</body>
+</html>
