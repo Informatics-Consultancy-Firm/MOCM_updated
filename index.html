@@ -231,42 +231,58 @@
 <script>
 /* ================= CONFIGURATION ================= */
 
-/* One module per MOCM form. Each module folder holds:
-     presentation.pdf  ·  video.mp4  ·  assessment.html
-   The data collection step points at the existing form file. */
+/* One module per MOCM form. Every file is named after the form, all in the
+   same folder as index.html — no sub-folders. */
 var MODULES = [
-  {letter:"A", folder:"facility-profile",    data:"form_a.html", accent:"#3b78a8",
-   title:"Facility Profile",                  desc:"PHU identification, location and staff details."},
-  {letter:"B", folder:"hf-readiness",        data:"form_b.html", accent:"#2b5f8a",
-   title:"HF Readiness",                      desc:"Capacity, supplies, tools and referral readiness."},
-  {letter:"C", folder:"case-management",     data:"form_c.html", accent:"#4a8dbf",
-   title:"Case Management",                   desc:"RDT, ACT and treatment compliance at the facility."},
-  {letter:"D", folder:"data-quality",        data:"form_d.html", accent:"#28a745",
-   title:"Data Quality",                      desc:"HMIS register review and data verification."},
-  {letter:"E", folder:"community-services",  data:"form_e.html", accent:"#fd7e14",
-   title:"Community Services",                desc:"IPTp, ITN distribution and outreach activities."},
-  {letter:"F", folder:"referral-system",     data:"form_f.html", accent:"#9c27b0",
-   title:"Referral System",                   desc:"Severe malaria referral pathway and follow-up."},
-  {letter:"G", folder:"supervisor-feedback", data:"form_g.html", accent:"#ffc107",
-   title:"Supervisor Feedback & Action Plan", desc:"Ratings, gaps and agreed corrective actions."},
-  {letter:"H", folder:"laboratory",           data:"form_h.html", accent:"#17a2b8",
-   title:"Laboratory",                        desc:"Microscopy, RDT quality control, reagents and lab records."},
-  {letter:"I", folder:"pmc",                  data:"form_i.html", accent:"#e83e8c",
-   title:"Perennial Malaria Chemoprevention (PMC)",
-   desc:"Formerly Intermittent Preventive Treatment in Infants (IPTi). Eligibility, doses and recording."},
-  {letter:"J", folder:"malaria-vaccine",      data:"form_j.html", accent:"#6f42c1",
-   title:"Malaria Vaccine (RTS,S) Administration",
-   desc:"RTS,S dose schedule, cold chain, wastage and recording."}
+  {letter:"A", accent:"#3b78a8", title:"Facility Profile",
+   desc:"PHU identification, location and staff details.",
+   pres:"form-a-presentation.pdf", video:"form-a-video.mp4", assessment:"form-a-assessment.html", data:"form_a.html"},
+
+  {letter:"B", accent:"#2b5f8a", title:"HF Readiness",
+   desc:"Capacity, supplies, tools and referral readiness.",
+   pres:"form-b-presentation.pdf", video:"form-b-video.mp4", assessment:"form-b-assessment.html", data:"form_b.html"},
+
+  {letter:"C", accent:"#4a8dbf", title:"Case Management",
+   desc:"RDT, ACT and treatment compliance at the facility.",
+   pres:"form-c-presentation.pdf", video:"form-c-video.mp4", assessment:"form-c-assessment.html", data:"form_c.html"},
+
+  {letter:"D", accent:"#28a745", title:"Data Quality",
+   desc:"HMIS register review and data verification.",
+   pres:"form-d-presentation.pdf", video:"form-d-video.mp4", assessment:"form-d-assessment.html", data:"form_d.html"},
+
+  {letter:"E", accent:"#fd7e14", title:"Community Services",
+   desc:"IPTp, ITN distribution and outreach activities.",
+   pres:"form-e-presentation.pdf", video:"form-e-video.mp4", assessment:"form-e-assessment.html", data:"form_e.html"},
+
+  {letter:"F", accent:"#9c27b0", title:"Referral System",
+   desc:"Severe malaria referral pathway and follow-up.",
+   pres:"form-f-presentation.pdf", video:"form-f-video.mp4", assessment:"form-f-assessment.html", data:"form_f.html"},
+
+  {letter:"G", accent:"#ffc107", title:"Supervisor Feedback & Action Plan",
+   desc:"Ratings, gaps and agreed corrective actions.",
+   pres:"form-g-presentation.pdf", video:"form-g-video.mp4", assessment:"form-g-assessment.html", data:"form_g.html"},
+
+  {letter:"H", accent:"#17a2b8", title:"Laboratory",
+   desc:"Microscopy, RDT quality control, reagents and lab records.",
+   pres:"form-h-presentation.pdf", video:"form-h-video.mp4", assessment:"form-h-assessment.html", data:"form_h.html"},
+
+  {letter:"I", accent:"#e83e8c", title:"Perennial Malaria Chemoprevention (PMC)",
+   desc:"Formerly Intermittent Preventive Treatment in Infants (IPTi). Eligibility, doses and recording.",
+   pres:"form-i-presentation.pdf", video:"form-i-video.mp4", assessment:"form-i-assessment.html", data:"form_i.html"},
+
+  {letter:"J", accent:"#6f42c1", title:"Malaria Vaccine (RTS,S) Administration",
+   desc:"RTS,S dose schedule, cold chain, wastage and recording.",
+   pres:"form-j-presentation.pdf", video:"form-j-video.mp4", assessment:"form-j-assessment.html", data:"form_j.html"}
 ];
 
 var SUBS = [
-  {key:"ppt", file:"presentation.pdf", ic:"ppt", cls:"btn-orange", step:"Sub-module 1",
+  {key:"ppt", ic:"ppt", cls:"btn-orange", step:"Sub-module 1",
    title:"Presentation", desc:"Slide walkthrough of the form and the supervision workflow.", btn:"Open presentation"},
-  {key:"video", file:"video.mp4", ic:"vid", cls:"btn-blue", step:"Sub-module 2",
+  {key:"video", ic:"vid", cls:"btn-blue", step:"Sub-module 2",
    title:"Video", desc:"Recorded demonstration (.mp4) of how to complete the form.", btn:"Play video"},
-  {key:"assessment", file:"assessment.html", ic:"ass", cls:"btn-gold", step:"Sub-module 3",
+  {key:"assessment", ic:"ass", cls:"btn-gold", step:"Sub-module 3",
    title:"Assessment", desc:"Short assessment to confirm understanding before fieldwork.", btn:"Start assessment"},
-  {key:"data", file:null, ic:"dat", cls:"btn-green", step:"Sub-module 4",
+  {key:"data", ic:"dat", cls:"btn-green", step:"Sub-module 4",
    title:"Data Collection", desc:"Launch the live supervision form used at the facility.", btn:"Open data collection"}
 ];
 
@@ -401,7 +417,7 @@ function subByKey(key){
 }
 
 function subUrl(m, s){
-  return (s.key === "data") ? m.data : (m.folder + "/" + s.file);
+  return (s.key === "ppt") ? m.pres : m[s.key];
 }
 
 function openSub(key, i){
@@ -426,11 +442,8 @@ function openSub(key, i){
     }
   }
 
-  openDoc(key === "ppt" ? "pdf" : "html", s.title + " \u00B7 " + m.title, subUrl(m, s), depthOf(subUrl(m, s)));
+  openDoc(key === "ppt" ? "pdf" : "html", s.title + " \u00B7 " + m.title, subUrl(m, s), 0);
 }
-
-/* how many folders deep the opened file sits, so the theme path resolves */
-function depthOf(url){ return (url.split("/").length - 1); }
 
 /* ================= DOC VIEWER ================= */
 function openDoc(kind, title, url, depth){
@@ -446,7 +459,7 @@ function openDoc(kind, title, url, depth){
   } else {
     document.getElementById("pdfScroll").innerHTML = "";
     var frame = document.getElementById("dvFrame");
-    frame.onload = function(){ themeFrame(frame, depth || 0); };
+    frame.onload = function(){ themeFrame(frame, 0); };
     frame.src = url;
   }
 }
@@ -571,7 +584,7 @@ function renderPdf(container, url){
       visible();
     });
   }).catch(function(){
-    container.innerHTML = '<div class="dvmsg">Could not load the presentation. Check that presentation.pdf sits in the module folder.</div>';
+    container.innerHTML = '<div class="dvmsg">Could not load the presentation. Check that the PDF sits beside index.html.</div>';
   });
 }
 
@@ -608,7 +621,7 @@ function submitLogin(){
     try { sessionStorage.setItem("mocm_unlocked_final", JSON.stringify(unlockedForms)); } catch(e) {}
     closeLoginModal();
     if (currentModule === i) goModule(i);
-    openDoc("html", "Data Collection \u00B7 " + m.title, m.data, depthOf(m.data));
+    openDoc("html", "Data Collection \u00B7 " + m.title, m.data, 0);
   } else {
     document.getElementById("loginErrorMsg").style.display = "block";
     userField.style.animation = "shake 0.3s ease";
