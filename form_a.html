@@ -109,6 +109,7 @@ body {
   outline: none;
   box-shadow: 0 0 0 3px rgba(59, 120, 168, 0.1);
 }
+.form-select:disabled { background: #f6f8fa; color: #9aa7b4; }
 
 .question-row { margin-bottom: 24px; }
 .question-text { font-weight: 600; font-size: 14px; margin-bottom: 12px; color: var(--text-dark); }
@@ -247,13 +248,13 @@ body {
 
 <div class="form-title">FORM A: General Health Facility Information</div>
 
-<!-- Demographics Section with Cascading from CSV (district, chiefdom, phu, facility_type) -->
+<!-- Demographics Section: District > Chiefdom > PHU > Facility Type -->
 <div class="demographics">
   <h3>FACILITY DEMOGRAPHICS</h3>
   <div class="question-row">
     <div class="question-text">1. District <span class="required-star">*</span></div>
     <select class="form-select" id="districtSelect" onchange="updateChiefdom()">
-      <option value="">Loading districts...</option>
+      <option value="">Select District...</option>
     </select>
   </div>
   <div class="question-row">
@@ -293,15 +294,30 @@ body {
       </div>
     </div>
     <div class="question-row"><div class="question-text">8. Cadre of In-Charge <span class="required-star">*</span></div>
-      <div class="options-group-vertical" id="cadre_group">
-        <label class="radio-option-vertical"><input type="radio" name="cadre" value="CHO"> CHO</label>
-        <label class="radio-option-vertical"><input type="radio" name="cadre" value="CHT"> CHT</label>
-        <label class="radio-option-vertical"><input type="radio" name="cadre" value="CHA"> CHA</label>
-        <label class="radio-option-vertical"><input type="radio" name="cadre" value="Midwife"> Midwife</label>
-        <label class="radio-option-vertical"><input type="radio" name="cadre" value="SRN"> SRN</label>
-        <label class="radio-option-vertical"><input type="radio" name="cadre" value="SECHN"> SECHN</label>
-        <label class="radio-option-vertical"><input type="radio" name="cadre" value="MCHA"> MCHA</label>
-      </div>
+      <select class="form-select" id="cadre" onchange="toggleCadreOther()">
+        <option value="">Select cadre...</option>
+        <option>Medical Officer / Doctor</option>
+        <option>Community Health Officer (CHO)</option>
+        <option>Community Health Technician (CHT)</option>
+        <option>Community Health Assistant (CHA)</option>
+        <option>State Registered Nurse (SRN)</option>
+        <option>State Enrolled Community Health Nurse (SECHN)</option>
+        <option>Registered Midwife</option>
+        <option>MCH Aide (MCHA)</option>
+        <option>Public Health Nurse (PHN)</option>
+        <option>Nurse Anaesthetist</option>
+        <option>Laboratory Technician</option>
+        <option>Laboratory Assistant</option>
+        <option>Pharmacy Technician / Dispenser</option>
+        <option>Environmental Health Officer / Assistant</option>
+        <option>Nutritionist</option>
+        <option>Data Clerk / M&amp;E Officer</option>
+        <option>Vaccinator / EPI Officer</option>
+        <option>Community Health Worker (CHW)</option>
+        <option>Nurse Aide / Ward Attendant</option>
+        <option>Other</option>
+      </select>
+      <input class="form-input" id="cadre_other" type="text" placeholder="If Other, specify" style="display:none;margin-top:8px;">
     </div>
     <div class="question-row"><div class="question-text">9. Date of visit <span class="required-star">*</span></div>
       <input class="form-input" id="visit_date" type="date">
@@ -341,38 +357,100 @@ body {
 </div>
 
 <script>
-// ==================== CSV DATA STRUCTURE ====================
-// Expected CSV columns: district, chiefdom, phu, facility_type
+// ==================== FACILITY LIST ====================
+// MOCM pilot: 10 selected facilities, Bo District.
+// district | chiefdom | phu | facility_type
+const PILOT_FACILITIES = [
+  { district: "Bo", chiefdom: "Badjia Chiefdom",     phu: "Njagbahun (Badjia) MCHP",   facilityType: "MCHP" },
+  { district: "Bo", chiefdom: "Baoma Chiefdom",      phu: "Faabu CHP",                 facilityType: "CHP"  },
+  { district: "Bo", chiefdom: "Baoma Chiefdom",      phu: "Gerehun CHC",               facilityType: "CHC"  },
+  { district: "Bo", chiefdom: "Baoma Chiefdom",      phu: "Mbundorbu MCHP",            facilityType: "MCHP" },
+  { district: "Bo", chiefdom: "Bongor Chiefdom",     phu: "Mamboma (Bongor) CHP",      facilityType: "CHP"  },
+  { district: "Bo", chiefdom: "Bumpe Ngao Chiefdom", phu: "Bumpe CHC",                 facilityType: "CHC"  },
+  { district: "Bo", chiefdom: "Bumpe Ngao Chiefdom", phu: "Mokoba MCHP",               facilityType: "MCHP" },
+  { district: "Bo", chiefdom: "Bumpe Ngao Chiefdom", phu: "Yengema (Bumpe Ngao) MCHP", facilityType: "MCHP" },
+  { district: "Bo", chiefdom: "Tikonko Chiefdom",    phu: "Gondama (Tikonko) CHC",     facilityType: "CHC"  },
+  { district: "Bo", chiefdom: "Tikonko Chiefdom",    phu: "Griema MCHP",               facilityType: "MCHP" }
+];
+
+
+
+// ==================== CASCADE DATA STRUCTURE ====================
 let csvData = [];
 let districtsSet = new Set();
 let chiefdomMap = new Map();        // district -> Set of chiefdoms
-let phuMap = new Map();             // "district|chiefdom" -> Array of {phu, facility_type}
+let phuMap = new Map();             // "district|chiefdom" -> Array of {phu, facilityType}
 let facilityTypeMap = new Map();    // "district|chiefdom|phu" -> facility_type
 
-// Load CSV file
-async function loadCSV() {
-  try {
-    const response = await fetch('cascading.csv');
-    if (!response.ok) {
-      throw new Error('CSV file not found');
-    }
-    const csvText = await response.text();
-    parseCSV(csvText);
-  } catch (error) {
-    console.error('Error loading cascading.csv:', error);
-    document.getElementById("districtSelect").innerHTML = '<option value="">Error: cascading.csv not found</option>';
+function resetCascade() {
+  csvData = [];
+  districtsSet = new Set();
+  chiefdomMap = new Map();
+  phuMap = new Map();
+  facilityTypeMap = new Map();
+}
+
+// Load rows of {district, chiefdom, phu, facilityType} into the cascade
+function ingestRows(rows) {
+  resetCascade();
+  rows.forEach(function(row) {
+    const district = (row.district || "").trim();
+    const chiefdom = (row.chiefdom || "").trim();
+    const phu = (row.phu || "").trim();
+    const facilityType = (row.facilityType || "").trim();
+    if (!district || !chiefdom || !phu) return;
+
+    csvData.push({ district, chiefdom, phu, facilityType });
+    districtsSet.add(district);
+
+    if (!chiefdomMap.has(district)) chiefdomMap.set(district, new Set());
+    chiefdomMap.get(district).add(chiefdom);
+
+    const phuKey = district + "|" + chiefdom;
+    if (!phuMap.has(phuKey)) phuMap.set(phuKey, []);
+    phuMap.get(phuKey).push({ phu, facilityType });
+
+    const facilityKey = district + "|" + chiefdom + "|" + phu;
+    if (!facilityTypeMap.has(facilityKey) && facilityType) facilityTypeMap.set(facilityKey, facilityType);
+  });
+  populateDistricts();
+}
+
+function populateDistricts() {
+  const districtSelect = document.getElementById("districtSelect");
+  const sorted = Array.from(districtsSet).sort();
+  districtSelect.innerHTML = '<option value="">Select District...</option>';
+  sorted.forEach(function(district) {
+    districtSelect.innerHTML += '<option value="' + escapeHtml(district) + '">' + escapeHtml(district) + '</option>';
+  });
+  districtSelect.disabled = false;
+  // if only one district exists, select it
+  if (sorted.length === 1) {
+    districtSelect.value = sorted[0];
+    updateChiefdom();
   }
 }
 
+// Optional: cascading.csv in the same folder overrides the built-in list
+async function loadCSV() {
+  ingestRows(PILOT_FACILITIES);
+  try {
+    const response = await fetch('cascading.csv');
+    if (!response.ok) return;
+    const rows = parseCSV(await response.text());
+    if (rows.length) ingestRows(rows);
+  } catch (error) {
+    // no CSV present - the built-in pilot list stays in use
+  }
+}
+
+// Expected CSV columns: district, chiefdom, phu, facility_type
 function parseCSV(csvText) {
   const lines = csvText.trim().split(/\r?\n/);
-  if (lines.length === 0) return;
-  
-  // Parse header to find column indices
-  const header = lines[0].toLowerCase();
-  let districtIdx = -1, chiefdomIdx = -1, phuIdx = -1, facilityTypeIdx = -1;
+  if (lines.length < 2) return [];
+
   const headers = parseCSVLine(lines[0]);
-  
+  let districtIdx = -1, chiefdomIdx = -1, phuIdx = -1, facilityTypeIdx = -1;
   for (let i = 0; i < headers.length; i++) {
     const h = headers[i].toLowerCase().trim();
     if (h === 'district') districtIdx = i;
@@ -380,77 +458,45 @@ function parseCSV(csvText) {
     else if (h === 'phu') phuIdx = i;
     else if (h === 'facility_type') facilityTypeIdx = i;
   }
-  
-  // If exact match not found, try alternative names
   if (districtIdx === -1) districtIdx = headers.findIndex(h => h.toLowerCase().includes('district'));
   if (chiefdomIdx === -1) chiefdomIdx = headers.findIndex(h => h.toLowerCase().includes('chiefdom'));
   if (phuIdx === -1) phuIdx = headers.findIndex(h => h.toLowerCase().includes('phu') || h.toLowerCase().includes('facility'));
   if (facilityTypeIdx === -1) facilityTypeIdx = headers.findIndex(h => h.toLowerCase().includes('facility_type') || h.toLowerCase().includes('facility type'));
-  
-  const startRow = 1;
-  
-  for (let i = startRow; i < lines.length; i++) {
+
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
     const line = lines[i].trim();
     if (line === "") continue;
-    
-    const row = parseCSVLine(line);
-    if (row.length > Math.max(districtIdx, chiefdomIdx, phuIdx, facilityTypeIdx)) {
-      const district = row[districtIdx]?.trim();
-      const chiefdom = row[chiefdomIdx]?.trim();
-      const phu = row[phuIdx]?.trim();
-      const facilityType = facilityTypeIdx !== -1 ? row[facilityTypeIdx]?.trim() : "";
-      
-      if (district && chiefdom && phu) {
-        csvData.push({ district, chiefdom, phu, facilityType });
-        districtsSet.add(district);
-        
-        if (!chiefdomMap.has(district)) {
-          chiefdomMap.set(district, new Set());
-        }
-        chiefdomMap.get(district).add(chiefdom);
-        
-        const phuKey = `${district}|${chiefdom}`;
-        if (!phuMap.has(phuKey)) {
-          phuMap.set(phuKey, []);
-        }
-        phuMap.get(phuKey).push({ phu, facilityType });
-        
-        const facilityKey = `${district}|${chiefdom}|${phu}`;
-        if (!facilityTypeMap.has(facilityKey) && facilityType) {
-          facilityTypeMap.set(facilityKey, facilityType);
-        }
-      }
-    }
+    const cells = parseCSVLine(line);
+    if (cells.length <= Math.max(districtIdx, chiefdomIdx, phuIdx)) continue;
+    rows.push({
+      district: cells[districtIdx],
+      chiefdom: cells[chiefdomIdx],
+      phu: cells[phuIdx],
+      facilityType: facilityTypeIdx !== -1 ? cells[facilityTypeIdx] : ""
+    });
   }
-  
-  // Populate district dropdown
-  const districtSelect = document.getElementById("districtSelect");
-  const sortedDistricts = Array.from(districtsSet).sort();
-  districtSelect.innerHTML = '<option value="">Select District...</option>';
-  sortedDistricts.forEach(district => {
-    districtSelect.innerHTML += `<option value="${escapeHtml(district)}">${escapeHtml(district)}</option>`;
-  });
-  districtSelect.disabled = false;
+  return rows;
 }
 
 function parseCSVLine(line) {
   const result = [];
   let inQuotes = false;
   let current = '';
-  
   for (let i = 0; i < line.length; i++) {
     const char = line[i];
-    if (char === '"') {
-      inQuotes = !inQuotes;
-    } else if (char === ',' && !inQuotes) {
-      result.push(current);
-      current = '';
-    } else {
-      current += char;
-    }
+    if (char === '"') inQuotes = !inQuotes;
+    else if (char === ',' && !inQuotes) { result.push(current); current = ''; }
+    else current += char;
   }
   result.push(current);
   return result;
+}
+
+// only the chiefdoms that hold a facility in the list
+function chiefdomsForDistrict(district) {
+  if (chiefdomMap.has(district)) return Array.from(chiefdomMap.get(district)).sort();
+  return [];
 }
 
 function updateChiefdom() {
@@ -458,20 +504,21 @@ function updateChiefdom() {
   const chiefdomSelect = document.getElementById("chiefdomSelect");
   const phuSelect = document.getElementById("phuSelect");
   const facilityTypeSelect = document.getElementById("facilityTypeSelect");
-  
+
   chiefdomSelect.innerHTML = '<option value="">Select Chiefdom...</option>';
-  phuSelect.innerHTML = '<option value="">Select PHU first</option>';
+  phuSelect.innerHTML = '<option value="">Select Chiefdom first</option>';
   facilityTypeSelect.innerHTML = '<option value="">Select PHU first</option>';
   phuSelect.disabled = true;
   facilityTypeSelect.disabled = true;
-  
-  if (district && chiefdomMap.has(district)) {
-    const chiefdoms = Array.from(chiefdomMap.get(district)).sort();
-    chiefdoms.forEach(chiefdom => {
-      chiefdomSelect.innerHTML += `<option value="${escapeHtml(chiefdom)}">${escapeHtml(chiefdom)}</option>`;
+
+  const chiefdoms = chiefdomsForDistrict(district);
+  if (chiefdoms.length) {
+    chiefdoms.forEach(function(chiefdom) {
+      chiefdomSelect.innerHTML += '<option value="' + escapeHtml(chiefdom) + '">' + escapeHtml(chiefdom) + '</option>';
     });
     chiefdomSelect.disabled = false;
   } else {
+    chiefdomSelect.innerHTML = '<option value="">No chiefdoms listed for this district</option>';
     chiefdomSelect.disabled = true;
   }
 }
@@ -481,23 +528,19 @@ function updatePHU() {
   const chiefdom = document.getElementById("chiefdomSelect").value;
   const phuSelect = document.getElementById("phuSelect");
   const facilityTypeSelect = document.getElementById("facilityTypeSelect");
-  
+
   phuSelect.innerHTML = '<option value="">Select PHU...</option>';
   facilityTypeSelect.innerHTML = '<option value="">Select PHU first</option>';
   facilityTypeSelect.disabled = true;
-  
-  if (district && chiefdom) {
-    const phuKey = `${district}|${chiefdom}`;
-    if (phuMap.has(phuKey)) {
-      const phus = phuMap.get(phuKey).sort((a,b) => a.phu.localeCompare(b.phu));
-      phus.forEach(item => {
-        phuSelect.innerHTML += `<option value="${escapeHtml(item.phu)}" data-facility-type="${escapeHtml(item.facilityType || '')}">${escapeHtml(item.phu)}</option>`;
-      });
-      phuSelect.disabled = false;
-    } else {
-      phuSelect.disabled = true;
-    }
+
+  const phuKey = district + "|" + chiefdom;
+  if (district && chiefdom && phuMap.has(phuKey)) {
+    phuMap.get(phuKey).slice().sort(function(a, b) { return a.phu.localeCompare(b.phu); }).forEach(function(item) {
+      phuSelect.innerHTML += '<option value="' + escapeHtml(item.phu) + '" data-facility-type="' + escapeHtml(item.facilityType || '') + '">' + escapeHtml(item.phu) + '</option>';
+    });
+    phuSelect.disabled = false;
   } else {
+    phuSelect.innerHTML = '<option value="">No facilities listed for this chiefdom</option>';
     phuSelect.disabled = true;
   }
 }
@@ -507,20 +550,15 @@ function updateFacilityType() {
   const chiefdom = document.getElementById("chiefdomSelect").value;
   const phu = document.getElementById("phuSelect").value;
   const facilityTypeSelect = document.getElementById("facilityTypeSelect");
-  
+
   if (district && chiefdom && phu) {
-    const facilityKey = `${district}|${chiefdom}|${phu}`;
-    const facilityType = facilityTypeMap.get(facilityKey) || "";
-    
+    const facilityType = facilityTypeMap.get(district + "|" + chiefdom + "|" + phu) || "";
     if (facilityType) {
-      facilityTypeSelect.innerHTML = `<option value="${escapeHtml(facilityType)}">${escapeHtml(facilityType)}</option>`;
+      facilityTypeSelect.innerHTML = '<option value="' + escapeHtml(facilityType) + '">' + escapeHtml(facilityType) + '</option>';
       facilityTypeSelect.disabled = false;
     } else {
-      // Allow manual entry if not in CSV
-      facilityTypeSelect.innerHTML = '<option value="">Select or enter facility type...</option>' +
-        '<option>CHC</option><option>CHPs (Community Health Post)</option><option>MCH Aid Post</option>' +
-        '<option>Peripheral Health Unit (PHU)</option><option>Government Hospital</option><option>Mission Hospital</option>';
-      facilityTypeSelect.disabled = false;
+      facilityTypeSelect.innerHTML = '<option value="">Type not listed for this facility</option>';
+      facilityTypeSelect.disabled = true;
     }
   } else {
     facilityTypeSelect.innerHTML = '<option value="">Select PHU first</option>';
@@ -537,7 +575,7 @@ function createSignaturePad(canvasId, clearBtnId, storageKey) {
   const canvas = document.getElementById(canvasId);
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  
+
   function getCoordinates(e) {
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;
@@ -552,7 +590,7 @@ function createSignaturePad(canvasId, clearBtnId, storageKey) {
     }
     return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY };
   }
-  
+
   function startDrawing(e) {
     drawing = true;
     const coord = getCoordinates(e);
@@ -562,7 +600,7 @@ function createSignaturePad(canvasId, clearBtnId, storageKey) {
     ctx.stroke();
     e.preventDefault();
   }
-  
+
   function draw(e) {
     if (!drawing) return;
     const coord = getCoordinates(e);
@@ -572,17 +610,17 @@ function createSignaturePad(canvasId, clearBtnId, storageKey) {
     ctx.moveTo(coord.x, coord.y);
     e.preventDefault();
   }
-  
+
   function stopDrawing() {
     drawing = false;
     ctx.beginPath();
     if (storageKey) sessionStorage.setItem(storageKey, canvas.toDataURL());
   }
-  
+
   ctx.lineWidth = 2;
   ctx.lineCap = 'round';
   ctx.strokeStyle = '#1a2c3e';
-  
+
   canvas.addEventListener('mousedown', startDrawing);
   canvas.addEventListener('mousemove', draw);
   canvas.addEventListener('mouseup', stopDrawing);
@@ -590,16 +628,16 @@ function createSignaturePad(canvasId, clearBtnId, storageKey) {
   canvas.addEventListener('touchstart', startDrawing);
   canvas.addEventListener('touchmove', draw);
   canvas.addEventListener('touchend', stopDrawing);
-  
+
   document.getElementById(clearBtnId)?.addEventListener('click', () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (storageKey) sessionStorage.removeItem(storageKey);
   });
-  
+
   canvas.width = canvas.offsetWidth * 2;
   canvas.height = canvas.offsetHeight * 2;
   ctx.scale(2, 2);
-  
+
   const saved = sessionStorage.getItem(storageKey);
   if (saved) { const img = new Image(); img.onload = () => ctx.drawImage(img, 0, 0); img.src = saved; }
 }
@@ -620,7 +658,7 @@ function renderSupervisors() {
     </div>`;
   });
   container.innerHTML = html;
-  
+
   supervisors.forEach((s, i) => {
     setTimeout(() => createSignaturePad(`sup_sig_canvas_${i}`, `sup_sig_clear_${i}`, `sup_sig_${i}`), 50);
     document.getElementById(`sup_name_${i}`).addEventListener('input', (e) => { supervisors[i].name = e.target.value; });
@@ -649,7 +687,7 @@ function renderStaff() {
     </div>`;
   });
   container.innerHTML = html;
-  
+
   staffMembers.forEach((s, i) => {
     document.getElementById(`staff_name_${i}`)?.addEventListener('input', (e) => { staffMembers[i].name = e.target.value; });
     document.querySelectorAll(`input[name="staff_sex_${i}"]`).forEach(r => r.addEventListener('change', (e) => { if(e.target.checked) staffMembers[i].sex = e.target.value; updateRadioVisuals(document.getElementById(`staff_sex_group_${i}`)); }));
@@ -671,7 +709,22 @@ function updateRadioVisuals(container) {
   });
 }
 
-function escapeHtml(str) { if (!str) return ''; return String(str).replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
+function toggleCadreOther() {
+  var sel = document.getElementById("cadre");
+  var box = document.getElementById("cadre_other");
+  var isOther = sel.value === "Other";
+  box.style.display = isOther ? "block" : "none";
+  if (!isOther) box.value = "";
+}
+
+function cadreValue() {
+  var sel = document.getElementById("cadre").value;
+  if (sel !== "Other") return sel;
+  var other = document.getElementById("cadre_other").value.trim();
+  return other ? "Other: " + other : "Other";
+}
+
+function escapeHtml(str) { if (!str) return ''; return String(str).replace(/[&<>"]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[m])); }
 function validatePhone(phone) { return phone && String(phone).replace(/\D/g, '').length === 9; }
 
 function validateForm() {
@@ -681,15 +734,16 @@ function validateForm() {
   if (!document.getElementById("facilityTypeSelect").value) { alert("Please select/enter Health Facility Type"); return false; }
   if (!document.getElementById("incharge_name").value) { alert("Please enter In-Charge Name"); return false; }
   if (!document.querySelector('input[name="incharge_gender"]:checked')) { alert("Please select In-Charge Gender"); return false; }
-  if (!document.querySelector('input[name="cadre"]:checked')) { alert("Please select In-Charge Cadre"); return false; }
-  
+  if (!document.getElementById("cadre").value) { alert("Please select In-Charge Cadre"); return false; }
+  if (document.getElementById("cadre").value === "Other" && !document.getElementById("cadre_other").value.trim()) { alert("Please specify the In-Charge Cadre"); return false; }
+
   const validSupervisors = supervisors.filter((s, idx) => {
     if (!s.name || !s.sex || !s.designation) return false;
     if (!validatePhone(s.phone)) { alert(`Supervisor #${idx+1}: Phone must be 9 digits`); return false; }
     return true;
   });
   if (validSupervisors.length === 0) { alert("Add at least one supervisor with Name, Sex, Designation, and 9-digit Phone."); return false; }
-  
+
   const firstStaff = staffMembers[0];
   if (!firstStaff.name || !firstStaff.sex || !firstStaff.cadre) { alert("First staff member: Name, Sex, and Cadre are required."); return false; }
   return true;
@@ -705,7 +759,7 @@ function getFormData() {
     hcw_count: document.getElementById("hcw_count").value,
     incharge_name: document.getElementById("incharge_name").value,
     incharge_gender: document.querySelector('input[name="incharge_gender"]:checked')?.value || "",
-    cadre: document.querySelector('input[name="cadre"]:checked')?.value || "",
+    cadre: cadreValue(),
     visit_date: document.getElementById("visit_date").value,
     supervisors: supervisors.map((s, i) => ({ ...s, signature: sessionStorage.getItem(`sup_sig_${i}`) || "" })),
     staff: staffMembers
@@ -746,8 +800,285 @@ renderStaff();
 
 setTimeout(() => {
   updateRadioVisuals(document.getElementById('incharge_gender_group'));
-  updateRadioVisuals(document.getElementById('cadre_group'));
 }, 100);
+
+/* ==================== REQUIRE EVERY QUESTION ====================
+   Set REQUIRE_ALL to false to go back to checking only the key fields. */
+var REQUIRE_ALL = true;
+
+var _RA_STYLE = document.createElement('style');
+_RA_STYLE.textContent =
+  '.ra-missing input,.ra-missing select,.ra-missing textarea{border-color:#dc3545 !important;box-shadow:0 0 0 3px rgba(220,53,69,.15) !important;}' +
+  '.ra-missing .options-group-vertical,.ra-missing .options-group-check,.ra-missing .options-group-h{outline:2px solid #dc3545;outline-offset:4px;border-radius:12px;}' +
+  '.ra-flag{color:#dc3545;font-weight:700;font-size:12px;margin-top:6px;}';
+document.head.appendChild(_RA_STYLE);
+
+function _raVisible(el){
+  // a row is skipped only when it (or a wrapper inside its section) is hidden,
+  // never because its wizard section is the inactive one
+  var n = el;
+  while (n && n !== document.body) {
+    if (n.classList && (n.classList.contains('section-page') || n.classList.contains('tab-page'))) return true;
+    if (n.style && n.style.display === 'none') return false;
+    n = n.parentElement;
+  }
+  return true;
+}
+
+function _raLabel(row){
+  var t = row.querySelector('.question-text');
+  var s = t ? t.textContent.replace(/\s+/g,' ').replace(/\*$/,'').trim() : 'this question';
+  return s.length > 90 ? s.slice(0,90) + '…' : s;
+}
+
+/* an "Other, specify" box only counts when an Other option is ticked */
+function _raOtherRequired(row){
+  var ticked = row.querySelectorAll('input[type=radio]:checked, input[type=checkbox]:checked');
+  for (var i = 0; i < ticked.length; i++) {
+    if (/other/i.test(ticked[i].value || '')) return true;
+  }
+  var sels = row.querySelectorAll('select');
+  for (var j = 0; j < sels.length; j++) {
+    if (/other/i.test(sels[j].value || '')) return true;
+  }
+  return false;
+}
+
+function _raRowAnswered(row){
+  var radios = row.querySelectorAll('input[type=radio]');
+  if (radios.length) {
+    var names = {};
+    for (var i = 0; i < radios.length; i++) names[radios[i].name] = true;
+    for (var nm in names) {
+      if (!row.querySelector('input[type=radio][name="' + nm + '"]:checked')) return false;
+    }
+  }
+  var boxes = row.querySelectorAll('input[type=checkbox]');
+  if (boxes.length && !row.querySelector('input[type=checkbox]:checked')) return false;
+
+  var fields = row.querySelectorAll('select, textarea, input[type=text], input[type=number], input[type=date], input[type=month], input[type=tel], input[type=email]');
+  for (var j = 0; j < fields.length; j++) {
+    var f = fields[j];
+    if (f.disabled) continue;
+    if (/other/i.test(f.placeholder || '') && !_raOtherRequired(row)) continue;
+    if (String(f.value).trim() === '') return false;
+  }
+  return true;
+}
+
+function validateAllQuestions(){
+  document.querySelectorAll('.ra-missing').forEach(function(e){ e.classList.remove('ra-missing'); });
+  document.querySelectorAll('.ra-flag').forEach(function(e){ e.remove(); });
+
+  var rows = document.querySelectorAll('.question-row');
+  for (var i = 0; i < rows.length; i++) {
+    var row = rows[i];
+    if (!_raVisible(row)) continue;
+    if (!row.querySelector('input, select, textarea')) continue;   // heading-only rows
+    if (_raRowAnswered(row)) continue;
+
+    // bring it on screen: right tab, right wizard section
+    if (typeof switchTab === 'function') {
+      var tab = row.closest('.tab-page');
+      if (tab && !tab.classList.contains('active')) switchTab('entry');
+    }
+    var page = row.closest('.section-page');
+    if (page && typeof showSection === 'function') {
+      var all = Array.prototype.slice.call(document.querySelectorAll('.section-page'));
+      var idx = all.indexOf(page);
+      if (idx > -1) showSection(idx);
+    }
+    row.classList.add('ra-missing');
+    var flag = document.createElement('div');
+    flag.className = 'ra-flag';
+    flag.textContent = 'This question is required.';
+    row.appendChild(flag);
+    row.scrollIntoView({ behavior:'smooth', block:'center' });
+    alert('Please answer: ' + _raLabel(row));
+    return false;
+  }
+  return true;
+}
+
+/* run the full check before whatever the form already did */
+(function(){
+  var _origSubmit = window.submitForm;
+  window.submitForm = function(){
+    if (REQUIRE_ALL && !validateAllQuestions()) return;
+    return _origSubmit.apply(this, arguments);
+  };
+})();
+
+(function(){
+  var _origVAS = window.validateAndSubmit;
+  window.validateAndSubmit = function(){
+    if (REQUIRE_ALL && !validateAllQuestions()) return;
+    return _origVAS.apply(this, arguments);
+  };
+})();
+
+
+/* ==================== SIGN IN ====================
+   Add or change users here. Three slots; fill the empty two when ready. */
+var USERS = [
+  { username: "msk", password: "1234", name: "Mohamed Sillah Kanu" },
+  { username: "",    password: "",     name: "" },   // second user — fill in
+  { username: "",    password: "",     name: "" }    // third user — fill in
+];
+
+(function(){
+  var KEY = "mocm_user";
+
+  function currentUser(){
+    try { return JSON.parse(sessionStorage.getItem(KEY)); } catch(e){ return null; }
+  }
+
+  var css = document.createElement('style');
+  css.textContent =
+    '#lgOverlay{position:fixed;inset:0;z-index:3000;background:linear-gradient(160deg,#2b5f8a,#1e4a6d);' +
+    'display:flex;align-items:center;justify-content:center;padding:20px;font-family:inherit;}' +
+    '#lgCard{background:#fff;border-radius:20px;width:100%;max-width:330px;padding:26px 22px 24px;text-align:center;' +
+    'box-shadow:0 24px 48px rgba(0,0,0,.3);}' +
+    '#lgCard .lgIcon{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#2b5f8a,#3b78a8);' +
+    'margin:0 auto 14px;display:flex;align-items:center;justify-content:center;}' +
+    '#lgCard .lgIcon svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2;}' +
+    '#lgCard h3{font-size:17px;font-weight:800;color:#2b5f8a;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}' +
+    '#lgCard p{font-size:12px;color:#6c7a8a;margin-bottom:18px;}' +
+    '#lgCard input{width:100%;padding:13px 14px;border:1.5px solid #e0e6ed;border-radius:12px;font-size:15px;' +
+    'font-family:inherit;margin-bottom:10px;}' +
+    '#lgCard input:focus{border-color:#3b78a8;outline:2px solid rgba(59,120,168,.2);}' +
+    '#lgErr{color:#dc3545;font-size:12px;font-weight:600;min-height:16px;margin-bottom:8px;display:none;}' +
+    '#lgBtn{width:100%;padding:14px;background:#2b5f8a;color:#fff;border:none;border-radius:12px;' +
+    'font-weight:700;font-size:15px;font-family:inherit;cursor:pointer;}' +
+    '.lgWho{font-size:10.5px;font-weight:600;letter-spacing:.4px;opacity:.9;margin-top:8px;}' +
+    '.lgWho a{color:#ffc107;text-decoration:underline;cursor:pointer;margin-left:8px;}' +
+    '.lgStamp{background:#e7f3ff;border:1px solid #c9dff2;border-radius:12px;padding:11px 14px;margin:0 0 12px;}' +
+    '.lgStamp b{color:#2b5f8a;}' +
+    '@keyframes lgShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}';
+  document.head.appendChild(css);
+
+  function showWho(){
+    var u = currentUser(); if(!u) return;
+    document.querySelectorAll('.page-header, .header-sub').length;
+    var host = document.querySelector('.page-header');
+    if(!host || host.querySelector('.lgWho')) return;
+    var d = document.createElement('div');
+    d.className = 'lgWho';
+    d.innerHTML = 'Signed in: ' + u.name + ' (' + u.username + ')<a id="lgOut">Sign out</a>';
+    host.appendChild(d);
+    d.querySelector('#lgOut').onclick = function(){
+      sessionStorage.removeItem(KEY);
+      location.reload();
+    };
+  }
+
+  function gate(){
+    if (currentUser()) { showWho(); return; }
+    var o = document.createElement('div');
+    o.id = 'lgOverlay';
+    o.innerHTML =
+      '<div id="lgCard">' +
+      '<div class="lgIcon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/>' +
+      '<path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>' +
+      '<h3>Sign in</h3><p>MOCM / OTSS+ supervision · NMCP Sierra Leone</p>' +
+      '<input id="lgUser" type="text" placeholder="Username" autocomplete="off" autocapitalize="none">' +
+      '<input id="lgPass" type="password" placeholder="Password">' +
+      '<div id="lgErr">Wrong username or password.</div>' +
+      '<button id="lgBtn">Sign in</button></div>';
+    document.body.appendChild(o);
+
+    var uEl = o.querySelector('#lgUser'), pEl = o.querySelector('#lgPass'), err = o.querySelector('#lgErr');
+    function attempt(){
+      var u = uEl.value.trim().toLowerCase(), p = pEl.value;
+      for (var i = 0; i < USERS.length; i++) {
+        var acc = USERS[i];
+        if (acc.username && acc.username.toLowerCase() === u && acc.password === p) {
+          sessionStorage.setItem(KEY, JSON.stringify({ username: acc.username, name: acc.name, at: new Date().toLocaleString() }));
+          o.remove();
+          showWho();
+          return;
+        }
+      }
+      err.style.display = 'block';
+      var card = o.querySelector('#lgCard');
+      card.style.animation = 'lgShake .3s';
+      setTimeout(function(){ card.style.animation = ''; }, 320);
+      pEl.value = ''; uEl.focus();
+    }
+    o.querySelector('#lgBtn').onclick = attempt;
+    pEl.onkeydown = function(e){ if (e.key === 'Enter') attempt(); };
+    uEl.onkeydown = function(e){ if (e.key === 'Enter') pEl.focus(); };
+    setTimeout(function(){ uEl.focus(); }, 60);
+  }
+
+  /* the summary carries who submitted it */
+  function stamp(){
+    var u = currentUser(); if(!u) return;
+    var host = document.getElementById('summary-content') || document.getElementById('summaryBody');
+    if(!host || host.querySelector('.lgStamp')) return;
+    var d = document.createElement('div');
+    d.className = 'lgStamp';
+    d.innerHTML = 'Submitted by <b>' + u.name + '</b> (' + u.username + ')';
+    host.insertBefore(d, host.firstChild);
+  }
+  ['renderSummary','showSummary'].forEach(function(fnName){
+    if (typeof window[fnName] === 'function') {
+      var orig = window[fnName];
+      window[fnName] = function(){ var r = orig.apply(this, arguments); stamp(); return r; };
+    }
+  });
+  if (typeof window.doSubmit === 'function') {
+    var _ds = window.doSubmit;
+    window.doSubmit = function(){ var r = _ds.apply(this, arguments); stamp(); return r; };
+  }
+  if (typeof window.confirmSubmit === 'function') {
+    var _cs = window.confirmSubmit;
+    window.confirmSubmit = function(){ stamp(); return _cs.apply(this, arguments); };
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', gate);
+  else gate();
+})();
+
+
+/* ---------- show the star on every question the form enforces ---------- */
+(function(){
+  function isOtherBox(f){ return /other/i.test(f.placeholder || ''); }
+
+  function markRequired(){
+    var rows = document.querySelectorAll('.question-row');
+    for (var i = 0; i < rows.length; i++) {
+      var row = rows[i];
+      var fields = row.querySelectorAll('input, select, textarea');
+      if (!fields.length) continue;                     // heading-only row
+
+      // a row holding nothing but an "If Other, specify" box stays unstarred
+      var onlyOther = true;
+      for (var j = 0; j < fields.length; j++) {
+        if (!isOtherBox(fields[j])) { onlyOther = false; break; }
+      }
+      if (onlyOther) continue;
+
+      var label = row.querySelector('.question-text');
+      if (!label || label.querySelector('.required-star')) continue;
+      var star = document.createElement('span');
+      star.className = 'required-star';
+      star.textContent = '*';
+      label.appendChild(star);
+    }
+  }
+
+  var pending = null;
+  function schedule(){
+    clearTimeout(pending);
+    pending = setTimeout(markRequired, 120);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule);
+  else schedule();
+  new MutationObserver(schedule).observe(document.body, { childList:true, subtree:true });
+})();
+
 </script>
 </body>
 </html>

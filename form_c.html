@@ -337,14 +337,6 @@ let currentSection = 0;
 // MOCM pilot: 10 selected facilities, Bo District.
 const DISTRICT = "Bo";
 
-// All chiefdoms of Bo District. The pilot facilities sit in five of them;
-// the others are listed so any Bo chiefdom can be recorded.
-const BO_CHIEFDOMS = [
-  "Badjia Chiefdom", "Bagbe Chiefdom", "Bagbo Chiefdom", "Baoma Chiefdom",
-  "Bongor Chiefdom", "Bumpe Ngao Chiefdom", "Gbo Chiefdom", "Kakua Chiefdom",
-  "Komboya Chiefdom", "Lugbu Chiefdom", "Niawa Lenga Chiefdom", "Selenga Chiefdom",
-  "Tikonko Chiefdom", "Valunia Chiefdom", "Wonde Chiefdom"
-];
 
 // district | chiefdom | phu | facility_type
 const PILOT_FACILITIES = [
@@ -360,10 +352,9 @@ const PILOT_FACILITIES = [
   { district:"Bo", chiefdom:"Tikonko Chiefdom",    phu:"Griema MCHP",               type:"MCHP" }
 ];
 
-const FACILITY_TYPES = ["CHC","CHP","MCHP","Government Hospital","Mission Hospital"];
 
+// only the chiefdoms that hold a pilot facility
 function chiefdomsIn(district){
-  if (district === DISTRICT) return BO_CHIEFDOMS.slice();
   const set = new Set();
   PILOT_FACILITIES.forEach(f => { if (f.district === district) set.add(f.chiefdom); });
   return Array.from(set).sort();
@@ -672,9 +663,8 @@ function updateFacilityType() {
   if(!t) return;
   if (!phu) { t.innerHTML = '<option value="">Select PHU first</option>'; t.disabled = true; return; }
   const type = typeOf(district, chiefdom, phu);
-  if (type) t.innerHTML = `<option>${escOpt(type)}</option>`;
-  else t.innerHTML = '<option value="">Select facility type...</option>' + FACILITY_TYPES.map(x => `<option>${x}</option>`).join('');
-  t.disabled = false;
+  if (type) { t.innerHTML = `<option>${escOpt(type)}</option>`; t.disabled = false; }
+  else { t.innerHTML = '<option value="">Type not listed for this facility</option>'; t.disabled = true; }
 }
 
 function getDemographics() {
@@ -749,6 +739,276 @@ setTimeout(() => {
   updateRadioVisuals('group_fb1'); updateRadioVisuals('group_rating'); updateRadioVisuals('group_gapaddr');
   updateRadioVisuals('group_immfeedback');
 }, 200);
+
+/* ==================== REQUIRE EVERY QUESTION ====================
+   Set REQUIRE_ALL to false to go back to checking only the key fields. */
+var REQUIRE_ALL = true;
+
+var _RA_STYLE = document.createElement('style');
+_RA_STYLE.textContent =
+  '.ra-missing input,.ra-missing select,.ra-missing textarea{border-color:#dc3545 !important;box-shadow:0 0 0 3px rgba(220,53,69,.15) !important;}' +
+  '.ra-missing .options-group-vertical,.ra-missing .options-group-check,.ra-missing .options-group-h{outline:2px solid #dc3545;outline-offset:4px;border-radius:12px;}' +
+  '.ra-flag{color:#dc3545;font-weight:700;font-size:12px;margin-top:6px;}';
+document.head.appendChild(_RA_STYLE);
+
+function _raVisible(el){
+  // a row is skipped only when it (or a wrapper inside its section) is hidden,
+  // never because its wizard section is the inactive one
+  var n = el;
+  while (n && n !== document.body) {
+    if (n.classList && (n.classList.contains('section-page') || n.classList.contains('tab-page'))) return true;
+    if (n.style && n.style.display === 'none') return false;
+    n = n.parentElement;
+  }
+  return true;
+}
+
+function _raLabel(row){
+  var t = row.querySelector('.question-text');
+  var s = t ? t.textContent.replace(/\s+/g,' ').replace(/\*$/,'').trim() : 'this question';
+  return s.length > 90 ? s.slice(0,90) + '…' : s;
+}
+
+/* an "Other, specify" box only counts when an Other option is ticked */
+function _raOtherRequired(row){
+  var ticked = row.querySelectorAll('input[type=radio]:checked, input[type=checkbox]:checked');
+  for (var i = 0; i < ticked.length; i++) {
+    if (/other/i.test(ticked[i].value || '')) return true;
+  }
+  var sels = row.querySelectorAll('select');
+  for (var j = 0; j < sels.length; j++) {
+    if (/other/i.test(sels[j].value || '')) return true;
+  }
+  return false;
+}
+
+function _raRowAnswered(row){
+  var radios = row.querySelectorAll('input[type=radio]');
+  if (radios.length) {
+    var names = {};
+    for (var i = 0; i < radios.length; i++) names[radios[i].name] = true;
+    for (var nm in names) {
+      if (!row.querySelector('input[type=radio][name="' + nm + '"]:checked')) return false;
+    }
+  }
+  var boxes = row.querySelectorAll('input[type=checkbox]');
+  if (boxes.length && !row.querySelector('input[type=checkbox]:checked')) return false;
+
+  var fields = row.querySelectorAll('select, textarea, input[type=text], input[type=number], input[type=date], input[type=month], input[type=tel], input[type=email]');
+  for (var j = 0; j < fields.length; j++) {
+    var f = fields[j];
+    if (f.disabled) continue;
+    if (/other/i.test(f.placeholder || '') && !_raOtherRequired(row)) continue;
+    if (String(f.value).trim() === '') return false;
+  }
+  return true;
+}
+
+function validateAllQuestions(){
+  document.querySelectorAll('.ra-missing').forEach(function(e){ e.classList.remove('ra-missing'); });
+  document.querySelectorAll('.ra-flag').forEach(function(e){ e.remove(); });
+
+  var rows = document.querySelectorAll('.question-row');
+  for (var i = 0; i < rows.length; i++) {
+    var row = rows[i];
+    if (!_raVisible(row)) continue;
+    if (!row.querySelector('input, select, textarea')) continue;   // heading-only rows
+    if (_raRowAnswered(row)) continue;
+
+    // bring it on screen: right tab, right wizard section
+    if (typeof switchTab === 'function') {
+      var tab = row.closest('.tab-page');
+      if (tab && !tab.classList.contains('active')) switchTab('entry');
+    }
+    var page = row.closest('.section-page');
+    if (page && typeof showSection === 'function') {
+      var all = Array.prototype.slice.call(document.querySelectorAll('.section-page'));
+      var idx = all.indexOf(page);
+      if (idx > -1) showSection(idx);
+    }
+    row.classList.add('ra-missing');
+    var flag = document.createElement('div');
+    flag.className = 'ra-flag';
+    flag.textContent = 'This question is required.';
+    row.appendChild(flag);
+    row.scrollIntoView({ behavior:'smooth', block:'center' });
+    alert('Please answer: ' + _raLabel(row));
+    return false;
+  }
+  return true;
+}
+
+/* run the full check before whatever the form already did */
+(function(){
+  var _origSubmit = window.submitForm;
+  window.submitForm = function(){
+    if (REQUIRE_ALL && !validateAllQuestions()) return;
+    return _origSubmit.apply(this, arguments);
+  };
+})();
+
+
+/* ==================== SIGN IN ====================
+   Add or change users here. Three slots; fill the empty two when ready. */
+var USERS = [
+  { username: "msk", password: "1234", name: "Mohamed Sillah Kanu" },
+  { username: "",    password: "",     name: "" },   // second user — fill in
+  { username: "",    password: "",     name: "" }    // third user — fill in
+];
+
+(function(){
+  var KEY = "mocm_user";
+
+  function currentUser(){
+    try { return JSON.parse(sessionStorage.getItem(KEY)); } catch(e){ return null; }
+  }
+
+  var css = document.createElement('style');
+  css.textContent =
+    '#lgOverlay{position:fixed;inset:0;z-index:3000;background:linear-gradient(160deg,#2b5f8a,#1e4a6d);' +
+    'display:flex;align-items:center;justify-content:center;padding:20px;font-family:inherit;}' +
+    '#lgCard{background:#fff;border-radius:20px;width:100%;max-width:330px;padding:26px 22px 24px;text-align:center;' +
+    'box-shadow:0 24px 48px rgba(0,0,0,.3);}' +
+    '#lgCard .lgIcon{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#2b5f8a,#3b78a8);' +
+    'margin:0 auto 14px;display:flex;align-items:center;justify-content:center;}' +
+    '#lgCard .lgIcon svg{width:24px;height:24px;stroke:#fff;fill:none;stroke-width:2;}' +
+    '#lgCard h3{font-size:17px;font-weight:800;color:#2b5f8a;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}' +
+    '#lgCard p{font-size:12px;color:#6c7a8a;margin-bottom:18px;}' +
+    '#lgCard input{width:100%;padding:13px 14px;border:1.5px solid #e0e6ed;border-radius:12px;font-size:15px;' +
+    'font-family:inherit;margin-bottom:10px;}' +
+    '#lgCard input:focus{border-color:#3b78a8;outline:2px solid rgba(59,120,168,.2);}' +
+    '#lgErr{color:#dc3545;font-size:12px;font-weight:600;min-height:16px;margin-bottom:8px;display:none;}' +
+    '#lgBtn{width:100%;padding:14px;background:#2b5f8a;color:#fff;border:none;border-radius:12px;' +
+    'font-weight:700;font-size:15px;font-family:inherit;cursor:pointer;}' +
+    '.lgWho{font-size:10.5px;font-weight:600;letter-spacing:.4px;opacity:.9;margin-top:8px;}' +
+    '.lgWho a{color:#ffc107;text-decoration:underline;cursor:pointer;margin-left:8px;}' +
+    '.lgStamp{background:#e7f3ff;border:1px solid #c9dff2;border-radius:12px;padding:11px 14px;margin:0 0 12px;}' +
+    '.lgStamp b{color:#2b5f8a;}' +
+    '@keyframes lgShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}';
+  document.head.appendChild(css);
+
+  function showWho(){
+    var u = currentUser(); if(!u) return;
+    document.querySelectorAll('.page-header, .header-sub').length;
+    var host = document.querySelector('.page-header');
+    if(!host || host.querySelector('.lgWho')) return;
+    var d = document.createElement('div');
+    d.className = 'lgWho';
+    d.innerHTML = 'Signed in: ' + u.name + ' (' + u.username + ')<a id="lgOut">Sign out</a>';
+    host.appendChild(d);
+    d.querySelector('#lgOut').onclick = function(){
+      sessionStorage.removeItem(KEY);
+      location.reload();
+    };
+  }
+
+  function gate(){
+    if (currentUser()) { showWho(); return; }
+    var o = document.createElement('div');
+    o.id = 'lgOverlay';
+    o.innerHTML =
+      '<div id="lgCard">' +
+      '<div class="lgIcon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/>' +
+      '<path d="M7 11V7a5 5 0 0110 0v4"/></svg></div>' +
+      '<h3>Sign in</h3><p>MOCM / OTSS+ supervision · NMCP Sierra Leone</p>' +
+      '<input id="lgUser" type="text" placeholder="Username" autocomplete="off" autocapitalize="none">' +
+      '<input id="lgPass" type="password" placeholder="Password">' +
+      '<div id="lgErr">Wrong username or password.</div>' +
+      '<button id="lgBtn">Sign in</button></div>';
+    document.body.appendChild(o);
+
+    var uEl = o.querySelector('#lgUser'), pEl = o.querySelector('#lgPass'), err = o.querySelector('#lgErr');
+    function attempt(){
+      var u = uEl.value.trim().toLowerCase(), p = pEl.value;
+      for (var i = 0; i < USERS.length; i++) {
+        var acc = USERS[i];
+        if (acc.username && acc.username.toLowerCase() === u && acc.password === p) {
+          sessionStorage.setItem(KEY, JSON.stringify({ username: acc.username, name: acc.name, at: new Date().toLocaleString() }));
+          o.remove();
+          showWho();
+          return;
+        }
+      }
+      err.style.display = 'block';
+      var card = o.querySelector('#lgCard');
+      card.style.animation = 'lgShake .3s';
+      setTimeout(function(){ card.style.animation = ''; }, 320);
+      pEl.value = ''; uEl.focus();
+    }
+    o.querySelector('#lgBtn').onclick = attempt;
+    pEl.onkeydown = function(e){ if (e.key === 'Enter') attempt(); };
+    uEl.onkeydown = function(e){ if (e.key === 'Enter') pEl.focus(); };
+    setTimeout(function(){ uEl.focus(); }, 60);
+  }
+
+  /* the summary carries who submitted it */
+  function stamp(){
+    var u = currentUser(); if(!u) return;
+    var host = document.getElementById('summary-content') || document.getElementById('summaryBody');
+    if(!host || host.querySelector('.lgStamp')) return;
+    var d = document.createElement('div');
+    d.className = 'lgStamp';
+    d.innerHTML = 'Submitted by <b>' + u.name + '</b> (' + u.username + ')';
+    host.insertBefore(d, host.firstChild);
+  }
+  ['renderSummary','showSummary'].forEach(function(fnName){
+    if (typeof window[fnName] === 'function') {
+      var orig = window[fnName];
+      window[fnName] = function(){ var r = orig.apply(this, arguments); stamp(); return r; };
+    }
+  });
+  if (typeof window.doSubmit === 'function') {
+    var _ds = window.doSubmit;
+    window.doSubmit = function(){ var r = _ds.apply(this, arguments); stamp(); return r; };
+  }
+  if (typeof window.confirmSubmit === 'function') {
+    var _cs = window.confirmSubmit;
+    window.confirmSubmit = function(){ stamp(); return _cs.apply(this, arguments); };
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', gate);
+  else gate();
+})();
+
+
+/* ---------- show the star on every question the form enforces ---------- */
+(function(){
+  function isOtherBox(f){ return /other/i.test(f.placeholder || ''); }
+
+  function markRequired(){
+    var rows = document.querySelectorAll('.question-row');
+    for (var i = 0; i < rows.length; i++) {
+      var row = rows[i];
+      var fields = row.querySelectorAll('input, select, textarea');
+      if (!fields.length) continue;                     // heading-only row
+
+      // a row holding nothing but an "If Other, specify" box stays unstarred
+      var onlyOther = true;
+      for (var j = 0; j < fields.length; j++) {
+        if (!isOtherBox(fields[j])) { onlyOther = false; break; }
+      }
+      if (onlyOther) continue;
+
+      var label = row.querySelector('.question-text');
+      if (!label || label.querySelector('.required-star')) continue;
+      var star = document.createElement('span');
+      star.className = 'required-star';
+      star.textContent = '*';
+      label.appendChild(star);
+    }
+  }
+
+  var pending = null;
+  function schedule(){
+    clearTimeout(pending);
+    pending = setTimeout(markRequired, 120);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', schedule);
+  else schedule();
+  new MutationObserver(schedule).observe(document.body, { childList:true, subtree:true });
+})();
+
 </script>
 </body>
 </html>
