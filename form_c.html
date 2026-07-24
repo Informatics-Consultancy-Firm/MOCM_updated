@@ -32,7 +32,7 @@ body {
   padding: 0;
 }
 
-/* TAB NAVIGATION - VISIBLE */
+/* TAB NAVIGATION */
 .tab-nav {
   display: flex;
   background: var(--blue-dark);
@@ -61,16 +61,10 @@ body {
 }
 
 /* Tab Pages */
-.tab-page {
-  display: none;
-  width: 100%;
-  padding-bottom: 20px;
-}
-.tab-page.active {
-  display: block;
-}
+.tab-page { display: none; width: 100%; padding-bottom: 20px; }
+.tab-page.active { display: block; }
 
-/* Progress Bar (only in data entry tab) */
+/* Progress Bar */
 .progress-container {
   background: var(--blue-dark);
   padding: 10px 16px;
@@ -78,26 +72,9 @@ body {
   top: 52px;
   z-index: 100;
 }
-.progress-bar {
-  background: rgba(255,255,255,0.2);
-  border-radius: 20px;
-  height: 6px;
-  overflow: hidden;
-}
-.progress-fill {
-  background: var(--gold);
-  height: 100%;
-  width: 0%;
-  transition: width 0.3s ease;
-  border-radius: 20px;
-}
-.progress-text {
-  color: white;
-  font-size: 11px;
-  margin-top: 6px;
-  text-align: center;
-  font-weight: 500;
-}
+.progress-bar { background: rgba(255,255,255,0.2); border-radius: 20px; height: 6px; overflow: hidden; }
+.progress-fill { background: var(--gold); height: 100%; width: 0%; transition: width 0.3s ease; border-radius: 20px; }
+.progress-text { color: white; font-size: 11px; margin-top: 6px; text-align: center; font-weight: 500; }
 
 /* Page Header */
 .page-header {
@@ -131,9 +108,7 @@ body {
   overflow: hidden;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
-.section-page.active {
-  display: block;
-}
+.section-page.active { display: block; }
 .section-header {
   background: var(--soft-bg);
   color: var(--blue-dark);
@@ -144,9 +119,7 @@ body {
   letter-spacing: 0.5px;
   border-left: 4px solid var(--blue);
 }
-.section-card {
-  padding: 16px;
-}
+.section-card { padding: 16px; }
 
 /* Form Elements */
 .form-input, .form-select, .form-textarea {
@@ -163,27 +136,13 @@ body {
   outline: none;
   box-shadow: 0 0 0 3px rgba(59,120,168,0.1);
 }
-.question-row {
-  margin-bottom: 20px;
-}
-.question-text {
-  font-weight: 600;
-  font-size: 14px;
-  margin-bottom: 10px;
-  color: var(--text-dark);
-}
-.required-star {
-  color: var(--red);
-  margin-left: 4px;
-}
+.form-select:disabled { background: #f6f8fa; color: #9aa7b4; }
+.question-row { margin-bottom: 20px; }
+.question-text { font-weight: 600; font-size: 14px; margin-bottom: 10px; color: var(--text-dark); }
+.required-star { color: var(--red); margin-left: 4px; }
 
-/* Radio Options - FULL VERTICAL */
-.options-group-vertical {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 6px;
-}
+/* Radio Options */
+.options-group-vertical { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
 .radio-option {
   display: flex;
   align-items: center;
@@ -197,30 +156,12 @@ body {
   font-size: 14px;
   transition: all 0.15s;
 }
-.radio-option input {
-  width: 20px;
-  height: 20px;
-  accent-color: var(--blue);
-  cursor: pointer;
-  margin: 0;
-  flex-shrink: 0;
-}
-.radio-option.selected {
-  background: var(--blue);
-  border-color: var(--blue);
-  color: white;
-}
-.radio-option.selected input {
-  accent-color: white;
-}
+.radio-option input { width: 20px; height: 20px; accent-color: var(--blue); cursor: pointer; margin: 0; flex-shrink: 0; }
+.radio-option.selected { background: var(--blue); border-color: var(--blue); color: white; }
+.radio-option.selected input { accent-color: white; }
 
 /* Checkbox Options */
-.options-group-check {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 6px;
-}
+.options-group-check { display: flex; flex-direction: column; gap: 10px; margin-top: 6px; }
 .check-option {
   display: flex;
   align-items: center;
@@ -233,19 +174,8 @@ body {
   font-weight: 500;
   font-size: 14px;
 }
-.check-option input {
-  width: 20px;
-  height: 20px;
-  accent-color: var(--blue);
-  cursor: pointer;
-  margin: 0;
-  flex-shrink: 0;
-}
-.check-option.selected {
-  background: var(--blue);
-  border-color: var(--blue);
-  color: white;
-}
+.check-option input { width: 20px; height: 20px; accent-color: var(--blue); cursor: pointer; margin: 0; flex-shrink: 0; }
+.check-option.selected { background: var(--blue); border-color: var(--blue); color: white; }
 
 /* Score Badge */
 .score-row {
@@ -257,18 +187,8 @@ body {
   border-top: 1px solid var(--border);
   margin-top: 8px;
 }
-.score-label {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--blue-dark);
-  text-transform: uppercase;
-}
-.score-badge {
-  font-size: 13px;
-  font-weight: 800;
-  padding: 4px 14px;
-  border-radius: 20px;
-}
+.score-label { font-size: 12px; font-weight: 700; color: var(--blue-dark); text-transform: uppercase; }
+.score-badge { font-size: 13px; font-weight: 800; padding: 4px 14px; border-radius: 20px; }
 .score-badge.good { background: var(--green); color: white; }
 .score-badge.fair { background: var(--orange); color: white; }
 .score-badge.poor { background: var(--red); color: white; }
@@ -292,19 +212,9 @@ body {
   text-align: center;
   border: none;
 }
-.btn-prev {
-  background: #f0f2f5;
-  color: var(--text-dark);
-  border: 1px solid var(--border);
-}
-.btn-next {
-  background: var(--blue);
-  color: white;
-}
-.btn-submit-final {
-  background: var(--green);
-  color: white;
-}
+.btn-prev { background: #f0f2f5; color: var(--text-dark); border: 1px solid var(--border); }
+.btn-next { background: var(--blue); color: white; }
+.btn-submit-final { background: var(--green); color: white; }
 
 /* Member Card */
 .member-card {
@@ -325,15 +235,7 @@ body {
   color: var(--blue-dark);
   font-size: 14px;
 }
-.remove-btn {
-  color: var(--red);
-  cursor: pointer;
-  background: none;
-  border: none;
-  font-size: 20px;
-  font-weight: 700;
-  padding: 0 8px;
-}
+.remove-btn { color: var(--red); cursor: pointer; background: none; border: none; font-size: 20px; font-weight: 700; padding: 0 8px; }
 .add-btn {
   background: var(--blue);
   color: white;
@@ -348,11 +250,7 @@ body {
 }
 
 /* Summary Tab */
-.summary-header {
-  background: linear-gradient(135deg, var(--blue-dark), var(--blue));
-  color: white;
-  padding: 20px 16px;
-}
+.summary-header { background: linear-gradient(135deg, var(--blue-dark), var(--blue)); color: white; padding: 20px 16px; }
 .summary-header h2 { font-size: 18px; font-weight: 800; color: var(--gold); }
 .summary-header p { font-size: 12px; margin-top: 5px; opacity: 0.9; }
 .summary-refresh {
@@ -367,66 +265,16 @@ body {
   margin-top: 10px;
   display: inline-block;
 }
-.summary-section {
-  margin: 12px;
-  background: white;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  overflow: hidden;
-}
-.summary-section-title {
-  background: var(--blue-dark);
-  color: white;
-  padding: 12px 14px;
-  font-weight: 700;
-  font-size: 13px;
-}
-.summary-item {
-  padding: 11px 14px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.summary-label {
-  font-weight: 700;
-  color: var(--blue);
-  font-size: 11px;
-  text-transform: uppercase;
-}
-.summary-value {
-  font-size: 13px;
-  color: var(--text-dark);
-  text-align: right;
-  flex: 1;
-}
+.summary-section { margin: 12px; background: white; border-radius: 14px; border: 1px solid var(--border); overflow: hidden; }
+.summary-section-title { background: var(--blue-dark); color: white; padding: 12px 14px; font-weight: 700; font-size: 13px; }
+.summary-item { padding: 11px 14px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.summary-label { font-weight: 700; color: var(--blue); font-size: 11px; text-transform: uppercase; }
+.summary-value { font-size: 13px; color: var(--text-dark); text-align: right; flex: 1; }
 
 /* Modal */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.7);
-  z-index: 1000;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-}
-.modal-content {
-  background: white;
-  border-radius: 20px;
-  max-width: 500px;
-  width: 100%;
-}
-.modal-header {
-  background: linear-gradient(135deg, var(--blue-dark), var(--blue));
-  color: white;
-  padding: 16px 20px;
-  font-weight: 700;
-  display: flex;
-  justify-content: space-between;
-}
+.modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
+.modal-content { background: white; border-radius: 20px; max-width: 500px; width: 100%; }
+.modal-header { background: linear-gradient(135deg, var(--blue-dark), var(--blue)); color: white; padding: 16px 20px; font-weight: 700; display: flex; justify-content: space-between; }
 .modal-header button { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
 .modal-body { padding: 20px; }
 .modal-footer { padding: 16px 20px; border-top: 1px solid var(--border); display: flex; gap: 12px; }
@@ -438,7 +286,7 @@ body {
 </head>
 <body>
 
-<!-- TAB NAVIGATION - VISIBLE -->
+<!-- TAB NAVIGATION -->
 <div class="tab-nav">
   <button class="tab-btn active" onclick="switchTab('entry')">📋 DATA ENTRY</button>
   <button class="tab-btn" onclick="switchTab('summary')">📊 SUMMARY</button>
@@ -484,6 +332,52 @@ body {
 let ans = {}, submitted = false;
 let observations = [{ cadre: "", gender: "" }];
 let currentSection = 0;
+
+// ==================== FACILITY LIST ====================
+// MOCM pilot: 10 selected facilities, Bo District.
+const DISTRICT = "Bo";
+
+// All chiefdoms of Bo District. The pilot facilities sit in five of them;
+// the others are listed so any Bo chiefdom can be recorded.
+const BO_CHIEFDOMS = [
+  "Badjia Chiefdom", "Bagbe Chiefdom", "Bagbo Chiefdom", "Baoma Chiefdom",
+  "Bongor Chiefdom", "Bumpe Ngao Chiefdom", "Gbo Chiefdom", "Kakua Chiefdom",
+  "Komboya Chiefdom", "Lugbu Chiefdom", "Niawa Lenga Chiefdom", "Selenga Chiefdom",
+  "Tikonko Chiefdom", "Valunia Chiefdom", "Wonde Chiefdom"
+];
+
+// district | chiefdom | phu | facility_type
+const PILOT_FACILITIES = [
+  { district:"Bo", chiefdom:"Badjia Chiefdom",     phu:"Njagbahun (Badjia) MCHP",   type:"MCHP" },
+  { district:"Bo", chiefdom:"Baoma Chiefdom",      phu:"Faabu CHP",                 type:"CHP"  },
+  { district:"Bo", chiefdom:"Baoma Chiefdom",      phu:"Gerehun CHC",               type:"CHC"  },
+  { district:"Bo", chiefdom:"Baoma Chiefdom",      phu:"Mbundorbu MCHP",            type:"MCHP" },
+  { district:"Bo", chiefdom:"Bongor Chiefdom",     phu:"Mamboma (Bongor) CHP",      type:"CHP"  },
+  { district:"Bo", chiefdom:"Bumpe Ngao Chiefdom", phu:"Bumpe CHC",                 type:"CHC"  },
+  { district:"Bo", chiefdom:"Bumpe Ngao Chiefdom", phu:"Mokoba MCHP",               type:"MCHP" },
+  { district:"Bo", chiefdom:"Bumpe Ngao Chiefdom", phu:"Yengema (Bumpe Ngao) MCHP", type:"MCHP" },
+  { district:"Bo", chiefdom:"Tikonko Chiefdom",    phu:"Gondama (Tikonko) CHC",     type:"CHC"  },
+  { district:"Bo", chiefdom:"Tikonko Chiefdom",    phu:"Griema MCHP",               type:"MCHP" }
+];
+
+const FACILITY_TYPES = ["CHC","CHP","MCHP","Government Hospital","Mission Hospital"];
+
+function chiefdomsIn(district){
+  if (district === DISTRICT) return BO_CHIEFDOMS.slice();
+  const set = new Set();
+  PILOT_FACILITIES.forEach(f => { if (f.district === district) set.add(f.chiefdom); });
+  return Array.from(set).sort();
+}
+function phusIn(district, chiefdom){
+  return PILOT_FACILITIES
+    .filter(f => f.district === district && f.chiefdom === chiefdom)
+    .sort((a,b) => a.phu.localeCompare(b.phu));
+}
+function typeOf(district, chiefdom, phu){
+  const hit = PILOT_FACILITIES.find(f => f.district === district && f.chiefdom === chiefdom && f.phu === phu);
+  return hit ? hit.type : "";
+}
+function escOpt(s){ return String(s).replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m])); }
 
 // Section definitions
 const sections = [
@@ -540,7 +434,7 @@ function updateScores() {
   let recScore = (ans.records === 'complete' ? 5 : 0) + (ans.negtreat === 'No' ? 1 : 0);
   if(ans.negtreat_count) recScore += Math.min(parseInt(ans.negtreat_count)||0, 2);
   recScore = Math.min(recScore, 8);
-  
+
   const scoreEls = ['score_avail', 'score_prep', 'score_proc', 'score_waste', 'score_therapeutic', 'score_records'];
   const scores = [availScore, prepScore, procScore, wasteScore, therScore, recScore];
   const maxes = [3,6,6,3,6,8];
@@ -583,16 +477,17 @@ function renderObservations() {
 function buildAllSections() {
   const container = document.getElementById("sections-container");
   let html = '';
-  
-  // Section 0: Demographics
+
+  // Section 0: Demographics — District > Chiefdom > PHU > Facility Type
   html += `<div class="section-page" id="section_demographics"><div class="section-header">1. FACILITY DEMOGRAPHICS</div><div class="section-card">
-    <div class="question-row"><div class="question-text">District <span class="required-star">*</span></div><select class="form-select" id="districtSelect" onchange="updateChiefdom()"><option value="">Select District...</option></select></div>
+    <div class="question-row"><div class="question-text">District <span class="required-star">*</span></div><select class="form-select" id="districtSelect" onchange="updateChiefdom()"><option>${DISTRICT}</option></select></div>
     <div class="question-row"><div class="question-text">Chiefdom / Zone / City <span class="required-star">*</span></div><select class="form-select" id="chiefdomSelect" onchange="updatePHU()" disabled><option value="">Select District first</option></select></div>
-    <div class="question-row"><div class="question-text">Health Facility (PHU) <span class="required-star">*</span></div><select class="form-select" id="phuSelect" disabled><option value="">Select Chiefdom first</option></select></div>
+    <div class="question-row"><div class="question-text">Health Facility (PHU) <span class="required-star">*</span></div><select class="form-select" id="phuSelect" onchange="updateFacilityType()" disabled><option value="">Select Chiefdom first</option></select></div>
+    <div class="question-row"><div class="question-text">Health Facility Type <span class="required-star">*</span></div><select class="form-select" id="facilityTypeSelect" disabled><option value="">Select PHU first</option></select></div>
     <div class="question-row"><div class="question-text">Supervisor Name <span class="required-star">*</span></div><input class="form-input" id="supervisor" type="text" placeholder="Supervisor name"></div>
     <div class="question-row"><div class="question-text">Date of Visit <span class="required-star">*</span></div><input class="form-input" id="visitdate" type="date"></div>
   </div></div>`;
-  
+
   // Section 1: Training
   html += `<div class="section-page" id="section_training"><div class="section-header">2. STAFF TRAINING ON mRDT</div><div class="section-card">
     <div class="question-row"><div class="question-text">Are there any clinical staff who have been formally trained/mentored in mRDTs in the last two years? <span class="required-star">*</span></div>
@@ -600,10 +495,10 @@ function buildAllSections() {
     </div>
     <div class="question-row"><div class="question-text">Number of clinical staff formally trained in mRDTs in the last 2 years</div><input class="form-input" id="trained_count" type="number" min="0" placeholder="0" oninput="updateAns('trained_count',this.value)"></div>
   </div></div>`;
-  
+
   // Section 2: Observations
   html += `<div class="section-page" id="section_observations"><div class="section-header">3. STAFF OBSERVATION</div><div class="section-card"><div id="obs-container"></div><button class="add-btn" onclick="addObservation()">+ Add Another Observation</button></div></div>`;
-  
+
   // Section 3: Availability
   let availHtml = `<div class="section-page" id="section_availability"><div class="section-header">4. mRDT AVAILABILITY</div><div class="section-card">`;
   ["Are all materials for RDT procedure assembled?", "Are mRDTs available today for testing suspected cases?", "Is this observation being done with an actual suspected malaria case?"].forEach((q,idx) => {
@@ -612,7 +507,7 @@ function buildAllSections() {
   availHtml += `<div class="question-row"><div class="question-text">How was the observation done?</div><div class="options-group-vertical" id="group_avail3"><label class="radio-option"><input type="radio" name="avail3" value="Demonstration" onchange="updateAns('avail3','Demonstration'); updateRadioVisuals('group_avail3')"> Demonstration</label><label class="radio-option"><input type="radio" name="avail3" value="Other" onchange="updateAns('avail3','Other'); updateRadioVisuals('group_avail3')"> Other</label></div><input class="form-input" style="margin-top:8px;" placeholder="Specify other..." oninput="updateAns('availOther',this.value)"></div>
   <div class="score-row"><span class="score-label">Availability Score</span><span class="score-badge" id="score_avail">0/3</span></div></div></div>`;
   html += availHtml;
-  
+
   // Section 4: Preparation
   let prepHtml = `<div class="section-page" id="section_preparation"><div class="section-header">5. mRDT PREPARATION & PATIENT PREPARATION</div><div class="section-card">`;
   ["Expiry date checked", "Cassette labeled with patient's name/ID number", "Patient information recorded in the register", "Procedure explained to patient", "New gloves worn", "Puncture site cleaned with alcohol and allowed to air dry"].forEach((q,idx) => {
@@ -620,7 +515,7 @@ function buildAllSections() {
   });
   prepHtml += `<div class="score-row"><span class="score-label">Preparation Score</span><span class="score-badge" id="score_prep">0/6</span></div></div></div>`;
   html += prepHtml;
-  
+
   // Section 5: Procedure
   let procHtml = `<div class="section-page" id="section_procedure"><div class="section-header">6. BLOOD COLLECTION & mRDT PROCEDURE</div><div class="section-card">`;
   ["Adequate volume of blood collected", "Blood dispensed in correct well of mRDT device", "Buffer applied to correct well", "Appropriate number of drops of buffer dispensed", "If negative, did worker wait for correct incubation time?", "Is the Control line visible?"].forEach((q,idx) => {
@@ -630,7 +525,7 @@ function buildAllSections() {
   procHtml += `<div class="question-row"><div class="question-text">Reads test result correctly</div><div class="options-group-vertical" id="group_proc7"><label class="radio-option"><input type="radio" name="proc7" value="Yes" onchange="updateAns('proc7','Yes'); updateRadioVisuals('group_proc7')"> Yes</label><label class="radio-option"><input type="radio" name="proc7" value="No" onchange="updateAns('proc7','No'); updateRadioVisuals('group_proc7')"> No</label></div></div>
   <div class="score-row"><span class="score-label">Procedure Score</span><span class="score-badge" id="score_proc">0/6</span></div></div></div>`;
   html += procHtml;
-  
+
   // Section 6: Waste
   let wasteHtml = `<div class="section-page" id="section_waste"><div class="section-header">7. mRDT WASTE DISPOSAL</div><div class="section-card">`;
   ["Used tests, transfer devices disposed of appropriately", "Used lancet disposed of in sharps container", "Test result recorded correctly in register"].forEach((q,idx) => {
@@ -638,7 +533,7 @@ function buildAllSections() {
   });
   wasteHtml += `<div class="score-row"><span class="score-label">Waste Disposal Score</span><span class="score-badge" id="score_waste">0/3</span></div></div></div>`;
   html += wasteHtml;
-  
+
   // Section 7: Therapeutic
   let therHtml = `<div class="section-page" id="section_therapeutic"><div class="section-header">8. USE OF mRDT RESULT IN THERAPEUTIC DECISIONS</div><div class="section-card">`;
   ["Supervisor agrees on mRDT result", "Operator adhered to negative test result", "Operator adhered to positive test result", "If positive, patient prescribed right drug and dose", "If positive, patient/caretaker counseled", "Supervisor agrees on mRDT result (confirmation)"].forEach((q,idx) => {
@@ -646,7 +541,7 @@ function buildAllSections() {
   });
   therHtml += `<div class="score-row"><span class="score-label">Therapeutic Score</span><span class="score-badge" id="score_therapeutic">0/6</span></div></div></div>`;
   html += therHtml;
-  
+
   // Section 8: Records
   html += `<div class="section-page" id="section_records"><div class="section-header">9. ASSESSMENT OF COMPLIANCE WITH NEGATIVE RESULTS</div><div class="section-card">
     <div class="question-row"><div class="question-text">Select and review 3 under-five and 2 above-five records with negative mRDT results <span class="required-star">*</span></div><div class="options-group-vertical" id="group_records"><label class="radio-option"><input type="radio" name="records" value="complete" onchange="updateAns('records','complete'); updateRadioVisuals('group_records')"> Records complete (5/5)</label><label class="radio-option"><input type="radio" name="records" value="incomplete" onchange="updateAns('records','incomplete'); updateRadioVisuals('group_records')"> Incomplete records</label></div></div>
@@ -654,24 +549,24 @@ function buildAllSections() {
     <div class="question-row"><div class="question-text">How many negatives were treated?</div><input class="form-input" id="negtreat_count" type="number" min="0" placeholder="Number" oninput="updateAns('negtreat_count',this.value)"></div>
     <div class="score-row"><span class="score-label">Record Review Score</span><span class="score-badge" id="score_records">0/8</span></div>
   </div></div>`;
-  
+
   // Section 9: Unable
   const unableReasons = ["mRDT tests not ordered", "Health care worker cannot perform mRDT", "No mRDTs available", "Stopped due to potential Patient harm", "Not enough time during procedure"];
   html += `<div class="section-page" id="section_unable"><div class="section-header">10. REASON IF UNABLE TO CONDUCT mRDT OBSERVATION</div><div class="section-card">
     <div class="question-row"><div class="question-text">Select reason(s) for unable to conduct/complete m-RDT observations</div><div class="options-group-check" id="unable_group">${unableReasons.map(r=>`<label class="check-option"><input type="checkbox" value="${r}" onchange="updateCheck('unable',this.value,this)"> ${r}</label>`).join('')}<input class="form-input" style="margin-top:8px;" placeholder="Other specify..." oninput="updateAns('unableOther',this.value)"></div></div>
   </div></div>`;
-  
+
   // Section 10: Issues
   html += `<div class="section-page" id="section_issues"><div class="section-header">11. IMMEDIATE CORRECTIVE ACTIONS</div><div class="section-card">
     <div class="question-row"><div class="question-text">Briefly describe key activities and issues identified</div><textarea class="form-textarea" rows="3" oninput="updateAns('issues',this.value)"></textarea></div>
     <div class="question-row"><div class="question-text">Intervention types</div><div class="options-group-check" id="interventions_group">${["Guideline review","SOP review","Mentoring/Coaching","Document","Demonstration"].map(i=>`<label class="check-option"><input type="checkbox" value="${i}" onchange="updateCheck('interventions',this.value,this)"> ${i}</label>`).join('')}</div></div>
   </div></div>`;
-  
+
   // Section 11: Staff Reached
   html += `<div class="section-page" id="section_staffreach"><div class="section-header">12. TOTAL NUMBER OF STAFF REACHED</div><div class="section-card">
     <div class="question-row"><div class="question-text">Total number of staff reached</div><input class="form-input" id="staff_reached" type="number" placeholder="Number of staff" oninput="updateAns('staff_reached',this.value)"></div>
   </div></div>`;
-  
+
   // Section 12: Feedback
   html += `<div class="section-page" id="section_feedback"><div class="section-header">13. SUPERVISOR FEEDBACK</div><div class="section-card">
     <div class="question-row"><div class="question-text">Did you provide feedback to staff on mRDT technical performance? <span class="required-star">*</span></div><div class="options-group-vertical" id="group_fb1"><label class="radio-option"><input type="radio" name="fb1" value="Yes" onchange="updateAns('fb1','Yes'); updateRadioVisuals('group_fb1')"> Yes</label><label class="radio-option"><input type="radio" name="fb1" value="No" onchange="updateAns('fb1','No'); updateRadioVisuals('group_fb1')"> No</label></div></div>
@@ -679,7 +574,7 @@ function buildAllSections() {
     <div class="question-row"><div class="question-text">Overall rating of this HF on mRDT protocols <span class="required-star">*</span></div><div class="options-group-vertical" id="group_rating"><label class="radio-option"><input type="radio" name="rating" value="Unsatisfactory" onchange="updateAns('rating','Unsatisfactory'); updateRadioVisuals('group_rating')"> Unsatisfactory</label><label class="radio-option"><input type="radio" name="rating" value="Fair" onchange="updateAns('rating','Fair'); updateRadioVisuals('group_rating')"> Fair</label><label class="radio-option"><input type="radio" name="rating" value="Satisfactory" onchange="updateAns('rating','Satisfactory'); updateRadioVisuals('group_rating')"> Satisfactory</label><label class="radio-option"><input type="radio" name="rating" value="Excellent" onchange="updateAns('rating','Excellent'); updateRadioVisuals('group_rating')"> Excellent</label></div></div>
     <div class="question-row"><div class="question-text">Additional comments</div><textarea class="form-textarea" rows="2" oninput="updateAns('addComments',this.value)"></textarea></div>
   </div></div>`;
-  
+
   // Section 13: Gaps
   html += `<div class="section-page" id="section_gaps"><div class="section-header">14. GAP ANALYSIS & ACTION PLAN</div><div class="section-card">
     <div class="question-row"><div class="question-text">Biggest gap(s) identified during last HF visit</div><textarea class="form-textarea" id="lastgaps" rows="2" placeholder="1)... 2)... 3)..." oninput="updateAns('lastgaps',this.value)"></textarea></div>
@@ -689,9 +584,9 @@ function buildAllSections() {
     <div class="question-row"><div class="question-text">Was immediate feedback provided?</div><div class="options-group-vertical" id="group_immfeedback"><label class="radio-option"><input type="radio" name="immfeedback" value="Yes" onchange="updateAns('immfeedback','Yes'); updateRadioVisuals('group_immfeedback')"> Yes</label><label class="radio-option"><input type="radio" name="immfeedback" value="No" onchange="updateAns('immfeedback','No'); updateRadioVisuals('group_immfeedback')"> No</label></div></div>
     <div class="question-row"><div class="question-text">Supervisor Comments</div><textarea class="form-textarea" id="supcomments" rows="3" placeholder="Supervisor comments..." oninput="updateAns('supcomments',this.value)"></textarea></div>
   </div></div>`;
-  
+
   container.innerHTML = html;
-  
+
   // Add navigation buttons to each section
   document.querySelectorAll('.section-page').forEach((page, idx) => {
     const navDiv = document.createElement('div');
@@ -733,63 +628,64 @@ function switchTab(tab) {
   window.scrollTo(0, 0);
 }
 
-// Cascading CSV data
-let districtsSet = new Set(), chiefdomMap = new Map(), phuMap = new Map();
-async function loadCSV() {
-  try {
-    const response = await fetch('cascading.csv');
-    if (!response.ok) throw new Error('CSV not found');
-    const text = await response.text();
-    const lines = text.trim().split(/\r?\n/);
-    for (let i = 1; i < lines.length; i++) {
-      const parts = lines[i].split(',');
-      if (parts.length >= 3) {
-        const d = parts[0].trim(), c = parts[1].trim(), p = parts[2].trim();
-        if (d && c && p) {
-          districtsSet.add(d);
-          if (!chiefdomMap.has(d)) chiefdomMap.set(d, new Set());
-          chiefdomMap.get(d).add(c);
-          const key = `${d}|${c}`;
-          if (!phuMap.has(key)) phuMap.set(key, []);
-          phuMap.get(key).push(p);
-        }
-      }
-    }
-    const districtSelect = document.getElementById("districtSelect");
-    if(districtSelect) {
-      districtSelect.innerHTML = '<option value="">Select District...</option>';
-      Array.from(districtsSet).sort().forEach(d => { districtSelect.innerHTML += `<option value="${d}">${d}</option>`; });
-    }
-  } catch(e) { console.error(e); }
-}
-
+// ==================== CASCADE ====================
 function updateChiefdom() {
   const district = document.getElementById("districtSelect")?.value;
   const chiefdomSelect = document.getElementById("chiefdomSelect");
   if(!chiefdomSelect) return;
-  chiefdomSelect.innerHTML = '<option value="">Select Chiefdom...</option>';
-  if (district && chiefdomMap.has(district)) {
-    Array.from(chiefdomMap.get(district)).sort().forEach(c => { chiefdomSelect.innerHTML += `<option value="${c}">${c}</option>`; });
+  const list = district ? chiefdomsIn(district) : [];
+  if (list.length) {
+    chiefdomSelect.innerHTML = '<option value="">Select Chiefdom...</option>' + list.map(c => `<option>${escOpt(c)}</option>`).join('');
     chiefdomSelect.disabled = false;
-  } else chiefdomSelect.disabled = true;
+  } else {
+    chiefdomSelect.innerHTML = '<option value="">No chiefdoms listed for this district</option>';
+    chiefdomSelect.disabled = true;
+  }
   const phuSelect = document.getElementById("phuSelect");
   if(phuSelect) { phuSelect.innerHTML = '<option value="">Select Chiefdom first</option>'; phuSelect.disabled = true; }
+  const typeSelect = document.getElementById("facilityTypeSelect");
+  if(typeSelect) { typeSelect.innerHTML = '<option value="">Select PHU first</option>'; typeSelect.disabled = true; }
 }
 
 function updatePHU() {
-  const district = document.getElementById("districtSelect")?.value, chiefdom = document.getElementById("chiefdomSelect")?.value;
+  const district = document.getElementById("districtSelect")?.value;
+  const chiefdom = document.getElementById("chiefdomSelect")?.value;
   const phuSelect = document.getElementById("phuSelect");
   if(!phuSelect) return;
-  phuSelect.innerHTML = '<option value="">Select PHU...</option>';
-  if (district && chiefdom) {
-    const key = `${district}|${chiefdom}`;
-    if (phuMap.has(key)) { phuMap.get(key).sort().forEach(p => { phuSelect.innerHTML += `<option value="${p}">${p}</option>`; }); phuSelect.disabled = false; }
-    else phuSelect.disabled = true;
-  } else phuSelect.disabled = true;
+  const list = (district && chiefdom) ? phusIn(district, chiefdom) : [];
+  if (list.length) {
+    phuSelect.innerHTML = '<option value="">Select PHU...</option>' + list.map(f => `<option>${escOpt(f.phu)}</option>`).join('');
+    phuSelect.disabled = false;
+  } else {
+    phuSelect.innerHTML = '<option value="">No facilities listed for this chiefdom</option>';
+    phuSelect.disabled = true;
+  }
+  const typeSelect = document.getElementById("facilityTypeSelect");
+  if(typeSelect) { typeSelect.innerHTML = '<option value="">Select PHU first</option>'; typeSelect.disabled = true; }
+}
+
+function updateFacilityType() {
+  const district = document.getElementById("districtSelect")?.value;
+  const chiefdom = document.getElementById("chiefdomSelect")?.value;
+  const phu = document.getElementById("phuSelect")?.value;
+  const t = document.getElementById("facilityTypeSelect");
+  if(!t) return;
+  if (!phu) { t.innerHTML = '<option value="">Select PHU first</option>'; t.disabled = true; return; }
+  const type = typeOf(district, chiefdom, phu);
+  if (type) t.innerHTML = `<option>${escOpt(type)}</option>`;
+  else t.innerHTML = '<option value="">Select facility type...</option>' + FACILITY_TYPES.map(x => `<option>${x}</option>`).join('');
+  t.disabled = false;
 }
 
 function getDemographics() {
-  return { district: document.getElementById("districtSelect")?.value || "", chiefdom: document.getElementById("chiefdomSelect")?.value || "", phu: document.getElementById("phuSelect")?.value || "", supervisor: document.getElementById("supervisor")?.value || "", visitdate: document.getElementById("visitdate")?.value || "" };
+  return {
+    district: document.getElementById("districtSelect")?.value || "",
+    chiefdom: document.getElementById("chiefdomSelect")?.value || "",
+    phu: document.getElementById("phuSelect")?.value || "",
+    facility_type: document.getElementById("facilityTypeSelect")?.value || "",
+    supervisor: document.getElementById("supervisor")?.value || "",
+    visitdate: document.getElementById("visitdate")?.value || ""
+  };
 }
 
 function validateForm() {
@@ -797,6 +693,7 @@ function validateForm() {
   if(!d.district){ alert("Select District"); return false; }
   if(!d.chiefdom){ alert("Select Chiefdom"); return false; }
   if(!d.phu){ alert("Select Health Facility"); return false; }
+  if(!d.facility_type){ alert("Select Health Facility Type"); return false; }
   if(!d.supervisor){ alert("Enter Supervisor Name"); return false; }
   if(!d.visitdate){ alert("Select Date of Visit"); return false; }
   const hasObs = observations.some(o => o.cadre && o.gender);
@@ -825,6 +722,7 @@ function renderSummary(){
     <div class="summary-item"><span class="summary-label">District</span><span class="summary-value">${demo.district||'—'}</span></div>
     <div class="summary-item"><span class="summary-label">Chiefdom</span><span class="summary-value">${demo.chiefdom||'—'}</span></div>
     <div class="summary-item"><span class="summary-label">Health Facility</span><span class="summary-value">${demo.phu||'—'}</span></div>
+    <div class="summary-item"><span class="summary-label">Facility Type</span><span class="summary-value">${demo.facility_type||'—'}</span></div>
     <div class="summary-item"><span class="summary-label">Supervisor</span><span class="summary-value">${demo.supervisor||'—'}</span></div>
     <div class="summary-item"><span class="summary-label">Visit Date</span><span class="summary-value">${demo.visitdate||'—'}</span></div>
     <div class="summary-item"><span class="summary-label">Staff Trained</span><span class="summary-value">${ans.trained||'—'} ${ans.trained_count?`(${ans.trained_count} staff)`:''}</span></div>
@@ -834,10 +732,12 @@ function renderSummary(){
   document.getElementById('summary-content').innerHTML = html;
 }
 
-document.getElementById("visitdate")?.setAttribute('value', new Date().toISOString().split('T')[0]);
 buildAllSections();
 renderObservations();
-loadCSV();
+document.getElementById("districtSelect").value = DISTRICT;
+updateChiefdom();
+const _vd = document.getElementById("visitdate");
+if (_vd) _vd.value = new Date().toISOString().split('T')[0];
 showSection(0);
 setTimeout(() => {
   for(let i=0;i<3;i++) updateRadioVisuals(`group_avail${i}`);
